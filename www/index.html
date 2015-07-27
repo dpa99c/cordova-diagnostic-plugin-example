@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <style type="text/css">
+            body,
+            ul{
+                padding: 0;
+                margin: 0;
+            }
+            h2{
+                text-align: center;
+                margin-top: 0;
+                padding-top: 0;
+            }
+            li{
+                list-style: none;
+                clear: right;
+                padding: 0;
+                margin: 12px 0 0 4px;
+            }
+            li span.name{
+
+            }
+            li span.state{
+                float: right;
+                padding: 2px;
+            }
+            li span.on{
+                background-color: green;
+            }
+            li span.off{
+                background-color: red;
+            }
+
+            li span.on,
+            li.off span.on,
+            li.on span.off{
+                display: none;
+            }
+
+            li.on span.on{
+                display: list-item !important;
+            }
+
+            #settings{
+                border-top: 1px solid #000;
+                margin-top: 24px;
+                padding-top: 24px;
+                width: 100%;
+            }
+
+            #settings button{
+                display: block;
+                margin: 0 auto;
+                margin-bottom: 24px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>State</h2>
+        <ul id="state">
+            <li class="location">
+                <span class="name">Location</span>
+                <span class="state on">ENABLED</span>
+                <span class="state off">DISABLED</span>
+            </li>
+            <li class="location-setting">
+                <span class="name">Location setting</span>
+                <span class="state on">ENABLED</span>
+                <span class="state off">DISABLED</span>
+            </li>
+            <li class="location-authorisation">
+                <span class="name">Location authorisation</span>
+                <span class="state on">AUTHORISED</span>
+                <span class="state off">UNAUTHORISED</span>
+            </li>
+            <li class="camera">
+                <span class="name">Camera</span>
+                <span class="state on">PRESENT</span>
+                <span class="state off">ABSENT</span>
+            </li>
+            <li class="wifi">
+                <span class="name">WiFi</span>
+                <span class="state on">ENABLED</span>
+                <span class="state off">DISABLED</span>
+            </li>
+        </ul>
+
+        <div id="settings">
+            <button id="do-check">Re-check state</button>
+            <button id="location-settings">Location settings</button>
+        </div>
+    </body>
+</html>
