@@ -36,11 +36,11 @@ If you're unable to build the project or just want to try it out, here is the pr
 
 ## Android
 
-![iOS screenshot](https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/master/screenshots/ios.png)
+![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/ios.png)
 
 ## iOS
 
-![Android screenshot](https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/master/screenshots/android.png)
+![Android screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android.png)
 
 # License
 ================
