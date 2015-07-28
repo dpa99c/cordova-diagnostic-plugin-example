@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="uk.co.workingedge.phonegap.plugins.example.diagnostic" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Android diagnostic plugin example</name>
+    <name>Diagnostic plugin example</name>
     <description>
         An example app that demonstrates use of cordova.plugins.diagnostic
     </description>
@@ -10,6 +10,8 @@
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <plugin name="cordova.plugins.diagnostic" version="0" />
+    <plugin name="cordova-plugin-device" version="1" />
+
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

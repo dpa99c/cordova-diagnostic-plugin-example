@@ -1,10 +1,13 @@
 
 
 function onDeviceReady() {
+    $('body').addClass(device.platform.toLowerCase());
+
     // Bind events
     $(document).on("resume", onResume);
     $('#do-check').on("click", checkState);
     $('#settings #location-settings').on("click", onClickLocationSettings);
+
     checkState();
 }
 

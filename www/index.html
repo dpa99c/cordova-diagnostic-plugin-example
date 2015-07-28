@@ -14,6 +14,12 @@
                 padding: 0;
                 margin: 0;
             }
+
+            body.ios .android-only,
+            body.android .ios-only{
+                display: none;
+            }
+
             h2{
                 text-align: center;
                 margin-top: 0;
@@ -100,7 +106,7 @@
 
         <div id="settings">
             <button id="do-check">Re-check state</button>
-            <button id="location-settings">Location settings</button>
+            <button id="location-settings" class="android-only">Location settings</button>
         </div>
     </body>
 </html>
