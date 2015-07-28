@@ -33,6 +33,10 @@ function checkState(){
     cordova.plugins.diagnostic.isCameraEnabled(function(enabled){
         $('#state .camera').addClass(enabled ? 'on' : 'off');
     }, onError);
+
+    cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){
+        $('#state .bluetooth').addClass(enabled ? 'on' : 'off');
+    }, onError);
 }
 
 function onError(error){
