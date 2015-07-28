@@ -8,6 +8,9 @@
         Dave Alden
     </author>
     <content src="index.html" />
+
+    <preference name="Fullscreen" value="false" />
+
     <plugin name="cordova-plugin-whitelist" version="1" />
     <plugin name="cordova.plugins.diagnostic" version="0" />
     <plugin name="cordova-plugin-device" version="1" />
