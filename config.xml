@@ -14,6 +14,8 @@
     <plugin name="cordova-plugin-whitelist" version="1" />
     <plugin name="cordova.plugins.diagnostic" version="0" />
     <plugin name="cordova-plugin-device" version="1" />
+    <plugin name="cordova-plugin-geolocation" version="1" />
+    <plugin name="com.megster.cordova.bluetoothserial" version="0" />
 
     <access origin="*" />
     <allow-intent href="http://*/*" />

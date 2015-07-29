@@ -1,5 +1,3 @@
-
-
 function onDeviceReady() {
     $('body').addClass(device.platform.toLowerCase());
 
@@ -8,7 +6,28 @@ function onDeviceReady() {
     $('#do-check').on("click", checkState);
     $('#settings #location-settings').on("click", onClickLocationSettings);
 
-    checkState();
+    // Make dummy geolocation request to cause authorisation request
+    navigator.geolocation.getCurrentPosition(function(){},function(){});
+
+    // Make dummy Bluetooth request to cause authorisation request
+    bluetoothSerial.isEnabled(
+        function() {
+            // list the available BT ports:
+            bluetoothSerial.list(
+                function(results) {
+                    console.log(JSON.stringify(results));
+                },
+                function(error) {
+                    console.log(JSON.stringify(error));
+                }
+            );
+        },
+        function(){
+            console.log("Bluetooth is not enabled/supported");
+        }
+    );
+
+    setTimeout(checkState, 500);
 }
 
 
