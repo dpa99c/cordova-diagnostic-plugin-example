@@ -36,7 +36,7 @@ If you're unable to build the project or just want to try it out, here is the pr
 
 ## Android
 
-![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android.png)
+![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android_screenshot.png)
 
 ## iOS
 
