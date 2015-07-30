@@ -4,7 +4,22 @@ function onDeviceReady() {
     // Bind events
     $(document).on("resume", onResume);
     $('#do-check').on("click", checkState);
-    $('#settings #location-settings').on("click", onClickLocationSettings);
+
+    $('#settings #location-settings').on("click", function(){
+        cordova.plugins.diagnostic.switchToLocationSettings();
+    });
+
+    $('#settings #mobile-data-settings').on("click", function(){
+        cordova.plugins.diagnostic.switchToMobileDataSettings();
+    });
+
+    $('#settings #bluetooth-settings').on("click", function(){
+        cordova.plugins.diagnostic.switchToBluetoothSettings();
+    });
+
+    $('#settings #wifi-settings').on("click", function(){
+        cordova.plugins.diagnostic.switchToWifiSettings();
+    });
 
     // Make dummy geolocation request to cause authorisation request
     navigator.geolocation.getCurrentPosition(function(){},function(){});
@@ -40,13 +55,15 @@ function checkState(){
         $('#state .location').addClass(enabled ? 'on' : 'off');
     }, onError);
 
-    cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled){
-        $('#state .location-setting').addClass(enabled ? 'on' : 'off');
-    }, onError);
+    if(device.platform === "iOS"){
+        cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled){
+            $('#state .location-setting').addClass(enabled ? 'on' : 'off');
+        }, onError);
 
-    cordova.plugins.diagnostic.isLocationAuthorized(function(enabled){
-        $('#state .location-authorisation').addClass(enabled ? 'on' : 'off');
-    }, onError);
+        cordova.plugins.diagnostic.isLocationAuthorized(function(enabled){
+            $('#state .location-authorisation').addClass(enabled ? 'on' : 'off');
+        }, onError);
+    }
 
     cordova.plugins.diagnostic.isWifiEnabled(function(enabled){
         $('#state .wifi').addClass(enabled ? 'on' : 'off');
@@ -63,10 +80,6 @@ function checkState(){
 
 function onError(error){
     console.error("An error occurred: "+error);
-}
-
-function onClickLocationSettings(){
-    cordova.plugins.diagnostic.switchToLocationSettings();
 }
 
 function onResume(){

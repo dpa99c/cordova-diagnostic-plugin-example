@@ -6,8 +6,8 @@ This repo contains an example project which illustrates use of the [Diagnostic C
 
 ## Contents
 * [Downloading](#downloading)
-* [Building](#building)
-* [Running](#running)
+* [Building and running](#building-and-running)
+* [Pre-built app](#pre-built-app)
 * [Screenshots](#screenshots)
 * [License](#license)
  
@@ -17,7 +17,7 @@ To download the example project, clone it using git:
 
     $ git clone https://github.com/dpa99c/cordova-diagnostic-plugin-example.git
 
-# Building
+# Building and running
 
 The plugin currently supports the Android and iOS platforms.
 
@@ -26,17 +26,17 @@ For example, to run on the Android platform, execute the following commands from
 - Install the platform into the project: `$ cordova platform add android`
 - Build and run the project: `$ cordova run android`
 
-# Running
-If you're unable to build the project or just want to try it out, here is the project as a pre-built app:
+# Pre-built app
+If you're unable to build the project or just want to try it out, here is the project as a pre-built app installer:
 
-- [Android APK (debug unsigned)](build/cordova-diagnostic-plugin-example.apk)
-- [iOS IPA (signed for adhoc distribution)](build/cordova-diagnostic-plugin-example.ipa)
+- [Android (APK)](build/cordova-diagnostic-plugin-example.apk)
+- [iOS (IPA)](build/cordova-diagnostic-plugin-example.ipa)
 
 # Screenshots
 
 ## Android
 
-![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android1.png)
+![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android.png)
 
 ## iOS
 
