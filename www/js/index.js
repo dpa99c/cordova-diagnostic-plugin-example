@@ -5,19 +5,25 @@ function onDeviceReady() {
     $(document).on("resume", onResume);
     $('#do-check').on("click", checkState);
 
-    $('#settings #location-settings').on("click", function(){
+    // iOS settings
+    $('#settings').on("click", function(){
+        cordova.plugins.diagnostic.switchToSettings();
+    });
+
+    // Android settings
+    $('#location-settings').on("click", function(){
         cordova.plugins.diagnostic.switchToLocationSettings();
     });
 
-    $('#settings #mobile-data-settings').on("click", function(){
+    $('#mobile-data-settings').on("click", function(){
         cordova.plugins.diagnostic.switchToMobileDataSettings();
     });
 
-    $('#settings #bluetooth-settings').on("click", function(){
+    $('#bluetooth-settings').on("click", function(){
         cordova.plugins.diagnostic.switchToBluetoothSettings();
     });
 
-    $('#settings #wifi-settings').on("click", function(){
+    $('#wifi-settings').on("click", function(){
         cordova.plugins.diagnostic.switchToWifiSettings();
     });
 

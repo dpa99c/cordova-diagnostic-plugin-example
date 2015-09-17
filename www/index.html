@@ -59,14 +59,14 @@
                 display: list-item !important;
             }
 
-            #settings{
+            .settings{
                 border-top: 1px solid #000;
                 margin-top: 24px;
                 padding-top: 24px;
                 width: 100%;
             }
 
-            #settings button{
+            .settings button{
                 display: block;
                 margin: 0 auto;
                 margin-bottom: 24px;
@@ -108,12 +108,13 @@
             </li>
         </ul>
 
-        <div id="settings">
+        <div class="settings">
             <button id="do-check">Re-check state</button>
-            <button id="location-settings" class="android-only">Location settings</button>
-            <button id="mobile-data-settings" class="android-only">Mobile data settings</button>
-            <button id="bluetooth-settings" class="android-only">Bluetooth settings</button>
-            <button id="wifi-settings" class="android-only">WiFi settings</button>
+            <button id="settings" class="ios-only">Open Settings</button>
+            <button id="location-settings" class="android-only">Open Location settings</button>
+            <button id="mobile-data-settings" class="android-only">Open Mobile data settings</button>
+            <button id="bluetooth-settings" class="android-only">Open Bluetooth settings</button>
+            <button id="wifi-settings" class="android-only">Open WiFi settings</button>
         </div>
     </body>
 </html>
