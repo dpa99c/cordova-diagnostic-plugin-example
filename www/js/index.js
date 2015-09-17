@@ -7,7 +7,11 @@ function onDeviceReady() {
 
     // iOS settings
     $('#settings').on("click", function(){
-        cordova.plugins.diagnostic.switchToSettings();
+        cordova.plugins.diagnostic.switchToSettings(function(){
+            console.log("Successfully opened settings");
+        }, function(error){
+            console.error(error);
+        });
     });
 
     // Android settings
