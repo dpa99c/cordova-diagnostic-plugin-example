@@ -75,6 +75,16 @@ function checkState(){
         }, onError);
     }
 
+    if(device.platform === "Android"){
+        cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
+            $('#state .gps-location').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.isNetworkLocationEnabled(function(enabled){
+            $('#state .network-location').addClass(enabled ? 'on' : 'off');
+        }, onError);
+    }
+
     cordova.plugins.diagnostic.isWifiEnabled(function(enabled){
         $('#state .wifi').addClass(enabled ? 'on' : 'off');
     }, onError);
