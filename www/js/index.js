@@ -31,10 +31,10 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.switchToWifiSettings();
     });
 
-    // Make dummy geolocation request to cause authorisation request
+    // Make dummy geolocation request to cause authorization request
     navigator.geolocation.getCurrentPosition(function(){},function(){});
 
-    // Make dummy Bluetooth request to cause authorisation request
+    // Make dummy Bluetooth request to cause authorization request
     bluetoothSerial.isEnabled(
         function() {
             // list the available BT ports:
@@ -71,7 +71,15 @@ function checkState(){
         }, onError);
 
         cordova.plugins.diagnostic.isLocationAuthorized(function(enabled){
-            $('#state .location-authorisation').addClass(enabled ? 'on' : 'off');
+            $('#state .location-authorization').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.isLocationAuthorizedAlways(function(enabled){
+            $('#state .location-authorization-always').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.isLocationAuthorizedWhenInUse(function(enabled){
+            $('#state .location-authorization-in-use').addClass(enabled ? 'on' : 'off');
         }, onError);
     }
 
