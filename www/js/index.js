@@ -61,6 +61,7 @@ function checkState(){
 
     $('#state li').removeClass('on off');
 
+    // Location
     cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
         $('#state .location').addClass(enabled ? 'on' : 'off');
     }, onError);
@@ -89,12 +90,27 @@ function checkState(){
         }, onError);
     }
 
-    cordova.plugins.diagnostic.isWifiEnabled(function(enabled){
-        $('#state .wifi').addClass(enabled ? 'on' : 'off');
-    }, onError);
-
+    // Camera
     cordova.plugins.diagnostic.isCameraEnabled(function(enabled){
         $('#state .camera').addClass(enabled ? 'on' : 'off');
+    }, onError);
+
+    if(device.platform === "iOS"){
+        cordova.plugins.diagnostic.isCameraPresent(function(enabled){
+            $('#state .camera-present').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.isCameraAuthorized(function(enabled){
+            $('#state .camera-authorized').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.getCameraAuthorizationStatus(function(status){
+            $('#state .camera-authorization-status').find('.value').text(status.toUpperCase());
+        }, onError);
+    }
+
+    cordova.plugins.diagnostic.isWifiEnabled(function(enabled){
+        $('#state .wifi').addClass(enabled ? 'on' : 'off');
     }, onError);
 
     cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){

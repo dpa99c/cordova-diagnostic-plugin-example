@@ -75,51 +75,77 @@
     </head>
     <body>
         <h2>State</h2>
-        <ul id="state">
-            <li class="location">
-                <span class="name">Location</span>
-                <span class="state on">ENABLED</span>
-                <span class="state off">DISABLED</span>
-            </li>
-            <li class="gps-location android-only">
-                <span class="name">GPS Location</span>
-                <span class="state on">ENABLED</span>
-                <span class="state off">DISABLED</span>
-            </li>
-            <li class="network-location android-only">
-                <span class="name">Network Location</span>
-                <span class="state on">ENABLED</span>
-                <span class="state off">DISABLED</span>
-            </li>
-            <li class="location-setting ios-only">
-                <span class="name">Location setting</span>
-                <span class="state on">ENABLED</span>
-                <span class="state off">DISABLED</span>
-            </li>
-            <li class="location-authorization ios-only">
-                <span class="name">Location authorized</span>
-                <span class="state on">AUTHORIZED</span>
-                <span class="state off">UNAUTHORIZED</span>
-            </li>
-            <li class="location-authorization-status ios-only">
-                <span class="name">Location authorization status: <span class="value"></span></span>
-            </li>
-            <li class="camera">
-                <span class="name">Camera</span>
-                <span class="state on">PRESENT</span>
-                <span class="state off">ABSENT</span>
-            </li>
-            <li class="wifi">
-                <span class="name">WiFi</span>
-                <span class="state on">ENABLED</span>
-                <span class="state off">DISABLED</span>
-            </li>
-            <li class="bluetooth">
-                <span class="name">Bluetooth</span>
-                <span class="state on">ENABLED</span>
-                <span class="state off">DISABLED</span>
-            </li>
-        </ul>
+
+        <div id="state">
+            <h3>Location</h3>
+            <ul>
+                <li class="location">
+                    <span class="name">Location</span>
+                    <span class="state on">ENABLED</span>
+                    <span class="state off">DISABLED</span>
+                </li>
+                <li class="gps-location android-only">
+                    <span class="name">GPS Location</span>
+                    <span class="state on">ENABLED</span>
+                    <span class="state off">DISABLED</span>
+                </li>
+                <li class="network-location android-only">
+                    <span class="name">Network Location</span>
+                    <span class="state on">ENABLED</span>
+                    <span class="state off">DISABLED</span>
+                </li>
+                <li class="location-setting ios-only">
+                    <span class="name">Location setting</span>
+                    <span class="state on">ENABLED</span>
+                    <span class="state off">DISABLED</span>
+                </li>
+                <li class="location-authorization ios-only">
+                    <span class="name">Location authorized</span>
+                    <span class="state on">AUTHORIZED</span>
+                    <span class="state off">UNAUTHORIZED</span>
+                </li>
+                <li class="location-authorization-status ios-only">
+                    <span class="name">Location authorization status: <span class="value"></span></span>
+                </li>
+            </ul>
+            <h3>Camera</h3>
+            <ul>
+                <li class="camera">
+                    <span class="name">Camera</span>
+                    <span class="state on">ENABLED</span>
+                    <span class="state off">DISABLED</span>
+                </li>
+                <li class="camera-present ios-only">
+                    <span class="name">Camera present?</span>
+                    <span class="state on">PRESENT</span>
+                    <span class="state off">NOT PRESENT</span>
+                </li>
+                <li class="camera-authorized ios-only">
+                    <span class="name">Camera authorized?</span>
+                    <span class="state on">AUTHORIZED</span>
+                    <span class="state off">UNAUTHORIZED</span>
+                </li>
+                <li class="camera-authorization-status ios-only">
+                    <span class="name">Camera authorization status: <span class="value"></span></span>
+                </li>
+            </ul>
+            <h3>WiFi</h3>
+            <ul>
+                <li class="wifi">
+                    <span class="name">WiFi</span>
+                    <span class="state on">ENABLED</span>
+                    <span class="state off">DISABLED</span>
+                </li>
+            </ul>
+            <h3>Bluetooth</h3>
+            <ul>
+                <li class="bluetooth">
+                    <span class="name">Bluetooth</span>
+                    <span class="state on">ENABLED</span>
+                    <span class="state off">DISABLED</span>
+                </li>
+            </ul>
+        </div>
 
         <div class="settings">
             <button id="do-check">Re-check state</button>
