@@ -74,12 +74,8 @@ function checkState(){
             $('#state .location-authorization').addClass(enabled ? 'on' : 'off');
         }, onError);
 
-        cordova.plugins.diagnostic.isLocationAuthorizedAlways(function(enabled){
-            $('#state .location-authorization-always').addClass(enabled ? 'on' : 'off');
-        }, onError);
-
-        cordova.plugins.diagnostic.isLocationAuthorizedWhenInUse(function(enabled){
-            $('#state .location-authorization-in-use').addClass(enabled ? 'on' : 'off');
+        cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
+            $('#state .location-authorization-status').find('.value').text(status.toUpperCase());
         }, onError);
     }
 
