@@ -39,6 +39,15 @@ function onDeviceReady() {
         });
     });
 
+    $('#request-camera-roll').on("click", function(){
+        cordova.plugins.diagnostic.requestCameraRollAuthorization(function(status){
+            console.log("Successfully requested camera roll authorization: authorization status is now " + status);
+            checkState();
+        }, function(error){
+            console.error(error);
+        });
+    });
+
     // Android settings
     $('#location-settings').on("click", function(){
         cordova.plugins.diagnostic.switchToLocationSettings();
@@ -138,6 +147,7 @@ function checkState(){
 
         cordova.plugins.diagnostic.getCameraRollAuthorizationStatus(function(status){
             $('#state .camera-roll-authorization-status').find('.value').text(status.toUpperCase());
+            $('#request-camera-roll').toggle(status === "not_determined");
         }, onError);
     }
 
