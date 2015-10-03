@@ -90,9 +90,7 @@ function checkState(){
 
         cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
             $('#state .location-authorization-status').find('.value').text(status.toUpperCase());
-            if(status === "not_determined"){
-                $('.request-location').show();
-            }
+            $('.request-location').toggle(status === "not_determined");
         }, onError);
     }
 
