@@ -14,6 +14,22 @@ function onDeviceReady() {
         });
     });
 
+    $('#request-location-always').on("click", function(){
+        cordova.plugins.diagnostic.requestLocationAuthorization(function(){
+            console.log("Successfully requested location authorization always");
+        }, function(error){
+            console.error(error);
+        }, "always");
+    });
+
+    $('#request-location-in-use').on("click", function(){
+        cordova.plugins.diagnostic.requestLocationAuthorization(function(){
+            console.log("Successfully requested location authorization when in use");
+        }, function(error){
+            console.error(error);
+        }, "when_in_use");
+    });
+
     // Android settings
     $('#location-settings').on("click", function(){
         cordova.plugins.diagnostic.switchToLocationSettings();
@@ -32,7 +48,7 @@ function onDeviceReady() {
     });
 
     // Make dummy geolocation request to cause authorization request
-    navigator.geolocation.getCurrentPosition(function(){},function(){});
+    //navigator.geolocation.getCurrentPosition(function(){},function(){});
 
     // Make dummy Bluetooth request to cause authorization request
     bluetoothSerial.isEnabled(
