@@ -107,6 +107,14 @@ function checkState(){
         cordova.plugins.diagnostic.getCameraAuthorizationStatus(function(status){
             $('#state .camera-authorization-status').find('.value').text(status.toUpperCase());
         }, onError);
+
+        cordova.plugins.diagnostic.isCameraRollAuthorized(function(enabled){
+            $('#state .camera-roll-authorized').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.getCameraRollAuthorizationStatus(function(status){
+            $('#state .camera-roll-authorization-status').find('.value').text(status.toUpperCase());
+        }, onError);
     }
 
     cordova.plugins.diagnostic.isWifiEnabled(function(enabled){
