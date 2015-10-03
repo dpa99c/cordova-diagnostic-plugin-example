@@ -30,6 +30,15 @@ function onDeviceReady() {
         }, "when_in_use");
     });
 
+    $('#request-camera').on("click", function(){
+        cordova.plugins.diagnostic.requestCameraAuthorization(function(granted){
+            console.log("Successfully requested camera authorization: authorization was " + (granted ? "GRANTED" : "DENIED"));
+            checkState();
+        }, function(error){
+            console.error(error);
+        });
+    });
+
     // Android settings
     $('#location-settings').on("click", function(){
         cordova.plugins.diagnostic.switchToLocationSettings();
@@ -120,6 +129,7 @@ function checkState(){
 
         cordova.plugins.diagnostic.getCameraAuthorizationStatus(function(status){
             $('#state .camera-authorization-status').find('.value').text(status.toUpperCase());
+            $('#request-camera').toggle(status === "NOT_DETERMINED");
         }, onError);
 
         cordova.plugins.diagnostic.isCameraRollAuthorized(function(enabled){
