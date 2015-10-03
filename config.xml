@@ -13,12 +13,11 @@
     <preference name="Fullscreen" value="false" />
 
     <plugin name="cordova-plugin-whitelist" version="1" />
-    <plugin name="cordova.plugins.diagnostic" version="1" />
     <plugin name="cordova-plugin-device" version="1" />
     <plugin name="cordova-custom-config" version="1" />
-
     <plugin name="cordova-plugin-bluetooth-serial" version="0" />
-
+    
+    <plugin name="cordova.plugins.diagnostic" version="2" />
 
     <platform name="android"></platform>
     <platform name="ios">
