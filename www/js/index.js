@@ -169,7 +169,11 @@ function checkState(){
     }, onError);
 
     cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){
-        $('#state .bluetooth').addClass(enabled ? 'on' : 'off');
+        $('#state .bluetooth-available').addClass(enabled ? 'on' : 'off');
+    }, onError);
+
+    cordova.plugins.diagnostic.getBluetoothState(function(state){
+        $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
     }, onError);
 }
 
