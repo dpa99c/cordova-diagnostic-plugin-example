@@ -5,10 +5,15 @@ function onDeviceReady() {
     $(document).on("resume", onResume);
     $('#do-check').on("click", checkState);
 
-    // Register location authorization change listener for iOS
+    // Register change listeners for iOS
     if(device.platform === "iOS") {
-        cordova.plugins.diagnostic.registerLocationAuthorizationStatusHandler(function(status){
+        cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status){
             console.log("Location authorization status changed to: "+status);
+            checkState();
+        });
+
+        cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function(state){
+            console.log("Bluetooth state changed to: "+state);
             checkState();
         });
     }
