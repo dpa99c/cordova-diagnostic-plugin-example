@@ -5,6 +5,14 @@ function onDeviceReady() {
     $(document).on("resume", onResume);
     $('#do-check').on("click", checkState);
 
+    // Register location authorization change listener for iOS
+    if(device.platform === "iOS") {
+        cordova.plugins.diagnostic.registerLocationAuthorizationStatusHandler(function(status){
+            console.log("Location authorization status changed to: "+status);
+            checkState();
+        });
+    }
+
     // iOS settings
     $('#settings').on("click", function(){
         cordova.plugins.diagnostic.switchToSettings(function(){
