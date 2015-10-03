@@ -8,27 +8,30 @@
         Dave Alden
     </author>
     <content src="index.html" />
+    <access origin="*" />
 
     <preference name="Fullscreen" value="false" />
 
     <plugin name="cordova-plugin-whitelist" version="1" />
     <plugin name="cordova.plugins.diagnostic" version="0" />
     <plugin name="cordova-plugin-device" version="1" />
-    <plugin name="cordova-plugin-geolocation" version="1" />
+    <plugin name="cordova-custom-config" version="1" />
+
     <plugin name="cordova-plugin-bluetooth-serial" version="0" />
 
-    <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
-    <platform name="android">
-        <allow-intent href="market:*" />
-    </platform>
+
+    <platform name="android"></platform>
     <platform name="ios">
-        <allow-intent href="itms:*" />
-        <allow-intent href="itms-apps:*" />
+
+        <!-- Set message displayed when app requests constant location updates -->
+        <config-file platform="ios" target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+            <string>This app requires constant access to your location in order to track your position, even when the screen is off.</string>
+        </config-file>
+
+        <!-- Set message displayed when app requests foreground location updates -->
+        <config-file platform="ios" target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+            <string>This app will now only track your location when the screen is on and the app is displayed.</string>
+        </config-file>
+
     </platform>
 </widget>

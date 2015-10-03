@@ -47,9 +47,6 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.switchToWifiSettings();
     });
 
-    // Make dummy geolocation request to cause authorization request
-    //navigator.geolocation.getCurrentPosition(function(){},function(){});
-
     // Make dummy Bluetooth request to cause authorization request
     bluetoothSerial.isEnabled(
         function() {
