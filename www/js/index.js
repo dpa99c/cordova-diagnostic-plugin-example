@@ -129,7 +129,7 @@ function checkState(){
 
         cordova.plugins.diagnostic.getCameraAuthorizationStatus(function(status){
             $('#state .camera-authorization-status').find('.value').text(status.toUpperCase());
-            $('#request-camera').toggle(status === "NOT_DETERMINED");
+            $('#request-camera').toggle(status === "not_determined");
         }, onError);
 
         cordova.plugins.diagnostic.isCameraRollAuthorized(function(enabled){
