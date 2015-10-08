@@ -78,23 +78,63 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.switchToWifiSettings();
     });
 
-    // Make dummy Bluetooth request to cause authorization request
-    bluetoothSerial.isEnabled(
-        function() {
-            // list the available BT ports:
-            bluetoothSerial.list(
-                function(results) {
-                    console.log(JSON.stringify(results));
-                },
-                function(error) {
-                    console.log(JSON.stringify(error));
-                }
-            );
-        },
-        function(){
-            console.log("Bluetooth is not enabled/supported");
-        }
-    );
+    // Android set state
+    $('#enable-wifi').on("click", function(){
+        cordova.plugins.diagnostic.setWifiState(function(){
+            console.log("Successfully enabled Wifi");
+            setTimeout(checkState, 100);
+        }, function(error){
+            console.error(error);
+        }, true);
+    });
+
+    $('#disable-wifi').on("click", function(){
+        cordova.plugins.diagnostic.setWifiState(function(){
+            console.log("Successfully disabled Wifi");
+            setTimeout(checkState, 100);
+        }, function(error){
+            console.error(error);
+        }, false);
+    });
+
+    $('#enable-bluetooth').on("click", function(){
+        cordova.plugins.diagnostic.setBluetoothState(function(){
+            console.log("Successfully enabled Bluetooth");
+            setTimeout(checkState, 1000);
+        }, function(error){
+            console.error(error);
+        }, true);
+    });
+
+    $('#disable-bluetooth').on("click", function(){
+        cordova.plugins.diagnostic.setBluetoothState(function(){
+            console.log("Successfully disabled Bluetooth");
+            setTimeout(checkState, 1000);
+        }, function(error){
+            console.error(error);
+        }, false);
+    });
+
+
+    if(device.platform === "iOS") {
+        // Make dummy Bluetooth request to cause authorization request on iOS
+        bluetoothSerial.isEnabled(
+            function () {
+                // list the available BT ports:
+                bluetoothSerial.list(
+                    function (results) {
+                        console.log(JSON.stringify(results));
+                    },
+                    function (error) {
+                        console.log(JSON.stringify(error));
+                    }
+                );
+            },
+            function () {
+                console.log("Bluetooth is not enabled/supported");
+            }
+        );
+    }
 
     setTimeout(checkState, 500);
 }
@@ -166,15 +206,27 @@ function checkState(){
 
     cordova.plugins.diagnostic.isWifiEnabled(function(enabled){
         $('#state .wifi').addClass(enabled ? 'on' : 'off');
+
+        if(device.platform === "Android") {
+            $('#enable-wifi').toggle(!enabled);
+            $('#disable-wifi').toggle(!!enabled);
+        }
     }, onError);
 
     cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){
         $('#state .bluetooth-available').addClass(enabled ? 'on' : 'off');
+
+        if(device.platform === "Android") {
+            $('#enable-bluetooth').toggle(!enabled);
+            $('#disable-bluetooth').toggle(!!enabled);
+        }
     }, onError);
 
-    cordova.plugins.diagnostic.getBluetoothState(function(state){
-        $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
-    }, onError);
+    if(device.platform === "iOS"){
+        cordova.plugins.diagnostic.getBluetoothState(function(state){
+            $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
+        }, onError);
+    }
 }
 
 function onError(error){

@@ -1,5 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="uk.co.workingedge.phonegap.plugins.example.diagnostic" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget
+        id="uk.co.workingedge.phonegap.plugins.example.diagnostic"
+        version="0.0.1"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Diagnostic plugin example</name>
     <description>
         An example app that demonstrates use of cordova.plugins.diagnostic
@@ -15,12 +20,20 @@
     <plugin name="cordova-plugin-whitelist" version="1" />
     <plugin name="cordova-plugin-device" version="1" />
     <plugin name="cordova-custom-config" version="1" />
-    <plugin name="cordova-plugin-bluetooth-serial" version="0" />
-    
+
     <plugin name="cordova.plugins.diagnostic" version="2" />
 
-    <platform name="android"></platform>
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+        </config-file>
+    </platform>
+
     <platform name="ios">
+        <plugin name="cordova-plugin-bluetooth-serial" version="0" />
 
         <!-- Set message displayed when app requests constant location updates -->
         <config-file platform="ios" target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
