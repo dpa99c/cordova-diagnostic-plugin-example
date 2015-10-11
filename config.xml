@@ -24,6 +24,7 @@
     <plugin name="cordova.plugins.diagnostic" version="2" />
 
     <platform name="android">
+        <preference name="android-minSdkVersion" value="14" />
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.BLUETOOTH" />
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>

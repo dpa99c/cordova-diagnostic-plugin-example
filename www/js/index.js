@@ -173,6 +173,10 @@ function checkState(){
         cordova.plugins.diagnostic.isNetworkLocationEnabled(function(enabled){
             $('#state .network-location').addClass(enabled ? 'on' : 'off');
         }, onError);
+
+        cordova.plugins.diagnostic.getLocationMode(function(mode){
+            $('#state .location-mode').find('.value').text(mode.toUpperCase());
+        }, onError);
     }
 
     // Camera
