@@ -26,6 +26,16 @@ For example, to run on the Android platform, execute the following commands from
 - Install the platform into the project: `$ cordova platform add android`
 - Build and run the project: `$ cordova run android`
 
+## Testing Android runtime permissions
+
+If you want to test out Android runtime permissions, you need to run the example app on a device/emulator the app is running on has Android 6.0.
+
+Also, the app must be built using API 23 or higher. For Cordova, this means using the Cordova Android platform [version 5.0.0](https://github.com/apache/cordova-android/tree/5.0.x) or above:
+
+    $ cordova platform add android@5.0.0
+
+If the app is built with version 4.x or below (API 22 or below), runtime permissions do not apply - all permissions are granted at installation time.
+
 # Pre-built app
 If you're unable to build the project or just want to try it out, here is the project as a pre-built app installer:
 
@@ -36,13 +46,14 @@ If you're unable to build the project or just want to try it out, here is the pr
 
 ## Android
 
-![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android_1.png)
-![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android_2.png)
+![Android screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android_1.png)
+![Android screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android_2.png)
+![Android screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android_3.png)
 
 ## iOS
 
-![Android screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/ios_1.png)
-![Android screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/ios_2.png)
+![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/ios_1.png)
+![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/ios_2.png)
 
 # License
 ================
