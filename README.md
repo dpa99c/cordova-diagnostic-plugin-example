@@ -60,7 +60,7 @@ If you're unable to build the project or just want to try it out, here is the pr
 
 The MIT License
 
-Copyright (c) 2015 Working Edge Ltd.
+Copyright (c) 2015 Dave Alden / Working Edge Ltd.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
