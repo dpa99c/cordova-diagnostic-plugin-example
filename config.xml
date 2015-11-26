@@ -34,8 +34,11 @@
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
             <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
-            <!-- Required on Android 6+ to access Camera and Location runtime permissions -->
+            <!-- Required on Android 6+ to access Camera runtime permissions -->
             <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+            <!-- Required on Android 6+ to access Location runtime permissions -->
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
         </config-file>

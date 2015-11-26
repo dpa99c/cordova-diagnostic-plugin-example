@@ -132,9 +132,21 @@ function onDeviceReady() {
             var lon = position.coords.longitude;
             alert("Current position: "+lat+","+lon);
         }, function (err) {
-            console.error("Position Error: code="+ err.code + "; message=" + err.message);
+            console.error("Position error: code="+ err.code + "; message=" + err.message);
             alert("Position error\ncode="+ err.code + "\nmessage=" + err.message);
         }, posOptions);
+    });
+
+    $('#use-camera').on("click", function(){
+        navigator.camera.getPicture(function(){
+            alert("Successfully took a photo");
+        }, function(err){
+            console.error("Camera error: "+ err);
+            alert("Camera error: "+err);
+        }, {
+            saveToPhotoAlbum: false,
+            destinationType: Camera.DestinationType.DATA_URL
+        });
     });
 
 
