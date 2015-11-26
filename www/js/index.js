@@ -125,6 +125,18 @@ function onDeviceReady() {
         }, false);
     });
 
+    $('#get-location').on("click", function(){
+        var posOptions = { timeout: 35000, enableHighAccuracy: true, maximumAge: 5000 };
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            alert("Current position: "+lat+","+lon);
+        }, function (err) {
+            console.error("Position Error: code="+ err.code + "; message=" + err.message);
+            alert("Position error\ncode="+ err.code + "\nmessage=" + err.message);
+        }, posOptions);
+    });
+
 
     if(device.platform === "iOS") {
         // Make dummy Bluetooth request to cause authorization request on iOS

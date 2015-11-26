@@ -17,11 +17,12 @@
 
     <preference name="Fullscreen" value="false" />
 
-    <plugin name="cordova-plugin-whitelist" version="1" />
-    <plugin name="cordova-plugin-device" version="1" />
-    <plugin name="cordova-custom-config" version="1" />
+    <plugin name="cordova-plugin-whitelist" version="*" />
+    <plugin name="cordova-plugin-device" version="*" />
+    <plugin name="cordova-custom-config" version="*" />
+    <plugin name="cordova-plugin-geolocation" version="*" />
 
-    <plugin name="cordova.plugins.diagnostic" version="2" />
+    <plugin name="cordova.plugins.diagnostic" version="*" />
 
     <platform name="android">
         <preference name="android-minSdkVersion" value="14" />
