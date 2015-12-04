@@ -28,8 +28,6 @@ function onDeviceReady() {
         });
     });
 
-
-    // iOS settings
     $('#settings').on("click", function(){
         cordova.plugins.diagnostic.switchToSettings(function(){
             console.log("Successfully opened settings");
@@ -38,6 +36,8 @@ function onDeviceReady() {
         });
     });
 
+
+    // iOS settings
     $('#request-location-always').on("click", function(){
         cordova.plugins.diagnostic.requestLocationAuthorization(function(){
             console.log("Successfully requested location authorization always");
