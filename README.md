@@ -3,19 +3,27 @@ Cordova/Phonegap Diagnostic Plugin Example
 
 This repo contains an example project which illustrates use of the [Diagnostic Cordova/Phonegap plugin](https://github.com/dpa99c/cordova-diagnostic-plugin).
 
-
 ## Contents
+* [Important Android Note](#important-android-note)
 * [Downloading](#downloading)
 * [Building and running](#building-and-running)
 * [Pre-built app](#pre-built-app)
 * [Screenshots](#screenshots)
 * [License](#license)
- 
+
+# Important Android Note
+
+The [master branch of the diagnostic plugin](https://github.com/dpa99c/cordova-diagnostic-plugin) now supports Android 6 runtime permissions. The introduces a dependency which means that the project must be built against API 23 or above.
+
+Phonegap Build (at the time of writing) does not support API 23, so for its users and others who wish to build against API 22 or below, there is a branch of the plugin repo which contains all the functionality __except Android 6 runtime permissions__. This removes the dependency on API 23 and will allow you to build against legacy API versions (22 and below).
+
+There is also a corresponding branch of this project intended to be built with the legacy plugin version: [https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/api-22](https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/api-22)
+
 # Downloading
 
 To download the example project, clone it using git:
 
-    $ git clone https://github.com/dpa99c/cordova-diagnostic-plugin-example.git
+    $ git clone https://github.com/dpa99c/cordova-diagnostic-plugin-example
 
 # Building and running
 
@@ -23,18 +31,14 @@ The plugin currently supports the Android and iOS platforms.
 
 For example, to run on the Android platform, execute the following commands from the project root:
 
-- Install the platform into the project: `$ cordova platform add android`
+- Install the API 23 platform into the project: `$ cordova platform add android@5`
 - Build and run the project: `$ cordova run android`
 
 ## Testing Android runtime permissions
 
 If you want to test out Android runtime permissions, you need to run the example app on a device/emulator the app is running on has Android 6.0.
 
-Also, the app must be built using API 23 or higher. For Cordova, this means using the Cordova Android platform [version 5.0.0](https://github.com/apache/cordova-android/tree/5.0.x) or above:
-
-    $ cordova platform add android@5.0.0
-
-If the app is built with version 4.x or below (API 22 or below), runtime permissions do not apply - all permissions are granted at installation time.
+Note: If the app is run on Android 5.1 (API 22)  or below, runtime permissions do not apply - all permissions are granted at installation time.
 
 # Pre-built app
 If you're unable to build the project or just want to try it out, here is the project as a pre-built app installer:

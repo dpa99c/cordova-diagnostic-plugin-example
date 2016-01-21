@@ -20,7 +20,8 @@
     <plugin name="cordova-plugin-whitelist" version="*" />
     <plugin name="cordova-plugin-device" version="*" />
     <plugin name="cordova-custom-config" version="*" />
-    <plugin name="cordova-plugin-geolocation" version="*" />
+    <plugin name="cordova-plugin-geolocation" version="2.1.0" />
+    <plugin name="cordova-plugin-camera" version="2.1.0" />
 
     <plugin name="cordova.plugins.diagnostic" version="*" />
 
