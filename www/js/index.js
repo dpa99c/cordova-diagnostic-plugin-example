@@ -7,11 +7,6 @@ function onDeviceReady() {
 
     // Register change listeners for iOS
     if(device.platform === "iOS") {
-        cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status){
-            console.log("Location authorization status changed to: "+status);
-            checkState();
-        });
-
         cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function(state){
             console.log("Bluetooth state changed to: "+state);
             checkState();
@@ -38,18 +33,18 @@ function onDeviceReady() {
 
 
     // iOS settings
+    var onLocationRequestChange = function(status){
+        console.log("Location authorization status is: "+status);
+        checkState();
+    };
     $('#request-location-always').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(function(){
-            console.log("Successfully requested location authorization always");
-        }, function(error){
+        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, function(error){
             console.error(error);
         }, "always");
     });
 
     $('#request-location-in-use').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(function(){
-            console.log("Successfully requested location authorization when in use");
-        }, function(error){
+        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, function(error){
             console.error(error);
         }, "when_in_use");
     });
