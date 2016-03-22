@@ -31,6 +31,15 @@ function onDeviceReady() {
         });
     });
 
+    $('#request-microphone').on("click", function(){
+        cordova.plugins.diagnostic.requestMicrophoneAuthorization(function(granted){
+            console.log("Successfully requested microphone authorization: authorization was " + (granted ? "GRANTED" : "DENIED"));
+            checkState();
+        }, function(error){
+            console.error(error);
+        });
+    });
+
 
     // iOS settings
     var onLocationRequestChange = function(status){
@@ -259,6 +268,7 @@ function checkState(){
         }
     }
 
+    // Wifi
     cordova.plugins.diagnostic.isWifiEnabled(function(enabled){
         $('#state .wifi').addClass(enabled ? 'on' : 'off');
 
@@ -268,6 +278,7 @@ function checkState(){
         }
     }, onError);
 
+    // Bluetooth
     cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){
         $('#state .bluetooth-available').addClass(enabled ? 'on' : 'off');
 
@@ -281,6 +292,30 @@ function checkState(){
         cordova.plugins.diagnostic.getBluetoothState(function(state){
             $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
         }, onError);
+    }
+
+    // Microphone
+    var onGetMicrophoneAuthorizationStatus;
+
+    cordova.plugins.diagnostic.isMicrophoneAuthorized(function(enabled){
+        $('#state .microphone-authorized').addClass(enabled ? 'on' : 'off');
+    }, onError);
+
+    cordova.plugins.diagnostic.getMicrophoneAuthorizationStatus(function(status){
+        $('#state .microphone-authorization-status').find('.value').text(status.toUpperCase());
+        onGetMicrophoneAuthorizationStatus(status);
+    }, onError);
+
+    if(device.platform === "iOS"){
+        onGetMicrophoneAuthorizationStatus = function(status){
+            $('#request-microphone').toggle(status === "not_determined");
+        }
+    }
+
+    if(device.platform === "Android"){
+        onGetMicrophoneAuthorizationStatus = function(status){
+            $('#request-microphone').toggle(status != "GRANTED" && status != "DENIED_ALWAYS");
+        }
     }
 }
 
