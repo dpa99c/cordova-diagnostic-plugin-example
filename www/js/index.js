@@ -296,6 +296,10 @@ function checkState() {
         cordova.plugins.diagnostic.hasBluetoothLESupport(function(enabled) {
             $('#state .bluetooth-le-support').addClass(enabled ? 'on' : 'off');
         }, onError);
+
+        cordova.plugins.diagnostic.hasBluetoothLEPeripheralSupport(function(enabled) {
+            $('#state .bluetooth-le-peripheral-support').addClass(enabled ? 'on' : 'off');
+        }, onError);
     }
 
     if (device.platform === "iOS") {
