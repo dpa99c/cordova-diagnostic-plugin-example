@@ -69,8 +69,8 @@ function onDeviceReady() {
 
     // Android settings
     $('#request-location').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(function(){
-            console.log("Successfully requested location authorization");
+        cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
+            console.log("Successfully requested location authorization: authorization status is now " + status);
         }, function(error){
             console.error(error);
         });
