@@ -224,7 +224,15 @@ function checkState(){
 
         onGetLocationAuthorizationStatus = function(status){
             $('#request-location').toggle(status != "GRANTED" && status != "DENIED_ALWAYS");
-        }
+        };
+
+        cordova.plugins.diagnostic.hasBluetoothLESupport(function(supported){
+            $('#state .bluetooth-le-support').addClass(supported ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.hasBluetoothLEPeripheralSupport(function(supported){
+            $('#state .bluetooth-le-peripheral-support').addClass(supported ? 'on' : 'off');
+        }, onError);
     }
 
 
