@@ -49,13 +49,13 @@ function onDeviceReady() {
     $('#request-location-always').on("click", function(){
         cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, function(error){
             console.error(error);
-        }, Diagnostic.locationAuthorizationMode.ALWAYS);
+        }, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
     });
 
     $('#request-location-in-use').on("click", function(){
         cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, function(error){
             console.error(error);
-        }, Diagnostic.locationAuthorizationMode.WHEN_IN_USE);
+        }, cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE);
     });
 
     $('#request-camera-roll').on("click", function(){
@@ -205,7 +205,7 @@ function checkState(){
         }, onError);
 
         onGetLocationAuthorizationStatus = function(status){
-            $('.request-location').toggle(status === Diagnostic.permissionStatus.NOT_REQUESTED);
+            $('.request-location').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }
     }
 
@@ -223,8 +223,15 @@ function checkState(){
         }, onError);
 
         onGetLocationAuthorizationStatus = function(status){
-            $('#request-location').toggle(status != Diagnostic.permissionStatus.GRANTED && status != Diagnostic.permissionStatus.DENIED_ALWAYS);
+            $('#request-location').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }
+        cordova.plugins.diagnostic.hasBluetoothLESupport(function(supported){
+            $('#state .bluetooth-le-support').addClass(supported ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.hasBluetoothLEPeripheralSupport(function(supported){
+            $('#state .bluetooth-le-peripheral-support').addClass(supported ? 'on' : 'off');
+        }, onError);
     }
 
 
@@ -254,17 +261,17 @@ function checkState(){
 
         cordova.plugins.diagnostic.getCameraRollAuthorizationStatus(function(status){
             $('#state .camera-roll-authorization-status').find('.value').text(status.toUpperCase());
-            $('#request-camera-roll').toggle(status === Diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-camera-roll').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }, onError);
 
         onGetCameraAuthorizationStatus = function(status){
-            $('#request-camera').toggle(status === Diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-camera').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }
     }
 
     if(device.platform === "Android"){
         onGetCameraAuthorizationStatus = function(status){
-            $('#request-camera').toggle(status != Diagnostic.permissionStatus.GRANTED && status != Diagnostic.permissionStatus.DENIED_ALWAYS);
+            $('#request-camera').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }
     }
 
@@ -308,13 +315,13 @@ function checkState(){
 
     if(device.platform === "iOS"){
         onGetMicrophoneAuthorizationStatus = function(status){
-            $('#request-microphone').toggle(status === Diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-microphone').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }
     }
 
     if(device.platform === "Android"){
         onGetMicrophoneAuthorizationStatus = function(status){
-            $('#request-microphone').toggle(status != Diagnostic.permissionStatus.GRANTED && status != Diagnostic.permissionStatus.DENIED_ALWAYS);
+            $('#request-microphone').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }
     }
 }

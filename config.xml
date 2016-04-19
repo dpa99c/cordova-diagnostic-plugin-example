@@ -32,8 +32,11 @@
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.BLUETOOTH" />
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
             <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+
+            <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
             <!-- Required on Android 6+ to access Camera runtime permissions -->
             <uses-permission android:name="android.permission.CAMERA" />
