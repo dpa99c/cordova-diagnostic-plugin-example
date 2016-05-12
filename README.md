@@ -15,7 +15,9 @@ This repo contains an example project which illustrates use of the [Diagnostic C
 
 The [master branch of the diagnostic plugin](https://github.com/dpa99c/cordova-diagnostic-plugin) now supports Android 6 runtime permissions. The introduces a dependency which means that the project must be built against API 23 or above.
 
-Phonegap Build (at the time of writing) does not support API 23, so for its users and others who wish to build against API 22 or below, there is a branch of the plugin repo which contains all the functionality __except Android 6 runtime permissions__. This removes the dependency on API 23 and will allow you to build against legacy API versions (22 and below).
+**NOTE**: Phonegap Build now supports API 23, so its users may use the main plugin branch (`cordova.plugins.diagnostic`).
+
+For users who wish to build against API 22 or below, there is a branch of the plugin repo which contains all the functionality __except Android 6 runtime permissions__. This removes the dependency on API 23 and will allow you to build against legacy API versions (22 and below).
 
 There is also a corresponding branch of this project intended to be built with the legacy plugin version: [https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/api-22](https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/api-22)
 
@@ -31,7 +33,7 @@ The plugin currently supports the Android and iOS platforms.
 
 For example, to run on the Android platform, execute the following commands from the project root:
 
-- Install the API 23 platform into the project: `$ cordova platform add android@5`
+- Install the Android platform into the project: `$ cordova platform add android`
 - Build and run the project: `$ cordova run android`
 
 ## Testing Android runtime permissions
