@@ -26,7 +26,7 @@
     <plugin name="cordova.plugins.diagnostic" version="*" />
 
     <platform name="android">
-        <preference name="android-minSdkVersion" value="14" />
+        <preference name="android-minSdkVersion" value="21" />
         <preference name="android-targetSdkVersion" value="23" />
 
         <config-file target="AndroidManifest.xml" parent="/*">

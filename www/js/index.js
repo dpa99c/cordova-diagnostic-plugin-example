@@ -5,13 +5,11 @@ function onDeviceReady() {
     $(document).on("resume", onResume);
     $('#do-check').on("click", checkState);
 
-    // Register change listeners for iOS
-    if(device.platform === "iOS") {
-        cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function(state){
-            console.log("Bluetooth state changed to: "+state);
-            checkState();
-        });
-    }
+    // Register change listeners for iOS+Android
+    cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function(state){
+        console.log("Bluetooth state changed to: "+state);
+        checkState();
+    });
 
     // iOS+Android settings
     $('#request-camera').on("click", function(){
@@ -224,7 +222,12 @@ function checkState(){
 
         onGetLocationAuthorizationStatus = function(status){
             $('#request-location').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
-        }
+        };
+
+        cordova.plugins.diagnostic.hasBluetoothSupport(function(supported){
+            $('#state .bluetooth-support').addClass(supported ? 'on' : 'off');
+        }, onError);
+
         cordova.plugins.diagnostic.hasBluetoothLESupport(function(supported){
             $('#state .bluetooth-le-support').addClass(supported ? 'on' : 'off');
         }, onError);
@@ -295,11 +298,9 @@ function checkState(){
         }
     }, onError);
 
-    if(device.platform === "iOS"){
-        cordova.plugins.diagnostic.getBluetoothState(function(state){
-            $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
-        }, onError);
-    }
+    cordova.plugins.diagnostic.getBluetoothState(function(state){
+        $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
+    }, onError);
 
     // Microphone
     var onGetMicrophoneAuthorizationStatus;
