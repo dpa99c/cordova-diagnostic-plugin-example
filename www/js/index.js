@@ -9,6 +9,15 @@ function onDeviceReady() {
     cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function(state){
         console.log("Bluetooth state changed to: "+state);
         checkState();
+    }, function(error){
+        console.error("Error registering for Bluetooth state changes: "+error);
+    });
+
+    cordova.plugins.diagnostic.registerLocationStateChangeHandler(function(state){
+        console.log("Location state changed to: "+state);
+        checkState();
+    }, function(error){
+        console.error("Error registering for location state changes: "+error);
     });
 
     // iOS+Android settings
