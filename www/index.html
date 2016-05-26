@@ -204,6 +204,32 @@
                     <span class="value"></span>
                 </li>
             </ul>
+            <h3>Calendar</h3>
+            <ul>
+                <li class="calendar-authorized">
+                    <span class="name">Calendar authorized?</span>
+                    <span class="state on">AUTHORIZED</span>
+                    <span class="state off">UNAUTHORIZED</span>
+                </li>
+                <li class="calendar-authorization-status">
+                    <span class="name">Calendar authorization status</span>
+                    <span class="value"></span>
+                </li>
+            </ul>
+            <div class="ios-only">
+                <h3>Reminders</h3>
+                <ul>
+                    <li class="reminders-authorized">
+                        <span class="name">Reminders authorized?</span>
+                        <span class="state on">AUTHORIZED</span>
+                        <span class="state off">UNAUTHORIZED</span>
+                    </li>
+                    <li class="reminders-authorization-status">
+                        <span class="name">Reminders authorization status</span>
+                        <span class="value"></span>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="settings">
@@ -220,6 +246,8 @@
 
             <button id="request-microphone">Request Microphone Authorization</button>
             <button id="request-contacts">Request Contacts Authorization</button>
+            <button id="request-calendar">Request Calendar Authorization</button>
+            <button id="request-reminders" class="ios-only">Request Reminders Authorization</button>
 
             <button id="location-settings" class="android-only">Open Location settings</button>
             <button id="mobile-data-settings" class="android-only">Open Mobile data settings</button>

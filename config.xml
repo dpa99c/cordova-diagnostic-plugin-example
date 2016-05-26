@@ -38,15 +38,17 @@
 
             <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
-            <!-- Required on Android 6+ to access Camera runtime permissions -->
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-            <!-- Required on Android 6+ to access Location runtime permissions -->
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+            <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+            <uses-permission android:name="android.permission.READ_CALENDAR" />
         </config-file>
     </platform>
 

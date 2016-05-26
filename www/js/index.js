@@ -367,6 +367,42 @@ function checkState(){
             $('#request-contacts').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }
     }
+
+    // Calendar
+    var onGetCalendarAuthorizationStatus;
+
+    cordova.plugins.diagnostic.isCalendarAuthorized(function(enabled){
+        $('#state .calendar-authorized').addClass(enabled ? 'on' : 'off');
+    }, onError);
+
+    cordova.plugins.diagnostic.getCalendarAuthorizationStatus(function(status){
+        $('#state .calendar-authorization-status').find('.value').text(status.toUpperCase());
+        onGetCalendarAuthorizationStatus(status);
+    }, onError);
+
+    if(device.platform === "iOS"){
+        onGetCalendarAuthorizationStatus = function(status){
+            $('#request-calendar').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+        }
+    }
+
+    if(device.platform === "Android"){
+        onGetCalendarAuthorizationStatus = function(status){
+            $('#request-calendar').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
+        }
+    }
+
+    // Reminders
+    if(device.platform === "iOS") {
+        cordova.plugins.diagnostic.isRemindersAuthorized(function (enabled) {
+            $('#state .reminders-authorized').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.getRemindersAuthorizationStatus(function (status) {
+            $('#state .reminders-authorization-status').find('.value').text(status.toUpperCase());
+            $('#request-reminders').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+        }, onError);
+    }
 }
 
 function onError(error){
