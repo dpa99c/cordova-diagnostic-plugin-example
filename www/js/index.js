@@ -56,6 +56,15 @@ function onDeviceReady() {
         });
     });
 
+    $('#request-calendar').on("click", function(){
+        cordova.plugins.diagnostic.requestCalendarAuthorization(function(status){
+            console.log("Successfully requested calendar authorization: authorization was " + status);
+            checkState();
+        }, function(error){
+            console.error(error);
+        });
+    });
+
 
     // iOS settings
     var onLocationRequestChange = function(status){
@@ -77,6 +86,15 @@ function onDeviceReady() {
     $('#request-camera-roll').on("click", function(){
         cordova.plugins.diagnostic.requestCameraRollAuthorization(function(status){
             console.log("Successfully requested camera roll authorization: authorization was " + status);
+            checkState();
+        }, function(error){
+            console.error(error);
+        });
+    });
+
+    $('#request-reminders').on("click", function(){
+        cordova.plugins.diagnostic.requestRemindersAuthorization(function(status){
+            console.log("Successfully requested reminders authorization: authorization was " + status);
             checkState();
         }, function(error){
             console.error(error);
