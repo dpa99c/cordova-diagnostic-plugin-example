@@ -47,6 +47,15 @@ function onDeviceReady() {
         });
     });
 
+    $('#request-contacts').on("click", function(){
+        cordova.plugins.diagnostic.requestContactsAuthorization(function(status){
+            console.log("Successfully requested contacts authorization: authorization was " + status);
+            checkState();
+        }, function(error){
+            console.error(error);
+        });
+    });
+
 
     // iOS settings
     var onLocationRequestChange = function(status){
@@ -332,6 +341,30 @@ function checkState(){
     if(device.platform === "Android"){
         onGetMicrophoneAuthorizationStatus = function(status){
             $('#request-microphone').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
+        }
+    }
+
+    // Contacts
+    var onGetContactsAuthorizationStatus;
+
+    cordova.plugins.diagnostic.isContactsAuthorized(function(enabled){
+        $('#state .contacts-authorized').addClass(enabled ? 'on' : 'off');
+    }, onError);
+
+    cordova.plugins.diagnostic.getContactsAuthorizationStatus(function(status){
+        $('#state .contacts-authorization-status').find('.value').text(status.toUpperCase());
+        onGetContactsAuthorizationStatus(status);
+    }, onError);
+
+    if(device.platform === "iOS"){
+        onGetContactsAuthorizationStatus = function(status){
+            $('#request-contacts').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+        }
+    }
+
+    if(device.platform === "Android"){
+        onGetContactsAuthorizationStatus = function(status){
+            $('#request-contacts').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }
     }
 }
