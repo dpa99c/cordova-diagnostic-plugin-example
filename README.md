@@ -3,13 +3,19 @@ Cordova/Phonegap Diagnostic Plugin Example
 
 This repo contains an example project which illustrates use of the [Diagnostic Cordova/Phonegap plugin](https://github.com/dpa99c/cordova-diagnostic-plugin).
 
-## Contents
-* [Important Android Note](#important-android-note)
-* [Downloading](#downloading)
-* [Building and running](#building-and-running)
-* [Pre-built app](#pre-built-app)
-* [Screenshots](#screenshots)
-* [License](#license)
+<!-- START table-of-contents -->
+**Table of Contents**
+
+- [Important Android Note](#important-android-note)
+- [Downloading](#downloading)
+- [Building and running](#building-and-running)
+  - [Testing Android runtime permissions](#testing-android-runtime-permissions)
+- [Screenshots](#screenshots)
+  - [Android](#android)
+  - [iOS](#ios)
+- [License](#license)
+
+<!-- END table-of-contents -->
 
 # Important Android Note
 
@@ -40,11 +46,6 @@ If you want to test out Android runtime permissions, you need to run the example
 
 Note: If the app is run on Android 5.1 (API 22)  or below, runtime permissions do not apply - all permissions are granted at installation time.
 
-# Pre-built app
-If you're unable to build the project or just want to try it out, here is the project as a pre-built app installer:
-
-- [Android (APK)](build/cordova-diagnostic-plugin-example.apk)
-- [iOS (IPA)](build/cordova-diagnostic-plugin-example.ipa)
 
 # Screenshots
 
