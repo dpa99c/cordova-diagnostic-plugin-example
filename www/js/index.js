@@ -219,8 +219,12 @@ function checkState(){
 
     // Location
     var onGetLocationAuthorizationStatus;
+    cordova.plugins.diagnostic.isLocationAvailable(function(available){
+        $('#state .location').addClass(available ? 'on' : 'off');
+    }, onError);
+
     cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-        $('#state .location').addClass(enabled ? 'on' : 'off');
+        $('#state .location-setting').addClass(enabled ? 'on' : 'off');
     }, onError);
 
     cordova.plugins.diagnostic.isLocationAuthorized(function(enabled){
@@ -234,9 +238,6 @@ function checkState(){
 
 
     if(device.platform === "iOS"){
-        cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled){
-            $('#state .location-setting').addClass(enabled ? 'on' : 'off');
-        }, onError);
 
         onGetLocationAuthorizationStatus = function(status){
             $('.request-location').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
@@ -244,12 +245,20 @@ function checkState(){
     }
 
     if(device.platform === "Android"){
+        cordova.plugins.diagnostic.isGpsLocationAvailable(function(available){
+            $('#state .gps-location').addClass(available ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.isNetworkLocationAvailable(function(available){
+            $('#state .network-location').addClass(available ? 'on' : 'off');
+        }, onError);
+
         cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
-            $('#state .gps-location').addClass(enabled ? 'on' : 'off');
+            $('#state .gps-location-setting').addClass(enabled ? 'on' : 'off');
         }, onError);
 
         cordova.plugins.diagnostic.isNetworkLocationEnabled(function(enabled){
-            $('#state .network-location').addClass(enabled ? 'on' : 'off');
+            $('#state .network-location-setting').addClass(enabled ? 'on' : 'off');
         }, onError);
 
         cordova.plugins.diagnostic.getLocationMode(function(mode){
@@ -276,8 +285,8 @@ function checkState(){
 
     // Camera
     var onGetCameraAuthorizationStatus;
-    cordova.plugins.diagnostic.isCameraEnabled(function(enabled){
-        $('#state .camera').addClass(enabled ? 'on' : 'off');
+    cordova.plugins.diagnostic.isCameraAvailable(function(available){
+        $('#state .camera').addClass(available ? 'on' : 'off');
     }, onError);
 
     cordova.plugins.diagnostic.isCameraPresent(function(enabled){
@@ -325,14 +334,20 @@ function checkState(){
     }, onError);
 
     // Bluetooth
-    cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){
-        $('#state .bluetooth-available').addClass(enabled ? 'on' : 'off');
+    cordova.plugins.diagnostic.isBluetoothAvailable(function(available){
+        $('#state .bluetooth-available').addClass(available ? 'on' : 'off');
 
         if(device.platform === "Android") {
-            $('#enable-bluetooth').toggle(!enabled);
-            $('#disable-bluetooth').toggle(!!enabled);
+            $('#enable-bluetooth').toggle(!available);
+            $('#disable-bluetooth').toggle(!!available);
         }
     }, onError);
+
+    if(device.platform === "Android"){
+        cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){
+            $('#state .bluetooth-setting').addClass(enabled ? 'on' : 'off');
+        }, onError);
+    }
 
     cordova.plugins.diagnostic.getBluetoothState(function(state){
         $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
