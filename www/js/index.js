@@ -1,24 +1,32 @@
+var platform;
 function onDeviceReady() {
-    $('body').addClass(device.platform.toLowerCase());
+    platform = device.platform.toLowerCase();
+    if(platform.match(/win/)){
+        platform = "windows";
+    }
+
+    $('body').addClass(platform);
 
     // Bind events
     $(document).on("resume", onResume);
     $('#do-check').on("click", checkState);
 
     // Register change listeners for iOS+Android
-    cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function(state){
-        console.log("Bluetooth state changed to: "+state);
-        checkState();
-    }, function(error){
-        console.error("Error registering for Bluetooth state changes: "+error);
-    });
+    if(platform === "android" || platform === "ios") {
+        cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function (state) {
+            console.log("Bluetooth state changed to: " + state);
+            checkState();
+        }, function (error) {
+            console.error("Error registering for Bluetooth state changes: " + error);
+        });
 
-    cordova.plugins.diagnostic.registerLocationStateChangeHandler(function(state){
-        console.log("Location state changed to: "+state);
-        checkState();
-    }, function(error){
-        console.error("Error registering for location state changes: "+error);
-    });
+        cordova.plugins.diagnostic.registerLocationStateChangeHandler(function (state) {
+            console.log("Location state changed to: " + state);
+            checkState();
+        }, function (error) {
+            console.error("Error registering for location state changes: " + error);
+        });
+    }
 
     // iOS+Android settings
     $('#request-camera').on("click", function(){
@@ -188,7 +196,7 @@ function onDeviceReady() {
     });
 
 
-    if(device.platform === "iOS") {
+    if(platform === "ios") {
         // Make dummy Bluetooth request to cause authorization request on iOS
         bluetoothSerial.isEnabled(
             function () {
@@ -223,28 +231,30 @@ function checkState(){
         $('#state .location').addClass(available ? 'on' : 'off');
     }, onError);
 
-    cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-        $('#state .location-setting').addClass(enabled ? 'on' : 'off');
-    }, onError);
-
-    cordova.plugins.diagnostic.isLocationAuthorized(function(enabled){
-        $('#state .location-authorization').addClass(enabled ? 'on' : 'off');
-    }, onError);
-
-    cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
-        $('#state .location-authorization-status').find('.value').text(status.toUpperCase());
-        onGetLocationAuthorizationStatus(status); // platform-specific
-    }, onError);
+    if(platform === "android" || platform === "ios") {
+        cordova.plugins.diagnostic.isLocationEnabled(function (enabled) {
+            $('#state .location-setting').addClass(enabled ? 'on' : 'off');
+        }, onError);
 
 
-    if(device.platform === "iOS"){
+        cordova.plugins.diagnostic.isLocationAuthorized(function(enabled){
+            $('#state .location-authorization').addClass(enabled ? 'on' : 'off');
+        }, onError);
 
+        cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
+            $('#state .location-authorization-status').find('.value').text(status.toUpperCase());
+            onGetLocationAuthorizationStatus(status); // platform-specific
+        }, onError);
+    }
+
+
+    if(platform === "ios"){
         onGetLocationAuthorizationStatus = function(status){
             $('.request-location').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }
     }
 
-    if(device.platform === "Android"){
+    if(platform === "android"){
         cordova.plugins.diagnostic.isGpsLocationAvailable(function(available){
             $('#state .gps-location').addClass(available ? 'on' : 'off');
         }, onError);
@@ -289,20 +299,22 @@ function checkState(){
         $('#state .camera').addClass(available ? 'on' : 'off');
     }, onError);
 
-    cordova.plugins.diagnostic.isCameraPresent(function(enabled){
-        $('#state .camera-present').addClass(enabled ? 'on' : 'off');
-    }, onError);
+    if(platform === "android" || platform === "ios") {
+        cordova.plugins.diagnostic.isCameraPresent(function (enabled) {
+            $('#state .camera-present').addClass(enabled ? 'on' : 'off');
+        }, onError);
 
-    cordova.plugins.diagnostic.isCameraAuthorized(function(enabled){
-        $('#state .camera-authorized').addClass(enabled ? 'on' : 'off');
-    }, onError);
+        cordova.plugins.diagnostic.isCameraAuthorized(function (enabled) {
+            $('#state .camera-authorized').addClass(enabled ? 'on' : 'off');
+        }, onError);
 
-    cordova.plugins.diagnostic.getCameraAuthorizationStatus(function(status){
-        $('#state .camera-authorization-status').find('.value').text(status.toUpperCase());
-        onGetCameraAuthorizationStatus(status);
-    }, onError);
+        cordova.plugins.diagnostic.getCameraAuthorizationStatus(function (status) {
+            $('#state .camera-authorization-status').find('.value').text(status.toUpperCase());
+            onGetCameraAuthorizationStatus(status);
+        }, onError);
+    }
 
-    if(device.platform === "iOS"){
+    if(platform === "ios"){
         cordova.plugins.diagnostic.isCameraRollAuthorized(function(enabled){
             $('#state .camera-roll-authorized').addClass(enabled ? 'on' : 'off');
         }, onError);
@@ -317,7 +329,7 @@ function checkState(){
         }
     }
 
-    if(device.platform === "Android"){
+    if(platform === "android"){
         onGetCameraAuthorizationStatus = function(status){
             $('#request-camera').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }
@@ -327,7 +339,7 @@ function checkState(){
     cordova.plugins.diagnostic.isWifiAvailable(function(available){
         $('#state .wifi').addClass(available ? 'on' : 'off');
 
-        if(device.platform === "Android") {
+        if(platform === "android" || platform === "windows") {
             $('#enable-wifi').toggle(!available);
             $('#disable-wifi').toggle(!!available);
         }
@@ -337,41 +349,45 @@ function checkState(){
     cordova.plugins.diagnostic.isBluetoothAvailable(function(available){
         $('#state .bluetooth-available').addClass(available ? 'on' : 'off');
 
-        if(device.platform === "Android") {
+        if(platform === "android" || platform === "windows") {
             $('#enable-bluetooth').toggle(!available);
             $('#disable-bluetooth').toggle(!!available);
         }
     }, onError);
 
-    if(device.platform === "Android"){
+    if(platform === "android"){
         cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){
             $('#state .bluetooth-setting').addClass(enabled ? 'on' : 'off');
         }, onError);
     }
 
-    cordova.plugins.diagnostic.getBluetoothState(function(state){
-        $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
-    }, onError);
+    if(platform === "android" || platform === "ios") {
+        cordova.plugins.diagnostic.getBluetoothState(function (state) {
+            $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
+        }, onError);
+    }
 
     // Microphone
     var onGetMicrophoneAuthorizationStatus;
 
-    cordova.plugins.diagnostic.isMicrophoneAuthorized(function(enabled){
-        $('#state .microphone-authorized').addClass(enabled ? 'on' : 'off');
-    }, onError);
+    if(platform === "android" || platform === "ios") {
+        cordova.plugins.diagnostic.isMicrophoneAuthorized(function (enabled) {
+            $('#state .microphone-authorized').addClass(enabled ? 'on' : 'off');
+        }, onError);
 
-    cordova.plugins.diagnostic.getMicrophoneAuthorizationStatus(function(status){
-        $('#state .microphone-authorization-status').find('.value').text(status.toUpperCase());
-        onGetMicrophoneAuthorizationStatus(status);
-    }, onError);
+        cordova.plugins.diagnostic.getMicrophoneAuthorizationStatus(function (status) {
+            $('#state .microphone-authorization-status').find('.value').text(status.toUpperCase());
+            onGetMicrophoneAuthorizationStatus(status);
+        }, onError);
+    }
 
-    if(device.platform === "iOS"){
+    if(platform === "ios"){
         onGetMicrophoneAuthorizationStatus = function(status){
             $('#request-microphone').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }
     }
 
-    if(device.platform === "Android"){
+    if(platform === "android"){
         onGetMicrophoneAuthorizationStatus = function(status){
             $('#request-microphone').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }
@@ -380,22 +396,24 @@ function checkState(){
     // Contacts
     var onGetContactsAuthorizationStatus;
 
-    cordova.plugins.diagnostic.isContactsAuthorized(function(enabled){
-        $('#state .contacts-authorized').addClass(enabled ? 'on' : 'off');
-    }, onError);
+    if(platform === "android" || platform === "ios") {
+        cordova.plugins.diagnostic.isContactsAuthorized(function (enabled) {
+            $('#state .contacts-authorized').addClass(enabled ? 'on' : 'off');
+        }, onError);
 
-    cordova.plugins.diagnostic.getContactsAuthorizationStatus(function(status){
-        $('#state .contacts-authorization-status').find('.value').text(status.toUpperCase());
-        onGetContactsAuthorizationStatus(status);
-    }, onError);
+        cordova.plugins.diagnostic.getContactsAuthorizationStatus(function (status) {
+            $('#state .contacts-authorization-status').find('.value').text(status.toUpperCase());
+            onGetContactsAuthorizationStatus(status);
+        }, onError);
+    }
 
-    if(device.platform === "iOS"){
+    if(platform === "ios"){
         onGetContactsAuthorizationStatus = function(status){
             $('#request-contacts').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }
     }
 
-    if(device.platform === "Android"){
+    if(platform === "android"){
         onGetContactsAuthorizationStatus = function(status){
             $('#request-contacts').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }
@@ -404,29 +422,31 @@ function checkState(){
     // Calendar
     var onGetCalendarAuthorizationStatus;
 
-    cordova.plugins.diagnostic.isCalendarAuthorized(function(enabled){
-        $('#state .calendar-authorized').addClass(enabled ? 'on' : 'off');
-    }, onError);
+    if(platform === "android" || platform === "ios") {
+        cordova.plugins.diagnostic.isCalendarAuthorized(function (enabled) {
+            $('#state .calendar-authorized').addClass(enabled ? 'on' : 'off');
+        }, onError);
 
-    cordova.plugins.diagnostic.getCalendarAuthorizationStatus(function(status){
-        $('#state .calendar-authorization-status').find('.value').text(status.toUpperCase());
-        onGetCalendarAuthorizationStatus(status);
-    }, onError);
+        cordova.plugins.diagnostic.getCalendarAuthorizationStatus(function (status) {
+            $('#state .calendar-authorization-status').find('.value').text(status.toUpperCase());
+            onGetCalendarAuthorizationStatus(status);
+        }, onError);
+    }
 
-    if(device.platform === "iOS"){
+    if(platform === "ios"){
         onGetCalendarAuthorizationStatus = function(status){
             $('#request-calendar').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }
     }
 
-    if(device.platform === "Android"){
+    if(platform === "android"){
         onGetCalendarAuthorizationStatus = function(status){
             $('#request-calendar').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }
     }
 
     // Reminders
-    if(device.platform === "iOS") {
+    if(platform === "ios") {
         cordova.plugins.diagnostic.isRemindersAuthorized(function (enabled) {
             $('#state .reminders-authorized').addClass(enabled ? 'on' : 'off');
         }, onError);

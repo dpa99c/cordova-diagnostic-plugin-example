@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget
-        id="uk.co.workingedge.phonegap.plugins.example.diagnostic"
-        version="0.0.2"
+        id="cordova.plugins.diagnostic.example"
+        version="3.1.0"
         xmlns="http://www.w3.org/ns/widgets"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:cdv="http://cordova.apache.org/ns/1.0">
@@ -24,7 +24,7 @@
     <plugin name="cordova-plugin-geolocation" version="2.1.0" />
     <plugin name="cordova-plugin-camera" version="2.1.0" />
 
-    <plugin name="cordova.plugins.diagnostic" version="*" />
+    <plugin name="cordova.plugins.diagnostic" version="3.1.0" />
 
     <platform name="android">
         <preference name="android-build-tool" value="gradle" /> <!-- Phonegap Build only -->
@@ -68,5 +68,11 @@
             <string>This app will now only track your location when the screen is on and the app is displayed.</string>
         </config-file>
 
+    </platform>
+
+    <platform name="windows">
+        <preference name="windows-target-version" value="10.0" />
+        <preference name="target-device" value="universal" />
+        <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
     </platform>
 </widget>

@@ -19,10 +19,22 @@
                 margin-top: 20px;
             }
 
-            body.ios .android-only,
-            body.android .ios-only{
-                display: none !important;
+            body:not(.android) .android-only,
+            body:not(.ios) .ios-only,
+            body:not(.windows) .windows-only{
+                display: none;
             }
+
+            body .os-conditional{
+                display: none;
+            }
+
+            body.android .os-conditional.android,
+            body.ios .os-conditional.ios,
+            body.windows .os-conditional.windows{
+                display: block;
+            }
+
 
             h2{
                 text-align: center;
@@ -85,7 +97,7 @@
                     <span class="state on">AVAILABLE</span>
                     <span class="state off">UNAVAILABLE</span>
                 </li>
-                <li class="location-setting">
+                <li class="location-setting os-conditional android ios">
                     <span class="name">Location setting</span>
                     <span class="state on">ENABLED</span>
                     <span class="state off">DISABLED</span>
@@ -114,12 +126,12 @@
                     <span class="name">Location Mode</span>
                     <span class="value"></span>
                 </li>
-                <li class="location-authorization">
+                <li class="location-authorization os-conditional android ios">
                     <span class="name">Location authorized</span>
                     <span class="state on">AUTHORIZED</span>
                     <span class="state off">UNAUTHORIZED</span>
                 </li>
-                <li class="location-authorization-status">
+                <li class="location-authorization-status os-conditional android ios">
                     <span class="name">Location authorization status</span>
                     <span class="value"></span>
                 </li>
@@ -131,17 +143,17 @@
                     <span class="state on">AVAILABLE</span>
                     <span class="state off">UNAVAILABLE</span>
                 </li>
-                <li class="camera-present">
+                <li class="camera-present os-conditional android ios">
                     <span class="name">Camera present?</span>
                     <span class="state on">PRESENT</span>
                     <span class="state off">NOT PRESENT</span>
                 </li>
-                <li class="camera-authorized">
+                <li class="camera-authorized os-conditional android ios">
                     <span class="name">Camera authorized?</span>
                     <span class="state on">AUTHORIZED</span>
                     <span class="state off">UNAUTHORIZED</span>
                 </li>
-                <li class="camera-authorization-status">
+                <li class="camera-authorization-status os-conditional android ios">
                     <span class="name">Camera authorization status</span>
                     <span class="value"></span>
                 </li>
@@ -180,7 +192,7 @@
                     <span class="state on">ENABLED</span>
                     <span class="state off">DISABLED</span>
                 </li>
-                <li class="bluetooth-state">
+                <li class="bluetooth-state os-conditional android ios">
                     <span class="name">Bluetooth state</span>
                     <span class="value"></span>
                 </li>
@@ -195,43 +207,49 @@
                     <span class="state off">UNSUPPORTED</span>
                 </li>
             </ul>
-            <h3>Microphone</h3>
-            <ul>
-                <li class="microphone-authorized">
-                    <span class="name">Microphone authorized?</span>
-                    <span class="state on">AUTHORIZED</span>
-                    <span class="state off">UNAUTHORIZED</span>
-                </li>
-                <li class="microphone-authorization-status">
-                    <span class="name">Microphone authorization status</span>
-                    <span class="value"></span>
-                </li>
-            </ul>
-            <h3>Contacts (Address Book)</h3>
-            <ul>
-                <li class="contacts-authorized">
-                    <span class="name">Contacts authorized?</span>
-                    <span class="state on">AUTHORIZED</span>
-                    <span class="state off">UNAUTHORIZED</span>
-                </li>
-                <li class="contacts-authorization-status">
-                    <span class="name">Contacts authorization status</span>
-                    <span class="value"></span>
-                </li>
-            </ul>
-            <h3>Calendar</h3>
-            <ul>
-                <li class="calendar-authorized">
-                    <span class="name">Calendar authorized?</span>
-                    <span class="state on">AUTHORIZED</span>
-                    <span class="state off">UNAUTHORIZED</span>
-                </li>
-                <li class="calendar-authorization-status">
-                    <span class="name">Calendar authorization status</span>
-                    <span class="value"></span>
-                </li>
-            </ul>
-            <div class="ios-only">
+            <div class="microphone os-conditional android ios">
+                <h3>Microphone</h3>
+                <ul>
+                    <li class="microphone-authorized">
+                        <span class="name">Microphone authorized?</span>
+                        <span class="state on">AUTHORIZED</span>
+                        <span class="state off">UNAUTHORIZED</span>
+                    </li>
+                    <li class="microphone-authorization-status">
+                        <span class="name">Microphone authorization status</span>
+                        <span class="value"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="contacts os-conditional android ios">
+                <h3>Contacts (Address Book)</h3>
+                <ul>
+                    <li class="contacts-authorized">
+                        <span class="name">Contacts authorized?</span>
+                        <span class="state on">AUTHORIZED</span>
+                        <span class="state off">UNAUTHORIZED</span>
+                    </li>
+                    <li class="contacts-authorization-status">
+                        <span class="name">Contacts authorization status</span>
+                        <span class="value"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="calendar os-conditional android ios">
+                <h3>Calendar</h3>
+                <ul>
+                    <li class="calendar-authorized">
+                        <span class="name">Calendar authorized?</span>
+                        <span class="state on">AUTHORIZED</span>
+                        <span class="state off">UNAUTHORIZED</span>
+                    </li>
+                    <li class="calendar-authorization-status">
+                        <span class="name">Calendar authorization status</span>
+                        <span class="value"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="reminders ios-only">
                 <h3>Reminders</h3>
                 <ul>
                     <li class="reminders-authorized">
@@ -250,30 +268,30 @@
         <div class="settings">
             <button id="do-check">Re-check state</button>
 
-            <button id="settings">Open App Settings</button>
+            <button id="settings" class="os-conditional android ios">Open App Settings</button>
 
             <button id="request-location-always" class="ios-only request-location">Request Location Authorization Always</button>
             <button id="request-location-in-use" class="ios-only request-location">Request Location Authorization When In Use</button>
             <button id="request-location" class="android-only">Request Location Authorization</button>
 
-            <button id="request-camera">Request Camera Authorization</button>
+            <button id="request-camera" class="os-conditional android ios">Request Camera Authorization</button>
             <button id="request-camera-roll" class="ios-only">Request Camera Roll Authorization</button>
 
-            <button id="request-microphone">Request Microphone Authorization</button>
-            <button id="request-contacts">Request Contacts Authorization</button>
-            <button id="request-calendar">Request Calendar Authorization</button>
+            <button id="request-microphone" class="os-conditional android ios">Request Microphone Authorization</button>
+            <button id="request-contacts" class="os-conditional android ios">Request Contacts Authorization</button>
+            <button id="request-calendar" class="os-conditional android ios">Request Calendar Authorization</button>
             <button id="request-reminders" class="ios-only">Request Reminders Authorization</button>
 
-            <button id="location-settings" class="android-only">Open Location settings</button>
-            <button id="mobile-data-settings" class="android-only">Open Mobile data settings</button>
-            <button id="bluetooth-settings" class="android-only">Open Bluetooth settings</button>
-            <button id="wifi-settings" class="android-only">Open WiFi settings</button>
+            <button id="location-settings" class="os-conditional android windows">Open Location settings</button>
+            <button id="mobile-data-settings" class="os-conditional android windows">Open Mobile data settings</button>
+            <button id="bluetooth-settings" class="os-conditional android windows">Open Bluetooth settings</button>
+            <button id="wifi-settings" class="os-conditional android windows">Open WiFi settings</button>
 
-            <button id="enable-wifi" class="android-only">Enable Wifi</button>
-            <button id="disable-wifi" class="android-only">Disable Wifi</button>
+            <button id="enable-wifi" class="os-conditional android windows">Enable Wifi</button>
+            <button id="disable-wifi" class="os-conditional android windows">Disable Wifi</button>
 
-            <button id="enable-bluetooth" class="android-only">Enable Bluetooth</button>
-            <button id="disable-bluetooth" class="android-only">Disable Bluetooth</button>
+            <button id="enable-bluetooth" class="os-conditional android windows">Enable Bluetooth</button>
+            <button id="disable-bluetooth" class="os-conditional android windows">Disable Bluetooth</button>
 
             <button id="get-location">Get Current Location</button>
             <button id="use-camera">Use Camera</button>
