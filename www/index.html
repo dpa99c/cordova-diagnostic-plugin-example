@@ -25,13 +25,17 @@
                 display: none;
             }
 
-            body .os-conditional{
+            .os-conditional,
+            .settings button.os-conditional{
                 display: none;
             }
 
             body.android .os-conditional.android,
             body.ios .os-conditional.ios,
-            body.windows .os-conditional.windows{
+            body.windows .os-conditional.windows,
+            body.android .settings button.os-conditional.android,
+            body.ios .settings button.os-conditional.ios,
+            body.windows .settings button.os-conditional.windows{
                 display: block;
             }
 
