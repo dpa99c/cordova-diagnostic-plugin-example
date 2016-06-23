@@ -324,12 +324,12 @@ function checkState(){
     }
 
     // Wifi
-    cordova.plugins.diagnostic.isWifiEnabled(function(enabled){
-        $('#state .wifi').addClass(enabled ? 'on' : 'off');
+    cordova.plugins.diagnostic.isWifiAvailable(function(available){
+        $('#state .wifi').addClass(available ? 'on' : 'off');
 
         if(device.platform === "Android") {
-            $('#enable-wifi').toggle(!enabled);
-            $('#disable-wifi').toggle(!!enabled);
+            $('#enable-wifi').toggle(!available);
+            $('#disable-wifi').toggle(!!available);
         }
     }, onError);
 
