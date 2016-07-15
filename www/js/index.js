@@ -214,6 +214,25 @@ function onDeviceReady() {
                 console.log("Bluetooth is not enabled/supported");
             }
         );
+
+        // Setup background refresh request
+        var Fetcher = window.BackgroundFetch;
+        var fetchCallback = function() {
+            console.log('BackgroundFetch initiated');
+            $.get({
+                url: 'index.html',
+                callback: function(response) {
+                    console.log("BackgroundFetch successful");
+                    Fetcher.finish();
+                }
+            });
+        };
+        var failureCallback = function() {
+            console.error('- BackgroundFetch failed');
+        };
+        Fetcher.configure(fetchCallback, failureCallback, {
+            stopOnTerminate: true
+        });
     }
 
     setTimeout(checkState, 500);

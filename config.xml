@@ -57,6 +57,7 @@
 
     <platform name="ios">
         <plugin name="cordova-plugin-bluetooth-serial" version="0" />
+        <plugin name="https://github.com/christocracy/cordova-plugin-background-fetch.git" version="3.0.4" />
 
         <!-- Set message displayed when app requests constant location updates -->
         <config-file platform="ios" target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
