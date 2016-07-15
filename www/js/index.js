@@ -445,8 +445,9 @@ function checkState(){
         }
     }
 
-    // Reminders
+
     if(platform === "ios") {
+        // Reminders
         cordova.plugins.diagnostic.isRemindersAuthorized(function (enabled) {
             $('#state .reminders-authorized').addClass(enabled ? 'on' : 'off');
         }, onError);
@@ -454,6 +455,15 @@ function checkState(){
         cordova.plugins.diagnostic.getRemindersAuthorizationStatus(function (status) {
             $('#state .reminders-authorization-status').find('.value').text(status.toUpperCase());
             $('#request-reminders').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+        }, onError);
+
+        // Background refresh
+        cordova.plugins.diagnostic.isBackgroundRefreshAuthorized(function (enabled) {
+            $('#state .background-refresh-authorized').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.getBackgroundRefreshStatus(function (status) {
+            $('#state .background-refresh-authorization-status').find('.value').text(status.toUpperCase());
         }, onError);
     }
 }
