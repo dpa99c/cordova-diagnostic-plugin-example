@@ -28,6 +28,29 @@ function onDeviceReady() {
         });
     }
 
+    if(platform === "android"){
+        cordova.plugins.diagnostic.registerPermissionRequestCompleteHandler(function(statuses){
+            console.info("Permission request complete");
+            for (var permission in statuses){
+                switch(statuses[permission]){
+                    case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                        console.log("Permission granted to use "+permission);
+                        break;
+                    case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                        console.log("Permission to use "+permission+" has not been requested yet");
+                        break;
+                    case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                        console.log("Permission denied to use "+permission);
+                        break;
+                    case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+                        console.log("Permission permanently denied to use "+permission);
+                        break;
+                }
+            }
+        });
+
+    }
+
     // iOS+Android settings
     $('#request-camera').on("click", function(){
         cordova.plugins.diagnostic.requestCameraAuthorization(function(status){
