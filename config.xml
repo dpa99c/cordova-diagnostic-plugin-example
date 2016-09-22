@@ -24,7 +24,7 @@
     <plugin name="cordova-plugin-geolocation" version="2.1.0" />
     <plugin name="cordova-plugin-camera" version="2.1.0" />
 
-    <plugin name="cordova.plugins.diagnostic" version="3.1.4" />
+    <plugin name="cordova.plugins.diagnostic" version="3.2.0" />
 
     <platform name="android">
         <preference name="android-build-tool" value="gradle" /> <!-- Phonegap Build only -->
@@ -58,15 +58,14 @@
     <platform name="ios">
         <plugin name="cordova-plugin-bluetooth-serial" version="0" />
         <plugin name="https://github.com/christocracy/cordova-plugin-background-fetch.git" version="3.0.4" />
+        <plugin name="phonegap-plugin-push" version="*" />
 
-        <!-- Set message displayed when app requests constant location updates -->
-        <config-file platform="ios" target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
-            <string>This app requires constant access to your location in order to track your position, even when the screen is off.</string>
-        </config-file>
-
-        <!-- Set message displayed when app requests foreground location updates -->
-        <config-file platform="ios" target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-            <string>This app will now only track your location when the screen is on and the app is displayed.</string>
+        <!-- Set properties for remote notifications -->
+        <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>fetch</string>
+                <string>remote-notification</string>
+            </array>
         </config-file>
 
     </platform>

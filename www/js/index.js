@@ -256,6 +256,27 @@ function onDeviceReady() {
         Fetcher.configure(fetchCallback, failureCallback, {
             stopOnTerminate: true
         });
+
+        // Setup push notifications
+        var push = PushNotification.init({
+            "android": {
+                "senderID": "123456789"
+            },
+            "ios": {
+                "sound": true,
+                "alert": true,
+                "badge": true
+            },
+            "windows": {}
+        });
+
+        push.on('registration', function(data) {
+            console.log("registration event: " + data.registrationId);
+        });
+
+        push.on('error', function(e) {
+            console.log("push error = " + e.message);
+        });
     }
 
     setTimeout(checkState, 500);
@@ -506,6 +527,23 @@ function checkState(){
 
         cordova.plugins.diagnostic.getBackgroundRefreshStatus(function (status) {
             $('#state .background-refresh-authorization-status').find('.value').text(status.toUpperCase());
+        }, onError);
+
+        // Remote notifications
+        cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function (enabled) {
+            $('#state .remote-notifications-enabled').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.isRegisteredForRemoteNotifications(function (enabled) {
+            $('#state .remote-notifications-registered').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.getRemoteNotificationTypes(function (types) {
+            var value = "";
+            for (var type in types){
+                value += type + "=" + (types[type] ? "Y" : "N") +"; ";
+            }
+            $('#state .remote-notifications-types').find('.value').text(value);
         }, onError);
     }
 }
