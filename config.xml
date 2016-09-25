@@ -57,7 +57,7 @@
 
     <platform name="ios">
         <plugin name="cordova-plugin-bluetooth-serial" version="0" />
-        <plugin name="https://github.com/christocracy/cordova-plugin-background-fetch.git" version="3.0.4" />
+        <plugin spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" source="git" />
         <plugin name="phonegap-plugin-push" version="*" />
 
         <!-- Set properties for remote notifications -->
