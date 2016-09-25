@@ -24,8 +24,8 @@
     <plugin name="cordova-plugin-geolocation" version="2.1.0" />
     <plugin name="cordova-plugin-camera" version="2.1.0" />
 
-    <!--<plugin name="cordova.plugins.diagnostic" version="*" />-->
-    <plugin spec="https://github.com/dpa99c/cordova-diagnostic-plugin.git#dev" source="git" />
+    <plugin name="cordova.plugins.diagnostic" version="*" />
+    <!--<plugin spec="https://github.com/dpa99c/cordova-diagnostic-plugin.git#dev" source="git" />-->
 
     <platform name="android">
         <preference name="android-build-tool" value="gradle" /> <!-- Phonegap Build only -->
