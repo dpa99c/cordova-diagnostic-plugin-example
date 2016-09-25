@@ -58,7 +58,9 @@
     <platform name="ios">
         <plugin name="cordova-plugin-bluetooth-serial" version="0" />
         <plugin spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" source="git" />
-        <plugin name="phonegap-plugin-push" version="*" />
+        <plugin name="phonegap-plugin-push" version="*">
+            <param name="SENDER_ID" value="12345678" />
+        </plugin>
 
         <!-- Set properties for remote notifications -->
         <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
