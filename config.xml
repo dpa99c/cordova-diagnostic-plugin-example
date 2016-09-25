@@ -16,7 +16,7 @@
     <access origin="*" />
 
     <preference name="Fullscreen" value="false" />
-    <preference name="phonegap-version" value="cli-6.1.0" /> <!-- Phonegap Build only -->
+    <preference name="phonegap-version" value="cli-6.3.0" /> <!-- Phonegap Build only -->
 
     <plugin name="cordova-plugin-whitelist" version="*" />
     <plugin name="cordova-plugin-device" version="*" />
