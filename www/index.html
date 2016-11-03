@@ -300,6 +300,20 @@
                     </li>
                 </ul>
             </div>
+            <div class="motion ios-only">
+                <h3>Motion</h3>
+                <ul>
+                    <li class="motion-authorized">
+                        <span class="name">Motion authorized?</span>
+                        <span class="state on">AUTHORIZED</span>
+                        <span class="state off">UNAUTHORIZED</span>
+                    </li>
+                    <li class="motion-authorization-status">
+                        <span class="name">Motion authorization status</span>
+                        <span class="value"></span>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="settings">
@@ -330,6 +344,8 @@
             <button id="request-bluetooth" class="ios-only">Request Bluetooth Authorization</button>
             <button id="enable-bluetooth" class="os-conditional android windows">Enable Bluetooth</button>
             <button id="disable-bluetooth" class="os-conditional android windows">Disable Bluetooth</button>
+
+            <button id="motion-roll" class="ios-only">Request Motion Authorization</button>
 
             <button id="get-location">Get Current Location</button>
             <button id="use-camera">Use Camera</button>
