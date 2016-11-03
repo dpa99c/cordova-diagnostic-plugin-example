@@ -132,6 +132,15 @@ function onDeviceReady() {
         });
     });
 
+    $('#request-bluetooth').on("click", function(){
+        cordova.plugins.diagnostic.requestBluetoothAuthorization(function(){
+            console.log("Successfully requested Bluetooth authorization");
+            checkState();
+        }, function(error){
+            console.error(error);
+        });
+    });
+
     // Android settings
     $('#request-location').on("click", function(){
         cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
@@ -220,24 +229,6 @@ function onDeviceReady() {
 
 
     if(platform === "ios") {
-        // Make dummy Bluetooth request to cause authorization request on iOS
-        bluetoothSerial.isEnabled(
-            function () {
-                // list the available BT ports:
-                bluetoothSerial.list(
-                    function (results) {
-                        console.log(JSON.stringify(results));
-                    },
-                    function (error) {
-                        console.log(JSON.stringify(error));
-                    }
-                );
-            },
-            function () {
-                console.log("Bluetooth is not enabled/supported");
-            }
-        );
-
         // Setup background refresh request
         var Fetcher = window.BackgroundFetch;
         var fetchCallback = function() {

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget
         id="cordova.plugins.diagnostic.example"
-        version="3.1.4"
+        version="3.2.0"
         xmlns="http://www.w3.org/ns/widgets"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:cdv="http://cordova.apache.org/ns/1.0">
@@ -57,7 +57,6 @@
     </platform>
 
     <platform name="ios">
-        <plugin name="cordova-plugin-bluetooth-serial" version="0" />
         <plugin spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" source="git" />
         <plugin name="phonegap-plugin-push" version="*">
             <param name="SENDER_ID" value="12345678" />
