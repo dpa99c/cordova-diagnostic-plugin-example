@@ -142,9 +142,9 @@ function onDeviceReady() {
     });
 
     $('#request-motion').on("click", function(){
-        cordova.plugins.diagnostic.requestMotionAuthorization(function(status){
-            console.log("Successfully requested motion authorization: authorization was " + status);
-            checkState();
+        cordova.plugins.diagnostic.requestAndCheckMotionAuthorization(function(status){
+            console.log("Requested motion authorization: authorization is " + status);
+            $('#state .motion-authorization-status').find('.value').text(status.toUpperCase());
         }, function(error){
             console.error(error);
         });
@@ -547,14 +547,6 @@ function checkState(){
             $('#state .remote-notifications-types').find('.value').text(value);
         }, onError);
 
-        // Motion
-        cordova.plugins.diagnostic.isMotionAuthorized(function (enabled) {
-            $('#state .motion-authorized').addClass(enabled ? 'on' : 'off');
-        }, onError);
-
-        cordova.plugins.diagnostic.getMotionAuthorizationStatus(function (status) {
-            $('#state .motion-authorization-status').find('.value').text(status.toUpperCase());
-        }, onError);
     }
 }
 
