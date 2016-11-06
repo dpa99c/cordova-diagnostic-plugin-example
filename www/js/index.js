@@ -551,7 +551,9 @@ function checkState(){
         cordova.plugins.diagnostic.isMotionAvailable(function (available) {
             $('#state .motion-available').addClass(available ? 'on' : 'off');
             if(!available){
-                $('#request-motion').attrib('disabled', 'disabled');
+                $('#request-motion')
+                    .attr('disabled', 'disabled')
+                    .addClass('disabled');
             }
         }, onError);
 
