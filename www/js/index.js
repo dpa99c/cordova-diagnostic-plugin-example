@@ -547,6 +547,18 @@ function checkState(){
             $('#state .remote-notifications-types').find('.value').text(value);
         }, onError);
 
+        // Motion
+        cordova.plugins.diagnostic.isMotionAvailable(function (available) {
+            $('#state .motion-available').addClass(available ? 'on' : 'off');
+            if(!available){
+                $('#request-motion').attrib('disabled', 'disabled');
+            }
+        }, onError);
+
+        cordova.plugins.diagnostic.isMotionRequestOutcomeAvailable(function (available) {
+            $('#state .motion-request-outcome-available').addClass(available ? 'on' : 'off');
+        }, onError);
+
     }
 }
 

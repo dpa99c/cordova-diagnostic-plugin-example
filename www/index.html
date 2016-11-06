@@ -1,349 +1,359 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <style type="text/css">
-            body,
-            ul{
-                padding: 0;
-                margin: 0;
-            }
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <style type="text/css">
+        body,
+        ul{
+            padding: 0;
+            margin: 0;
+        }
 
-            body.ios{
-                margin-top: 20px;
-            }
+        body.ios{
+            margin-top: 20px;
+        }
 
-            body:not(.android) .android-only,
-            body:not(.ios) .ios-only,
-            body:not(.windows) .windows-only{
-                display: none;
-            }
+        body:not(.android) .android-only,
+        body:not(.ios) .ios-only,
+        body:not(.windows) .windows-only{
+            display: none;
+        }
 
-            .os-conditional,
-            .settings button.os-conditional{
-                display: none;
-            }
+        .os-conditional,
+        .settings button.os-conditional{
+            display: none;
+        }
 
-            body.android .os-conditional.android,
-            body.ios .os-conditional.ios,
-            body.windows .os-conditional.windows,
-            body.android .settings button.os-conditional.android,
-            body.ios .settings button.os-conditional.ios,
-            body.windows .settings button.os-conditional.windows{
-                display: block;
-            }
+        body.android .os-conditional.android,
+        body.ios .os-conditional.ios,
+        body.windows .os-conditional.windows,
+        body.android .settings button.os-conditional.android,
+        body.ios .settings button.os-conditional.ios,
+        body.windows .settings button.os-conditional.windows{
+            display: block;
+        }
 
 
-            h2{
-                text-align: center;
-                margin-top: 0;
-                padding-top: 0;
-            }
-            li{
-                list-style: none;
-                clear: right;
-                padding: 0;
-                margin: 12px 0 0 4px;
-            }
-            li span.name{
+        h2{
+            text-align: center;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        li{
+            list-style: none;
+            clear: right;
+            padding: 0;
+            margin: 12px 0 0 4px;
+        }
+        li span.name{
 
-            }
-            li span.state,
-            li span.value{
-                float: right;
-                padding: 2px;
-            }
-            li span.on{
-                background-color: green;
-            }
-            li span.off{
-                background-color: red;
-            }
+        }
+        li span.state,
+        li span.value{
+            float: right;
+            padding: 2px;
+        }
+        li span.on{
+            background-color: green;
+        }
+        li span.off{
+            background-color: red;
+        }
 
-            li span.on,
-            li.off span.on,
-            li.on span.off{
-                display: none;
-            }
+        li span.on,
+        li.off span.on,
+        li.on span.off{
+            display: none;
+        }
 
-            li.on span.on{
-                display: list-item !important;
-            }
+        li.on span.on{
+            display: list-item !important;
+        }
 
-            .settings{
-                border-top: 1px solid #000;
-                margin-top: 24px;
-                padding-top: 24px;
-                width: 100%;
-            }
+        .settings{
+            border-top: 1px solid #000;
+            margin-top: 24px;
+            padding-top: 24px;
+            width: 100%;
+        }
 
-            .settings button{
-                display: block;
-                margin: 0 auto;
-                margin-bottom: 24px;
-            }
-        </style>
-    </head>
-    <body>
-        <h2>State</h2>
+        .settings button{
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+<h2>State</h2>
 
-        <div id="state">
-            <h3>Location</h3>
-            <ul>
-                <li class="location">
-                    <span class="name">Location</span>
-                    <span class="state on">AVAILABLE</span>
-                    <span class="state off">UNAVAILABLE</span>
-                </li>
-                <li class="location-setting os-conditional android ios">
-                    <span class="name">Location setting</span>
-                    <span class="state on">ENABLED</span>
-                    <span class="state off">DISABLED</span>
-                </li>
-                <li class="gps-location android-only">
-                    <span class="name">GPS Location</span>
-                    <span class="state on">AVAILABLE</span>
-                    <span class="state off">UNAVAILABLE</span>
-                </li>
-                <li class="gps-location-setting android-only">
-                    <span class="name">GPS Location setting</span>
-                    <span class="state on">ENABLED</span>
-                    <span class="state off">DISABLED</span>
-                </li>
-                <li class="network-location android-only">
-                    <span class="name">Network Location</span>
-                    <span class="state on">AVAILABLE</span>
-                    <span class="state off">UNAVAILABLE</span>
-                </li>
-                <li class="network-location-setting android-only">
-                    <span class="name">Network Location setting</span>
-                    <span class="state on">ENABLED</span>
-                    <span class="state off">DISABLED</span>
-                </li>
-                <li class="location-mode android-only">
-                    <span class="name">Location Mode</span>
-                    <span class="value"></span>
-                </li>
-                <li class="location-authorization os-conditional android ios">
-                    <span class="name">Location authorized</span>
-                    <span class="state on">AUTHORIZED</span>
-                    <span class="state off">UNAUTHORIZED</span>
-                </li>
-                <li class="location-authorization-status os-conditional android ios">
-                    <span class="name">Location authorization status</span>
-                    <span class="value"></span>
-                </li>
-            </ul>
-            <h3>Camera</h3>
-            <ul>
-                <li class="camera">
-                    <span class="name">Camera</span>
-                    <span class="state on">AVAILABLE</span>
-                    <span class="state off">UNAVAILABLE</span>
-                </li>
-                <li class="camera-present os-conditional android ios">
-                    <span class="name">Camera present?</span>
-                    <span class="state on">PRESENT</span>
-                    <span class="state off">NOT PRESENT</span>
-                </li>
-                <li class="camera-authorized os-conditional android ios">
-                    <span class="name">Camera authorized?</span>
-                    <span class="state on">AUTHORIZED</span>
-                    <span class="state off">UNAUTHORIZED</span>
-                </li>
-                <li class="camera-authorization-status os-conditional android ios">
-                    <span class="name">Camera authorization status</span>
-                    <span class="value"></span>
-                </li>
-                <li class="camera-roll-authorized ios-only">
-                    <span class="name">Camera Roll authorized?</span>
-                    <span class="state on">AUTHORIZED</span>
-                    <span class="state off">UNAUTHORIZED</span>
-                </li>
-                <li class="camera-roll-authorization-status ios-only">
-                    <span class="name">Camera Roll authorization status</span>
-                    <span class="value"></span>
-                </li>
-            </ul>
-            <h3>WiFi</h3>
-            <ul>
-                <li class="wifi">
-                    <span class="name">WiFi</span>
-                    <span class="state on">AVAILABLE</span>
-                    <span class="state off">UNAVAILABLE</span>
-                </li>
-            </ul>
-            <h3>Bluetooth</h3>
-            <ul>
-                <li class="bluetooth-support android-only">
-                    <span class="name">Bluetooth</span>
-                    <span class="state on">SUPPORTED</span>
-                    <span class="state off">UNSUPPORTED</span>
-                </li>
-                <li class="bluetooth-available">
-                    <span class="name">Bluetooth</span>
-                    <span class="state on">AVAILABLE</span>
-                    <span class="state off">UNAVAILABLE</span>
-                </li>
-                <li class="bluetooth-setting android-only">
-                    <span class="name">Bluetooth setting</span>
-                    <span class="state on">ENABLED</span>
-                    <span class="state off">DISABLED</span>
-                </li>
-                <li class="bluetooth-state os-conditional android ios">
-                    <span class="name">Bluetooth state</span>
-                    <span class="value"></span>
-                </li>
-                <li class="bluetooth-le-support android-only">
-                    <span class="name">Bluetooth Low Energy (LE)</span>
-                    <span class="state on">SUPPORTED</span>
-                    <span class="state off">UNSUPPORTED</span>
-                </li>
-                <li class="bluetooth-le-peripheral-support android-only">
-                    <span class="name">Bluetooth LE Peripheral Mode</span>
-                    <span class="state on">SUPPORTED</span>
-                    <span class="state off">UNSUPPORTED</span>
-                </li>
-            </ul>
-            <div class="microphone os-conditional android ios">
-                <h3>Microphone</h3>
-                <ul>
-                    <li class="microphone-authorized">
-                        <span class="name">Microphone authorized?</span>
-                        <span class="state on">AUTHORIZED</span>
-                        <span class="state off">UNAUTHORIZED</span>
-                    </li>
-                    <li class="microphone-authorization-status">
-                        <span class="name">Microphone authorization status</span>
-                        <span class="value"></span>
-                    </li>
-                </ul>
-            </div>
-            <div class="contacts os-conditional android ios">
-                <h3>Contacts (Address Book)</h3>
-                <ul>
-                    <li class="contacts-authorized">
-                        <span class="name">Contacts authorized?</span>
-                        <span class="state on">AUTHORIZED</span>
-                        <span class="state off">UNAUTHORIZED</span>
-                    </li>
-                    <li class="contacts-authorization-status">
-                        <span class="name">Contacts authorization status</span>
-                        <span class="value"></span>
-                    </li>
-                </ul>
-            </div>
-            <div class="calendar os-conditional android ios">
-                <h3>Calendar</h3>
-                <ul>
-                    <li class="calendar-authorized">
-                        <span class="name">Calendar authorized?</span>
-                        <span class="state on">AUTHORIZED</span>
-                        <span class="state off">UNAUTHORIZED</span>
-                    </li>
-                    <li class="calendar-authorization-status">
-                        <span class="name">Calendar authorization status</span>
-                        <span class="value"></span>
-                    </li>
-                </ul>
-            </div>
-            <div class="reminders ios-only">
-                <h3>Reminders</h3>
-                <ul>
-                    <li class="reminders-authorized">
-                        <span class="name">Reminders authorized?</span>
-                        <span class="state on">AUTHORIZED</span>
-                        <span class="state off">UNAUTHORIZED</span>
-                    </li>
-                    <li class="reminders-authorization-status">
-                        <span class="name">Reminders authorization status</span>
-                        <span class="value"></span>
-                    </li>
-                </ul>
-            </div>
-            <div class="background-refresh ios-only">
-                <h3>Background refresh</h3>
-                <ul>
-                    <li class="background-refresh-authorized">
-                        <span class="name">Background refresh authorized?</span>
-                        <span class="state on">AUTHORIZED</span>
-                        <span class="state off">UNAUTHORIZED</span>
-                    </li>
-                    <li class="background-refresh-authorization-status">
-                        <span class="name">Background refresh authorization status</span>
-                        <span class="value"></span>
-                    </li>
-                </ul>
-            </div>
-            <div class="remote-notifications ios-only">
-                <h3>Remote notifications</h3>
-                <ul>
-                    <li class="remote-notifications-enabled">
-                        <span class="name">Remote notifications enabled?</span>
-                        <span class="state on">ENABLED</span>
-                        <span class="state off">DISABLED</span>
-                    </li>
-                    <li class="remote-notifications-registered">
-                        <span class="name">Registered for remote notifications?</span>
-                        <span class="state on">REGISTERED</span>
-                        <span class="state off">NOT REGISTERED</span>
-                    </li>
-                    <li class="remote-notifications-types">
-                        <span class="name">Remote notifications types</span>
-                        <span class="value"></span>
-                    </li>
-                </ul>
-            </div>
-            <div class="motion ios-only">
-                <h3>Motion</h3>
-                <ul>
-                    <li class="motion-authorization-status">
-                        <span class="name">Motion authorization status</span>
-                        <span class="value">UNKNOWN</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<div id="state">
+    <h3>Location</h3>
+    <ul>
+        <li class="location">
+            <span class="name">Location</span>
+            <span class="state on">AVAILABLE</span>
+            <span class="state off">UNAVAILABLE</span>
+        </li>
+        <li class="location-setting os-conditional android ios">
+            <span class="name">Location setting</span>
+            <span class="state on">ENABLED</span>
+            <span class="state off">DISABLED</span>
+        </li>
+        <li class="gps-location android-only">
+            <span class="name">GPS Location</span>
+            <span class="state on">AVAILABLE</span>
+            <span class="state off">UNAVAILABLE</span>
+        </li>
+        <li class="gps-location-setting android-only">
+            <span class="name">GPS Location setting</span>
+            <span class="state on">ENABLED</span>
+            <span class="state off">DISABLED</span>
+        </li>
+        <li class="network-location android-only">
+            <span class="name">Network Location</span>
+            <span class="state on">AVAILABLE</span>
+            <span class="state off">UNAVAILABLE</span>
+        </li>
+        <li class="network-location-setting android-only">
+            <span class="name">Network Location setting</span>
+            <span class="state on">ENABLED</span>
+            <span class="state off">DISABLED</span>
+        </li>
+        <li class="location-mode android-only">
+            <span class="name">Location Mode</span>
+            <span class="value"></span>
+        </li>
+        <li class="location-authorization os-conditional android ios">
+            <span class="name">Location authorized</span>
+            <span class="state on">AUTHORIZED</span>
+            <span class="state off">UNAUTHORIZED</span>
+        </li>
+        <li class="location-authorization-status os-conditional android ios">
+            <span class="name">Location authorization status</span>
+            <span class="value"></span>
+        </li>
+    </ul>
+    <h3>Camera</h3>
+    <ul>
+        <li class="camera">
+            <span class="name">Camera</span>
+            <span class="state on">AVAILABLE</span>
+            <span class="state off">UNAVAILABLE</span>
+        </li>
+        <li class="camera-present os-conditional android ios">
+            <span class="name">Camera present?</span>
+            <span class="state on">PRESENT</span>
+            <span class="state off">NOT PRESENT</span>
+        </li>
+        <li class="camera-authorized os-conditional android ios">
+            <span class="name">Camera authorized?</span>
+            <span class="state on">AUTHORIZED</span>
+            <span class="state off">UNAUTHORIZED</span>
+        </li>
+        <li class="camera-authorization-status os-conditional android ios">
+            <span class="name">Camera authorization status</span>
+            <span class="value"></span>
+        </li>
+        <li class="camera-roll-authorized ios-only">
+            <span class="name">Camera Roll authorized?</span>
+            <span class="state on">AUTHORIZED</span>
+            <span class="state off">UNAUTHORIZED</span>
+        </li>
+        <li class="camera-roll-authorization-status ios-only">
+            <span class="name">Camera Roll authorization status</span>
+            <span class="value"></span>
+        </li>
+    </ul>
+    <h3>WiFi</h3>
+    <ul>
+        <li class="wifi">
+            <span class="name">WiFi</span>
+            <span class="state on">AVAILABLE</span>
+            <span class="state off">UNAVAILABLE</span>
+        </li>
+    </ul>
+    <h3>Bluetooth</h3>
+    <ul>
+        <li class="bluetooth-support android-only">
+            <span class="name">Bluetooth</span>
+            <span class="state on">SUPPORTED</span>
+            <span class="state off">UNSUPPORTED</span>
+        </li>
+        <li class="bluetooth-available">
+            <span class="name">Bluetooth</span>
+            <span class="state on">AVAILABLE</span>
+            <span class="state off">UNAVAILABLE</span>
+        </li>
+        <li class="bluetooth-setting android-only">
+            <span class="name">Bluetooth setting</span>
+            <span class="state on">ENABLED</span>
+            <span class="state off">DISABLED</span>
+        </li>
+        <li class="bluetooth-state os-conditional android ios">
+            <span class="name">Bluetooth state</span>
+            <span class="value"></span>
+        </li>
+        <li class="bluetooth-le-support android-only">
+            <span class="name">Bluetooth Low Energy (LE)</span>
+            <span class="state on">SUPPORTED</span>
+            <span class="state off">UNSUPPORTED</span>
+        </li>
+        <li class="bluetooth-le-peripheral-support android-only">
+            <span class="name">Bluetooth LE Peripheral Mode</span>
+            <span class="state on">SUPPORTED</span>
+            <span class="state off">UNSUPPORTED</span>
+        </li>
+    </ul>
+    <div class="microphone os-conditional android ios">
+        <h3>Microphone</h3>
+        <ul>
+            <li class="microphone-authorized">
+                <span class="name">Microphone authorized?</span>
+                <span class="state on">AUTHORIZED</span>
+                <span class="state off">UNAUTHORIZED</span>
+            </li>
+            <li class="microphone-authorization-status">
+                <span class="name">Microphone authorization status</span>
+                <span class="value"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="contacts os-conditional android ios">
+        <h3>Contacts (Address Book)</h3>
+        <ul>
+            <li class="contacts-authorized">
+                <span class="name">Contacts authorized?</span>
+                <span class="state on">AUTHORIZED</span>
+                <span class="state off">UNAUTHORIZED</span>
+            </li>
+            <li class="contacts-authorization-status">
+                <span class="name">Contacts authorization status</span>
+                <span class="value"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="calendar os-conditional android ios">
+        <h3>Calendar</h3>
+        <ul>
+            <li class="calendar-authorized">
+                <span class="name">Calendar authorized?</span>
+                <span class="state on">AUTHORIZED</span>
+                <span class="state off">UNAUTHORIZED</span>
+            </li>
+            <li class="calendar-authorization-status">
+                <span class="name">Calendar authorization status</span>
+                <span class="value"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="reminders ios-only">
+        <h3>Reminders</h3>
+        <ul>
+            <li class="reminders-authorized">
+                <span class="name">Reminders authorized?</span>
+                <span class="state on">AUTHORIZED</span>
+                <span class="state off">UNAUTHORIZED</span>
+            </li>
+            <li class="reminders-authorization-status">
+                <span class="name">Reminders authorization status</span>
+                <span class="value"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="background-refresh ios-only">
+        <h3>Background refresh</h3>
+        <ul>
+            <li class="background-refresh-authorized">
+                <span class="name">Background refresh authorized?</span>
+                <span class="state on">AUTHORIZED</span>
+                <span class="state off">UNAUTHORIZED</span>
+            </li>
+            <li class="background-refresh-authorization-status">
+                <span class="name">Background refresh authorization status</span>
+                <span class="value"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="remote-notifications ios-only">
+        <h3>Remote notifications</h3>
+        <ul>
+            <li class="remote-notifications-enabled">
+                <span class="name">Remote notifications enabled?</span>
+                <span class="state on">ENABLED</span>
+                <span class="state off">DISABLED</span>
+            </li>
+            <li class="remote-notifications-registered">
+                <span class="name">Registered for remote notifications?</span>
+                <span class="state on">REGISTERED</span>
+                <span class="state off">NOT REGISTERED</span>
+            </li>
+            <li class="remote-notifications-types">
+                <span class="name">Remote notifications types</span>
+                <span class="value"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="motion ios-only">
+        <h3>Motion</h3>
+        <ul>
+            <li class="motion-available">
+                <span class="name">Motion tracking?</span>
+                <span class="state on">AVAILABLE</span>
+                <span class="state off">UNAVAILABLE</span>
+            </li>
+            <li class="motion-request-outcome-available">
+                <span class="name">Motion tracking request outcome?</span>
+                <span class="state on">AVAILABLE</span>
+                <span class="state off">UNAVAILABLE</span>
+            </li>
+            <li class="motion-authorization-status">
+                <span class="name">Motion authorization status</span>
+                <span class="value">UNKNOWN</span>
+            </li>
+        </ul>
+    </div>
+</div>
 
-        <div class="settings">
-            <button id="do-check">Re-check state</button>
+<div class="settings">
+    <button id="do-check">Re-check state</button>
 
-            <button id="settings" class="os-conditional android ios">Open App Settings</button>
+    <button id="settings" class="os-conditional android ios">Open App Settings</button>
 
-            <button id="request-location-always" class="ios-only request-location">Request Location Authorization Always</button>
-            <button id="request-location-in-use" class="ios-only request-location">Request Location Authorization When In Use</button>
-            <button id="request-location" class="android-only">Request Location Authorization</button>
+    <button id="request-location-always" class="ios-only request-location">Request Location Authorization Always</button>
+    <button id="request-location-in-use" class="ios-only request-location">Request Location Authorization When In Use</button>
+    <button id="request-location" class="android-only">Request Location Authorization</button>
 
-            <button id="request-camera" class="os-conditional android ios">Request Camera Authorization</button>
-            <button id="request-camera-roll" class="ios-only">Request Camera Roll Authorization</button>
+    <button id="request-camera" class="os-conditional android ios">Request Camera Authorization</button>
+    <button id="request-camera-roll" class="ios-only">Request Camera Roll Authorization</button>
 
-            <button id="request-microphone" class="os-conditional android ios">Request Microphone Authorization</button>
-            <button id="request-contacts" class="os-conditional android ios">Request Contacts Authorization</button>
-            <button id="request-calendar" class="os-conditional android ios">Request Calendar Authorization</button>
-            <button id="request-reminders" class="ios-only">Request Reminders Authorization</button>
+    <button id="request-microphone" class="os-conditional android ios">Request Microphone Authorization</button>
+    <button id="request-contacts" class="os-conditional android ios">Request Contacts Authorization</button>
+    <button id="request-calendar" class="os-conditional android ios">Request Calendar Authorization</button>
+    <button id="request-reminders" class="ios-only">Request Reminders Authorization</button>
 
-            <button id="location-settings" class="os-conditional android windows">Open Location settings</button>
-            <button id="mobile-data-settings" class="os-conditional android windows">Open Mobile data settings</button>
-            <button id="bluetooth-settings" class="os-conditional android windows">Open Bluetooth settings</button>
-            <button id="wifi-settings" class="os-conditional android windows">Open WiFi settings</button>
+    <button id="location-settings" class="os-conditional android windows">Open Location settings</button>
+    <button id="mobile-data-settings" class="os-conditional android windows">Open Mobile data settings</button>
+    <button id="bluetooth-settings" class="os-conditional android windows">Open Bluetooth settings</button>
+    <button id="wifi-settings" class="os-conditional android windows">Open WiFi settings</button>
 
-            <button id="enable-wifi" class="os-conditional android windows">Enable Wifi</button>
-            <button id="disable-wifi" class="os-conditional android windows">Disable Wifi</button>
+    <button id="enable-wifi" class="os-conditional android windows">Enable Wifi</button>
+    <button id="disable-wifi" class="os-conditional android windows">Disable Wifi</button>
 
-            <button id="request-bluetooth" class="ios-only">Request Bluetooth Authorization</button>
-            <button id="enable-bluetooth" class="os-conditional android windows">Enable Bluetooth</button>
-            <button id="disable-bluetooth" class="os-conditional android windows">Disable Bluetooth</button>
+    <button id="request-bluetooth" class="ios-only">Request Bluetooth Authorization</button>
+    <button id="enable-bluetooth" class="os-conditional android windows">Enable Bluetooth</button>
+    <button id="disable-bluetooth" class="os-conditional android windows">Disable Bluetooth</button>
 
-            <button id="request-motion" class="ios-only">Request/Check Motion Authorization</button>
+    <button id="request-motion" class="ios-only">Request/Check Motion Authorization</button>
 
-            <button id="get-location">Get Current Location</button>
-            <button id="use-camera">Use Camera</button>
-        </div>
-    </body>
+    <button id="get-location">Get Current Location</button>
+    <button id="use-camera">Use Camera</button>
+</div>
+</body>
 </html>
