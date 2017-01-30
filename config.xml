@@ -28,6 +28,8 @@
     <!--<plugin spec="https://github.com/dpa99c/cordova-diagnostic-plugin.git#dev" source="git" />-->
 
     <platform name="android">
+        <plugin name="cordova-plugin-file" version="*" />
+
         <preference name="android-build-tool" value="gradle" /> <!-- Phonegap Build only -->
         
         <preference name="android-minSdkVersion" value="21" />
@@ -44,6 +46,7 @@
 
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

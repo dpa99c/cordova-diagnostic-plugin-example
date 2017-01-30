@@ -236,6 +236,62 @@ function onDeviceReady() {
         });
     });
 
+    $('#request-external-sd-permission').on("click", function(){
+        cordova.plugins.diagnostic.requestExternalStorageAuthorization(function(status){
+            console.log("Successfully requested external storage authorization: authorization was " + status);
+            checkState();
+        }, function(error){
+            console.error(error);
+        });
+    });
+
+    $('#request-external-sd-details').on("click", function(){
+        cordova.plugins.diagnostic.getExternalSdCardDetails(function(details){
+            console.log("Successfully retrieved external SD card details");
+            var $results = $('#request-external-sd-details-results');
+            $results.show().empty();
+            details.forEach(function(detail){
+                $results.append('<p>Path: '+detail.path+
+                    '<br/>Writable?: '+detail.canWrite+
+                    '<br/>Free space: '+detail.freeSpace+
+                    '<br/>Type: '+detail.type+
+                    '</p>');
+                if(detail.canWrite){
+                    $('#write-external-sd-file').css('display', 'block');
+                    cordova.file.externalSdCardDirectory = detail.filePath;
+                }
+            });
+            window.scrollTo(0,document.body.scrollHeight)
+        }, function(error){
+            console.error(error);
+        });
+    });
+
+    $('#write-external-sd-file').on("click", function(){
+        var targetDir = cordova.file.externalSdCardDirectory;
+        var filename = "test.txt";
+        var targetFilepath = targetDir + "/" + filename;
+
+        var fail = function(error) {
+            var msg = 'Failed to write file \'' + targetFilepath + '\'. Error code: ' + error.code;
+            console.error(msg);
+            alert(msg);
+        }
+        window.resolveLocalFileSystemURL(targetDir, function (dirEntry) {
+            dirEntry.getFile(filename, {
+                create: true,
+                exclusive: false
+            }, function (fileEntry) {
+                fileEntry.createWriter(function (writer) {
+                    writer.onwriteend = function (evt) {
+                        alert("Wrote "+targetFilepath);
+                    };
+                    writer.write("Hello world");
+                }, fail);
+            }, fail);
+        }, fail);
+    });
+
 
     if(platform === "ios") {
         // Setup background refresh request
@@ -560,7 +616,19 @@ function checkState(){
         cordova.plugins.diagnostic.isMotionRequestOutcomeAvailable(function (available) {
             $('#state .motion-request-outcome-available').addClass(available ? 'on' : 'off');
         }, onError);
+    }
 
+    // External SD card
+    if(platform === "android"){
+        cordova.plugins.diagnostic.isExternalStorageAuthorized(function (enabled) {
+            $('#state .external-sd-authorized').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.getExternalStorageAuthorizationStatus(function (status) {
+            $('#state .external-sd-authorization-status').find('.value').text(status.toUpperCase());
+            $('#request-external-sd-permission').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-external-sd-details').toggle(status === cordova.plugins.diagnostic.permissionStatus.GRANTED);
+        }, onError);
     }
 }
 

@@ -92,6 +92,20 @@
         .disabled{
             color: #cccccc;
         }
+
+        #request-external-sd-details-results{
+            display: none;
+            margin-top: 12px;
+            border-top: 1px solid #000;
+            width: 100%;
+            word-break: break-word;
+        }
+        #request-external-sd-details-results p{
+            padding: 12px;
+        }
+        #write-external-sd-file{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -323,6 +337,20 @@
             </li>
         </ul>
     </div>
+    <div class="external-sd android-only">
+        <h3>External SD card</h3>
+        <ul>
+            <li class="external-sd-authorized">
+                <span class="name">External SD card authorized?</span>
+                <span class="state on">AUTHORIZED</span>
+                <span class="state off">UNAUTHORIZED</span>
+            </li>
+            <li class="external-sd-authorization-status">
+                <span class="name">External SD card authorization status</span>
+                <span class="value"></span>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <div class="settings">
@@ -358,6 +386,13 @@
 
     <button id="get-location">Get Current Location</button>
     <button id="use-camera">Use Camera</button>
+
+    <div class="request-external-sd android-only">
+        <button id="request-external-sd-permission">Request external SD permission</button>
+        <button id="request-external-sd-details">Request external SD details</button>
+        <div id="request-external-sd-details-results"></div>
+        <button id="write-external-sd-file">Write external SD file</button>
+    </div>
 </div>
 </body>
 </html>
