@@ -175,6 +175,14 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.switchToWifiSettings();
     });
 
+    $('#wireless-settings').on("click", function(){
+        cordova.plugins.diagnostic.switchToWirelessSettings();
+    });
+
+    $('#nfc-settings').on("click", function(){
+        cordova.plugins.diagnostic.switchToNFCSettings();
+    });
+
     // Android set state
     $('#enable-wifi').on("click", function(){
         cordova.plugins.diagnostic.setWifiState(function(){
@@ -409,6 +417,24 @@ function checkState(){
         cordova.plugins.diagnostic.hasBluetoothLEPeripheralSupport(function(supported){
             $('#state .bluetooth-le-peripheral-support').addClass(supported ? 'on' : 'off');
         }, onError);
+
+        // NFC
+        cordova.plugins.diagnostic.isNFCPresent(function (present) {
+            $('#state .nfc-present').addClass(present ? 'on' : 'off');
+            if(!present){
+                $('#nfc-settings')
+                    .attr('disabled', 'disabled')
+                    .addClass('disabled');
+            }
+        }, onError);
+
+        cordova.plugins.diagnostic.isNFCEnabled(function (enabled) {
+            $('#state .nfc-enabled').addClass(enabled ? 'on' : 'off');
+        }, onError);
+
+        cordova.plugins.diagnostic.isNFCAvailable(function (available) {
+            $('#state .nfc-available').addClass(available ? 'on' : 'off');
+        }, onError);
     }
 
 
@@ -419,12 +445,12 @@ function checkState(){
     }, onError);
 
     if(platform === "android" || platform === "ios") {
-        cordova.plugins.diagnostic.isCameraPresent(function (enabled) {
-            $('#state .camera-present').addClass(enabled ? 'on' : 'off');
+        cordova.plugins.diagnostic.isCameraPresent(function (present) {
+            $('#state .camera-present').addClass(present ? 'on' : 'off');
         }, onError);
 
-        cordova.plugins.diagnostic.isCameraAuthorized(function (enabled) {
-            $('#state .camera-authorized').addClass(enabled ? 'on' : 'off');
+        cordova.plugins.diagnostic.isCameraAuthorized(function (authorized) {
+            $('#state .camera-authorized').addClass(authorized ? 'on' : 'off');
         }, onError);
 
         cordova.plugins.diagnostic.getCameraAuthorizationStatus(function (status) {
@@ -434,8 +460,8 @@ function checkState(){
     }
 
     if(platform === "ios"){
-        cordova.plugins.diagnostic.isCameraRollAuthorized(function(enabled){
-            $('#state .camera-roll-authorized').addClass(enabled ? 'on' : 'off');
+        cordova.plugins.diagnostic.isCameraRollAuthorized(function(authorized){
+            $('#state .camera-roll-authorized').addClass(authorized ? 'on' : 'off');
         }, onError);
 
         cordova.plugins.diagnostic.getCameraRollAuthorizationStatus(function(status){

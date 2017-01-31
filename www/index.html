@@ -337,6 +337,26 @@
             </li>
         </ul>
     </div>
+    <div class="nfc android-only">
+        <h3>NFC</h3>
+        <ul>
+            <li class="nfc-available">
+                <span class="name">NFC</span>
+                <span class="state on">AVAILABLE</span>
+                <span class="state off">UNAVAILABLE</span>
+            </li>
+            <li class="nfc-present">
+                <span class="name">NFC hardware</span>
+                <span class="state on">PRESENT</span>
+                <span class="state off">NOT PRESENT</span>
+            </li>
+            <li class="nfc-enabled">
+                <span class="name">NFC setting</span>
+                <span class="state on">ENABLED</span>
+                <span class="state off">DISABLED</span>
+            </li>
+        </ul>
+    </div>
     <div class="external-sd android-only">
         <h3>External SD card</h3>
         <ul>
@@ -361,9 +381,13 @@
     <button id="request-location-always" class="ios-only request-location">Request Location Authorization Always</button>
     <button id="request-location-in-use" class="ios-only request-location">Request Location Authorization When In Use</button>
     <button id="request-location" class="android-only">Request Location Authorization</button>
+    <button id="get-location">Get Current Location</button>
+
+    <button id="request-motion" class="ios-only">Request/Check Motion Authorization</button>
 
     <button id="request-camera" class="os-conditional android ios">Request Camera Authorization</button>
     <button id="request-camera-roll" class="ios-only">Request Camera Roll Authorization</button>
+    <button id="use-camera">Use Camera</button>
 
     <button id="request-microphone" class="os-conditional android ios">Request Microphone Authorization</button>
     <button id="request-contacts" class="os-conditional android ios">Request Contacts Authorization</button>
@@ -374,6 +398,8 @@
     <button id="mobile-data-settings" class="os-conditional android windows">Open Mobile data settings</button>
     <button id="bluetooth-settings" class="os-conditional android windows">Open Bluetooth settings</button>
     <button id="wifi-settings" class="os-conditional android windows">Open WiFi settings</button>
+    <button id="wireless-settings" class="android-only">Open Wireless settings</button>
+    <button id="nfc-settings" class="android-only">Open NFC settings</button>
 
     <button id="enable-wifi" class="os-conditional android windows">Enable Wifi</button>
     <button id="disable-wifi" class="os-conditional android windows">Disable Wifi</button>
@@ -382,10 +408,6 @@
     <button id="enable-bluetooth" class="os-conditional android windows">Enable Bluetooth</button>
     <button id="disable-bluetooth" class="os-conditional android windows">Disable Bluetooth</button>
 
-    <button id="request-motion" class="ios-only">Request/Check Motion Authorization</button>
-
-    <button id="get-location">Get Current Location</button>
-    <button id="use-camera">Use Camera</button>
 
     <div class="request-external-sd android-only">
         <button id="request-external-sd-permission">Request external SD permission</button>
