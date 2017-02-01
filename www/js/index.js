@@ -28,6 +28,7 @@ function onDeviceReady() {
         });
     }
 
+    // Register change listeners for Android
     if(platform === "android"){
         cordova.plugins.diagnostic.registerPermissionRequestCompleteHandler(function(statuses){
             console.info("Permission request complete");
@@ -49,6 +50,12 @@ function onDeviceReady() {
             }
         });
 
+        cordova.plugins.diagnostic.registerNFCStateChangeHandler(function (state) {
+            console.log("NFC state changed to: " + state);
+            checkState();
+        }, function (error) {
+            console.error("Error registering for NFC state changes: " + error);
+        });
     }
 
     // iOS+Android settings
