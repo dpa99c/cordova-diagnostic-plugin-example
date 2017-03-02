@@ -497,6 +497,10 @@ function checkState(){
         }
     }, onError);
 
+    cordova.plugins.diagnostic.isWifiEnabled(function(available){
+        $('#state .wifi-setting').addClass(available ? 'on' : 'off');
+    }, onError);
+
     // Bluetooth
     cordova.plugins.diagnostic.isBluetoothAvailable(function(available){
         $('#state .bluetooth-available').addClass(available ? 'on' : 'off');
