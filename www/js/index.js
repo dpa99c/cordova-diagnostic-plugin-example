@@ -60,11 +60,15 @@ function onDeviceReady() {
 
     // iOS+Android settings
     $('#request-camera').on("click", function(){
-        cordova.plugins.diagnostic.requestCameraAuthorization(function(status){
-            console.log("Successfully requested camera authorization: authorization was " + status);
-            checkState();
-        }, function(error){
-            console.error(error);
+        cordova.plugins.diagnostic.requestCameraAuthorization({
+            successCallback: function(status){
+                console.log("Successfully requested camera authorization: authorization was " + status);
+                checkState();
+            },
+            errorCallback: function(error){
+                console.error(error);
+            },
+            externalStorage: true
         });
     });
 
@@ -447,23 +451,36 @@ function checkState(){
 
     // Camera
     var onGetCameraAuthorizationStatus;
-    cordova.plugins.diagnostic.isCameraAvailable(function(available){
-        $('#state .camera').addClass(available ? 'on' : 'off');
-    }, onError);
+    cordova.plugins.diagnostic.isCameraAvailable({
+        successCallback: function(available){
+            $('#state .camera').addClass(available ? 'on' : 'off');
+        },
+        errorCallback: onError,
+        externalStorage: true
+    });
 
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.isCameraPresent(function (present) {
             $('#state .camera-present').addClass(present ? 'on' : 'off');
         }, onError);
 
-        cordova.plugins.diagnostic.isCameraAuthorized(function (authorized) {
-            $('#state .camera-authorized').addClass(authorized ? 'on' : 'off');
-        }, onError);
+        cordova.plugins.diagnostic.isCameraAuthorized({
+            successCallback: function (authorized) {
+                $('#state .camera-authorized').addClass(authorized ? 'on' : 'off');
+            },
+            errorCallback: onError,
+            externalStorage: true
+        });
 
-        cordova.plugins.diagnostic.getCameraAuthorizationStatus(function (status) {
-            $('#state .camera-authorization-status').find('.value').text(status.toUpperCase());
-            onGetCameraAuthorizationStatus(status);
-        }, onError);
+        cordova.plugins.diagnostic.getCameraAuthorizationStatus({
+            successCallback: function (status) {
+                $('#state .camera-authorization-status').find('.value').text(status.toUpperCase());
+                onGetCameraAuthorizationStatus(status);
+            },
+            errorCallback: onError,
+            externalStorage: true
+        });
+
     }
 
     if(platform === "ios"){
