@@ -153,7 +153,7 @@ function onDeviceReady() {
     });
 
     $('#request-motion').on("click", function(){
-        cordova.plugins.diagnostic.requestAndCheckMotionAuthorization(function(status){
+        cordova.plugins.diagnostic.requestMotionAuthorization(function(status){
             console.log("Requested motion authorization: authorization is " + status);
             $('#state .motion-authorization-status').find('.value').text(status.toUpperCase());
         }, function(error){
@@ -667,9 +667,15 @@ function checkState(){
             }
         }, onError);
 
-        cordova.plugins.diagnostic.isMotionRequestOutcomeAvailable(function (available) {
-            $('#state .motion-request-outcome-available').addClass(available ? 'on' : 'off');
+        cordova.plugins.diagnostic.isMotionAuthorizationStatusAvailable(function (available) {
+            $('#state .motion-authorization-status-available').addClass(available ? 'on' : 'off');
         }, onError);
+
+        cordova.plugins.diagnostic.getMotionAuthorizationStatus(function(status){
+            $('#state .motion-authorization-status').find('.value').text(status.toUpperCase());
+        }, function(error){
+            console.error(error);
+        });
     }
 
     // External SD card
