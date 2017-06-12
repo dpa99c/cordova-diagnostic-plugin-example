@@ -381,45 +381,39 @@
 <div class="settings">
     <button id="do-check">Re-check state</button>
 
+    <h3>Open settings</h3>
     <button id="settings" class="os-conditional android ios">Open App Settings</button>
+    <button id="location-settings" class="os-conditional android windows">Open Location settings</button>
+    <button id="bluetooth-settings" class="os-conditional android windows">Open Bluetooth settings</button>
+    <button id="wifi-settings" class="os-conditional android windows">Open WiFi settings</button>
+    <button id="mobile-data-settings" class="os-conditional android windows">Open Mobile data settings</button>
+    <button id="wireless-settings" class="android-only">Open Wireless settings</button>
+    <button id="nfc-settings" class="android-only">Open NFC settings</button>
 
+    <h3>Request permissions</h3>
     <button id="request-location-always" class="ios-only request-location">Request Location Authorization Always</button>
     <button id="request-location-in-use" class="ios-only request-location">Request Location Authorization When In Use</button>
     <button id="request-location" class="android-only">Request Location Authorization</button>
-    <button id="get-location">Get Current Location</button>
-
-    <button id="request-motion" class="ios-only">Request/Check Motion Authorization</button>
-
+    <button id="request-bluetooth" class="ios-only">Request Bluetooth Authorization</button>
     <button id="request-camera" class="os-conditional android ios">Request Camera Authorization</button>
     <button id="request-camera-roll" class="ios-only">Request Camera Roll Authorization</button>
-    <button id="use-camera">Use Camera</button>
-
     <button id="request-microphone" class="os-conditional android ios">Request Microphone Authorization</button>
     <button id="request-contacts" class="os-conditional android ios">Request Contacts Authorization</button>
     <button id="request-calendar" class="os-conditional android ios">Request Calendar Authorization</button>
     <button id="request-reminders" class="ios-only">Request Reminders Authorization</button>
+    <button id="request-motion" class="ios-only">Request/Check Motion Authorization</button>
+    <button id="request-external-sd-permission" class="android-only">Request external SD permission</button>
 
-    <button id="location-settings" class="os-conditional android windows">Open Location settings</button>
-    <button id="mobile-data-settings" class="os-conditional android windows">Open Mobile data settings</button>
-    <button id="bluetooth-settings" class="os-conditional android windows">Open Bluetooth settings</button>
-    <button id="wifi-settings" class="os-conditional android windows">Open WiFi settings</button>
-    <button id="wireless-settings" class="android-only">Open Wireless settings</button>
-    <button id="nfc-settings" class="android-only">Open NFC settings</button>
-
+    <h3>Use permissions</h3>
+    <button id="get-location">Get Current Location</button>
+    <button id="use-camera">Use Camera</button>
     <button id="enable-wifi" class="os-conditional android windows">Enable Wifi</button>
     <button id="disable-wifi" class="os-conditional android windows">Disable Wifi</button>
-
-    <button id="request-bluetooth" class="ios-only">Request Bluetooth Authorization</button>
     <button id="enable-bluetooth" class="os-conditional android windows">Enable Bluetooth</button>
     <button id="disable-bluetooth" class="os-conditional android windows">Disable Bluetooth</button>
-
-
-    <div class="request-external-sd android-only">
-        <button id="request-external-sd-permission">Request external SD permission</button>
-        <button id="request-external-sd-details">Request external SD details</button>
-        <div id="request-external-sd-details-results"></div>
-        <button id="write-external-sd-file">Write external SD file</button>
-    </div>
+    <button id="request-external-sd-details" class="android-only">Show external SD details</button>
+    <div id="request-external-sd-details-results" class="android-only"></div>
+    <button id="write-external-sd-file" class="android-only">Write external SD file</button>
 </div>
 </body>
 </html>
