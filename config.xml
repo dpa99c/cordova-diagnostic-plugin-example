@@ -23,6 +23,7 @@
     <plugin name="cordova-custom-config" version="*" />
     <plugin name="cordova-plugin-geolocation" version="2.1.0" />
     <plugin name="cordova-plugin-camera" version="2.1.0" />
+    <plugin name="cordova-plugin-file" version="4.3.3" />
 
     <plugin name="cordova.plugins.diagnostic" version="*" />
     <!--<plugin spec="https://github.com/dpa99c/cordova-diagnostic-plugin.git#dev" source="git" />-->
