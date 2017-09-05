@@ -1,6 +1,6 @@
 var platform, osVersion;
 function onDeviceReady() {
-    osVersion = parseFloat(device.platform.version);
+    osVersion = parseFloat(device.version);
     platform = device.platform.toLowerCase();
     if(platform.match(/win/)){
         platform = "windows";
