@@ -39,12 +39,12 @@ The plugin currently supports the Android and iOS platforms.
 
 For example, to run on the Android platform, execute the following commands from the project root:
 
-- Install the API 23 platform into the project: `$ cordova platform add android@5`
+- Install the Android platform into the project: `$ cordova platform add android@latest`
 - Build and run the project: `$ cordova run android`
 
 ## Testing Android runtime permissions
 
-If you want to test out Android runtime permissions, you need to run the example app on a device/emulator the app is running on has Android 6.0.
+If you want to test out Android runtime permissions, you need to run the example app on a device/emulator with Android 6+.
 
 Note: If the app is run on Android 5.1 (API 22)  or below, runtime permissions do not apply - all permissions are granted at installation time.
 

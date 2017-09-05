@@ -304,7 +304,7 @@
             </li>
         </ul>
     </div>
-    <div class="remote-notifications ios-only">
+    <div class="remote-notifications os-conditional android ios">
         <h3>Remote notifications</h3>
         <ul>
             <li class="remote-notifications-enabled">
@@ -312,12 +312,16 @@
                 <span class="state on">ENABLED</span>
                 <span class="state off">DISABLED</span>
             </li>
-            <li class="remote-notifications-registered">
+            <li class="remote-notifications-authorization-status ios-only">
+                <span class="name">Remote notifications authorization status</span>
+                <span class="value"></span>
+            </li>
+            <li class="remote-notifications-registered ios-only">
                 <span class="name">Registered for remote notifications?</span>
                 <span class="state on">REGISTERED</span>
                 <span class="state off">NOT REGISTERED</span>
             </li>
-            <li class="remote-notifications-types">
+            <li class="remote-notifications-types ios-only">
                 <span class="name">Remote notifications types</span>
                 <span class="value"></span>
             </li>
