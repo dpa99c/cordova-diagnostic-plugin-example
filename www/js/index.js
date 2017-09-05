@@ -1,5 +1,6 @@
-var platform;
+var platform, osVersion;
 function onDeviceReady() {
+    osVersion = parseFloat(device.platform.version);
     platform = device.platform.toLowerCase();
     if(platform.match(/win/)){
         platform = "windows";
@@ -616,6 +617,12 @@ function checkState(){
         }
     }
 
+    if(platform === "ios" || platform === "android") {
+        // Remote notifications
+        cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function (enabled) {
+            $('#state .remote-notifications-enabled').addClass(enabled ? 'on' : 'off');
+        }, error);
+    }
 
     if(platform === "ios") {
         // Reminders
@@ -638,9 +645,14 @@ function checkState(){
         }, error);
 
         // Remote notifications
-        cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function (enabled) {
-            $('#state .remote-notifications-enabled').addClass(enabled ? 'on' : 'off');
-        }, error);
+        var $remoteNotificationsAuthorizationStatusValue = $('#state .remote-notifications-authorization-status').find('.value');
+        if(osVersion >= 10){
+            cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(function (status) {
+                $remoteNotificationsAuthorizationStatusValue.text(status.toUpperCase());
+            }, error);
+        }else{
+            $remoteNotificationsAuthorizationStatusValue.text("UNAVAILABLE");
+        }
 
         cordova.plugins.diagnostic.isRegisteredForRemoteNotifications(function (enabled) {
             $('#state .remote-notifications-registered').addClass(enabled ? 'on' : 'off');
