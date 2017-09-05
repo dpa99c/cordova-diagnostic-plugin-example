@@ -676,15 +676,10 @@ function checkState(){
             }
         }, error);
 
-        cordova.plugins.diagnostic.isMotionAuthorizationStatusAvailable(function (available) {
-            $('#state .motion-authorization-status-available').addClass(available ? 'on' : 'off');
+        cordova.plugins.diagnostic.isMotionRequestOutcomeAvailable(function (available) {
+            $('#state .motion-request-outcome-available').addClass(available ? 'on' : 'off');
         }, error);
 
-        cordova.plugins.diagnostic.getMotionAuthorizationStatus(function(status){
-            $('#state .motion-authorization-status').find('.value').text(status.toUpperCase());
-        }, function(error){
-            error(error);
-        });
     }
 
     // External SD card
