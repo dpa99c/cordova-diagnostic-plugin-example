@@ -502,7 +502,7 @@ function checkState(){
         }
     }
 
-    // Wifi
+    // Network
     cordova.plugins.diagnostic.isWifiAvailable(function(available){
         $('#state .wifi').addClass(available ? 'on' : 'off');
 
@@ -515,6 +515,13 @@ function checkState(){
     cordova.plugins.diagnostic.isWifiEnabled(function(available){
         $('#state .wifi-setting').addClass(available ? 'on' : 'off');
     }, error);
+
+    if(platform === "android"){
+        cordova.plugins.diagnostic.isDataRoamingEnabled(function(enabled){
+            $('#state .data-roaming').addClass(enabled ? 'on' : 'off');
+        }, error);
+    }
+
 
     // Bluetooth
     cordova.plugins.diagnostic.isBluetoothAvailable(function(available){
@@ -692,6 +699,18 @@ function checkState(){
             $('#state .external-sd-authorization-status').find('.value').text(status.toUpperCase());
             $('#request-external-sd-permission').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
             $('#request-external-sd-details').toggle(status === cordova.plugins.diagnostic.permissionStatus.GRANTED);
+        }, error);
+    }
+
+
+    //Misc
+    if(platform === "android"){
+        cordova.plugins.diagnostic.isADBModeEnabled(function(enabled){
+            $('#state .adb').addClass(enabled ? 'on' : 'off');
+        }, error);
+
+        cordova.plugins.diagnostic.isDeviceRooted(function(enabled){
+            $('#state .root').addClass(enabled ? 'on' : 'off');
         }, error);
     }
 }
