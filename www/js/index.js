@@ -154,10 +154,7 @@ function onDeviceReady() {
     });
 
     $('#request-motion').on("click", function(){
-        cordova.plugins.diagnostic.requestMotionAuthorization(function(status){
-            log("Requested motion authorization: authorization is " + status);
-            $('#state .motion-authorization-status').find('.value').text(status.toUpperCase());
-        }, function(error){
+        cordova.plugins.diagnostic.requestMotionAuthorization(handleMotionAuthorizationStatus, function(error){
             error(error);
         });
     });
@@ -687,6 +684,8 @@ function checkState(){
             $('#state .motion-request-outcome-available').addClass(available ? 'on' : 'off');
         }, error);
 
+        cordova.plugins.diagnostic.getMotionAuthorizationStatus(handleMotionAuthorizationStatus, error);
+
     }
 
     // External SD card
@@ -730,6 +729,19 @@ function log(msg, alert){
 
 function onResume(){
     checkState();
+}
+
+function handleMotionAuthorizationStatus(status) {
+    $('#state .motion-authorization-status').find('.value').text(status.toUpperCase());
+    if(status === cordova.plugins.diagnostic.motionStatus.NOT_REQUESTED){
+        $('#request-motion')
+            .removeAttr('disabled')
+            .removeClass('disabled');
+    }else{
+        $('#request-motion')
+            .attr('disabled', 'disabled')
+            .addClass('disabled');
+    }
 }
 
 
