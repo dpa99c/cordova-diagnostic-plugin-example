@@ -6,10 +6,8 @@ This repo contains an example project which illustrates use of the [Diagnostic C
 <!-- START table-of-contents -->
 **Table of Contents**
 
-- [Important Android Note](#important-android-note)
 - [Downloading](#downloading)
 - [Building and running](#building-and-running)
-  - [Testing Android runtime permissions](#testing-android-runtime-permissions)
 - [Screenshots](#screenshots)
   - [Android](#android)
   - [iOS](#ios)
@@ -17,15 +15,6 @@ This repo contains an example project which illustrates use of the [Diagnostic C
 
 <!-- END table-of-contents -->
 
-# Important Android Note
-
-The [master branch of the diagnostic plugin](https://github.com/dpa99c/cordova-diagnostic-plugin) now supports Android 6 runtime permissions. The introduces a dependency which means that the project must be built against API 23 or above.
-
-For users who wish to build against API 22 or below, there is a branch of the plugin repo which contains all the functionality __except Android 6 runtime permissions__. This removes the dependency on API 23 and will allow you to build against legacy API versions (22 and below).
-
-There is also a corresponding branch of this project intended to be built with the legacy plugin version: [https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/api-22](https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/api-22)
-
-**NOTE**: Phonegap Build now supports API 23, so its users may use the main plugin branch (`cordova.plugins.diagnostic`).
 
 # Downloading
 
@@ -35,18 +24,12 @@ To download the example project, clone it using git:
 
 # Building and running
 
-The plugin currently supports the Android and iOS platforms.
+The example currently supports the Android and iOS platforms.
 
 For example, to run on the Android platform, execute the following commands from the project root:
 
 - Install the Android platform into the project: `$ cordova platform add android@latest`
 - Build and run the project: `$ cordova run android`
-
-## Testing Android runtime permissions
-
-If you want to test out Android runtime permissions, you need to run the example app on a device/emulator with Android 6+.
-
-Note: If the app is run on Android 5.1 (API 22)  or below, runtime permissions do not apply - all permissions are granted at installation time.
 
 
 # Screenshots
