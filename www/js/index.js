@@ -686,6 +686,12 @@ function checkState(){
             $('#state .root').addClass(enabled ? 'on' : 'off');
         }, error);
     }
+
+    if(platform === "android" || platform === "ios"){
+        cordova.plugins.diagnostic.getArchitecture(function (arch) {
+            $('#state .cpu-architecture').find('.value').text(arch.toUpperCase());
+        });
+    }
 }
 
 function error(error){

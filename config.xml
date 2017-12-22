@@ -45,11 +45,6 @@
         <preference name="target-device" value="universal" />
         <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
     </platform>
-
-    <engine name="android" spec="latest" />
-    <engine name="ios" spec="latest" />
-    <engine name="windows" spec="latest" />
-
     <plugin name="cordova-plugin-whitelist" spec="*" />
     <plugin name="cordova-plugin-device" spec="*" />
     <plugin name="cordova-custom-config" spec="*" />
@@ -57,4 +52,7 @@
     <plugin name="cordova-plugin-camera" spec="*" />
     <plugin name="cordova-plugin-file" spec="*" />
     <plugin name="cordova.plugins.diagnostic" spec="*" />
+    <engine name="android" spec="latest" />
+    <engine name="ios" spec="latest" />
+    <engine name="windows" spec="latest" />
 </widget>

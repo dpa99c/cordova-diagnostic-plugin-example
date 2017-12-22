@@ -385,18 +385,22 @@
             </li>
         </ul>
     </div>
-    <div class="misc android-only">
+    <div class="misc os-conditional android ios">
         <h3>Misc</h3>
         <ul>
-            <li class="adb">
+            <li class="adb android-only">
                 <span class="name">ADB enabled?</span>
                 <span class="state on">ENABLED</span>
                 <span class="state off">DISABLED</span>
             </li>
-            <li class="root">
+            <li class="root android-only">
                 <span class="name">Device rooted?</span>
                 <span class="state on">ROOTED</span>
                 <span class="state off">UNROOTED</span>
+            </li>
+            <li class="cpu-architecture">
+                <span class="name">CPU Architecture</span>
+                <span class="value"></span>
             </li>
         </ul>
     </div>
