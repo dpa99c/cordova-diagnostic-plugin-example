@@ -68,9 +68,7 @@ function onDeviceReady() {
                 log("Successfully requested camera authorization: authorization was " + status);
                 checkState();
             },
-            errorCallback: function(error){
-                error(error);
-            },
+            errorCallback: error,
             externalStorage: true
         });
     });
@@ -78,36 +76,28 @@ function onDeviceReady() {
     $('#settings').on("click", function(){
         cordova.plugins.diagnostic.switchToSettings(function(){
             log("Successfully opened settings");
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
     $('#request-microphone').on("click", function(){
         cordova.plugins.diagnostic.requestMicrophoneAuthorization(function(status){
             log("Successfully requested microphone authorization: authorization was " + status);
             checkState();
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
     $('#request-contacts').on("click", function(){
         cordova.plugins.diagnostic.requestContactsAuthorization(function(status){
             log("Successfully requested contacts authorization: authorization was " + status);
             checkState();
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
     $('#request-calendar').on("click", function(){
         cordova.plugins.diagnostic.requestCalendarAuthorization(function(status){
             log("Successfully requested calendar authorization: authorization was " + status);
             checkState();
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
 
@@ -117,57 +107,51 @@ function onDeviceReady() {
         checkState();
     };
     $('#request-location-always').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, function(error){
-            error(error);
-        }, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
+        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, error, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
     });
 
     $('#request-location-in-use').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, function(error){
-            error(error);
-        }, cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE);
+        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, error, cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE);
     });
 
     $('#request-camera-roll').on("click", function(){
         cordova.plugins.diagnostic.requestCameraRollAuthorization(function(status){
             log("Successfully requested camera roll authorization: authorization was " + status);
             checkState();
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
     $('#request-reminders').on("click", function(){
         cordova.plugins.diagnostic.requestRemindersAuthorization(function(status){
             log("Successfully requested reminders authorization: authorization was " + status);
             checkState();
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
     $('#request-bluetooth').on("click", function(){
         cordova.plugins.diagnostic.requestBluetoothAuthorization(function(){
             log("Successfully requested Bluetooth authorization");
             checkState();
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
     $('#request-motion').on("click", function(){
-        cordova.plugins.diagnostic.requestMotionAuthorization(handleMotionAuthorizationStatus, function(error){
-            error(error);
-        });
+        cordova.plugins.diagnostic.requestMotionAuthorization(handleMotionAuthorizationStatus, error);
     });
 
     // Android settings
+    $('#warm-restart').on("click", function(){
+        cordova.plugins.diagnostic.restart(error, false);
+    });
+
+    $('#cold-restart').on("click", function(){
+        cordova.plugins.diagnostic.restart(error, true);
+    });
+
     $('#request-location').on("click", function(){
         cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
             log("Successfully requested location authorization: authorization was " + status);
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
     $('#location-settings').on("click", function(){
@@ -199,36 +183,28 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.setWifiState(function(){
             log("Successfully enabled Wifi");
             setTimeout(checkState, 100);
-        }, function(error){
-            error(error);
-        }, true);
+        }, error, true);
     });
 
     $('#disable-wifi').on("click", function(){
         cordova.plugins.diagnostic.setWifiState(function(){
             log("Successfully disabled Wifi");
             setTimeout(checkState, 100);
-        }, function(error){
-            error(error);
-        }, false);
+        }, error, false);
     });
 
     $('#enable-bluetooth').on("click", function(){
         cordova.plugins.diagnostic.setBluetoothState(function(){
             log("Successfully enabled Bluetooth");
             setTimeout(checkState, 1000);
-        }, function(error){
-            error(error);
-        }, true);
+        }, error, true);
     });
 
     $('#disable-bluetooth').on("click", function(){
         cordova.plugins.diagnostic.setBluetoothState(function(){
             log("Successfully disabled Bluetooth");
             setTimeout(checkState, 1000);
-        }, function(error){
-            error(error);
-        }, false);
+        }, error, false);
     });
 
     $('#get-location').on("click", function(){
@@ -257,9 +233,7 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.requestExternalStorageAuthorization(function(status){
             log("Successfully requested external storage authorization: authorization was " + status);
             checkState();
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
     $('#request-external-sd-details').on("click", function(){
@@ -279,9 +253,7 @@ function onDeviceReady() {
                 }
             });
             window.scrollTo(0,document.body.scrollHeight)
-        }, function(error){
-            error(error);
-        });
+        }, error);
     });
 
     $('#write-external-sd-file').on("click", function(){
@@ -292,7 +264,7 @@ function onDeviceReady() {
         var fail = function(error) {
             var msg = 'Failed to write file \'' + targetFilepath + '\'. Error code: ' + error.code;
             error(msg);
-        }
+        };
         window.resolveLocalFileSystemURL(targetDir, function (dirEntry) {
             dirEntry.getFile(filename, {
                 create: true,
