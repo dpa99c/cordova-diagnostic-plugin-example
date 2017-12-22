@@ -1,0 +1,33 @@
+{
+  "name": "cordova.plugins.diagnostic.example",
+  "version": "3.8.0",
+  "displayName": "Diagnostic plugin example",
+  "cordova": {
+    "platforms": [
+      "android",
+      "ios",
+      "windows"
+    ],
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-device": {},
+      "cordova-custom-config": {},
+      "cordova-plugin-geolocation": {},
+      "cordova-plugin-camera": {},
+      "cordova-plugin-file": {},
+      "cordova.plugins.diagnostic": {}
+    }
+  },
+  "dependencies": {
+    "cordova-android": "latest",
+    "cordova-ios": "latest",
+    "cordova-windows": "latest",
+    "cordova-plugin-whitelist": "*",
+    "cordova-plugin-device": "*",
+    "cordova-custom-config": "*",
+    "cordova-plugin-geolocation": "*",
+    "cordova-plugin-camera": "*",
+    "cordova-plugin-file": "*",
+    "cordova.plugins.diagnostic": "*"
+  }
+}

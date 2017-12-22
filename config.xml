@@ -1,10 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget
-        id="cordova.plugins.diagnostic.example"
-        version="3.7.0"
-        xmlns="http://www.w3.org/ns/widgets"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="cordova.plugins.diagnostic.example" version="3.8.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Diagnostic plugin example</name>
     <description>
         An example app that demonstrates use of cordova.plugins.diagnostic
@@ -14,68 +9,52 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-
     <preference name="Fullscreen" value="false" />
-    <preference name="phonegap-version" value="cli-6.4.0" /> <!-- Phonegap Build only -->
-
-    <plugin name="cordova-plugin-whitelist" version="*" />
-    <plugin name="cordova-plugin-device" version="*" />
-    <plugin name="cordova-custom-config" version="*" />
-    <plugin name="cordova-plugin-geolocation" version="2.1.0" />
-    <plugin name="cordova-plugin-camera" version="2.1.0" />
-    <plugin name="cordova-plugin-file" version="4.3.3" />
-
-    <plugin name="cordova.plugins.diagnostic" version="*" />
-    <!--<plugin spec="https://github.com/dpa99c/cordova-diagnostic-plugin.git#dev" source="git" />-->
-
     <platform name="android">
-        <plugin name="cordova-plugin-file" version="*" />
-
-        <preference name="android-build-tool" value="gradle" /> <!-- Phonegap Build only -->
-        
-        <config-file target="AndroidManifest.xml" parent="/*">
+        <custom-config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.BLUETOOTH" />
-            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-
-            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-            <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-
-            <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+            <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-
             <uses-permission android:name="android.permission.READ_CONTACTS" />
-
             <uses-permission android:name="android.permission.READ_CALENDAR" />
-        </config-file>
+        </custom-config-file>
     </platform>
-
     <platform name="ios">
-        <plugin spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" source="git" />
+        <plugin source="git" spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" />
         <plugin name="phonegap-plugin-push" version="*">
             <param name="SENDER_ID" value="12345678" />
         </plugin>
-
-        <!-- Set properties for remote notifications -->
-        <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
+        <custom-config-file parent="UIBackgroundModes" platform="ios" target="*-Info.plist">
             <array>
                 <string>fetch</string>
                 <string>remote-notification</string>
             </array>
-        </config-file>
-
+        </custom-config-file>
     </platform>
-
     <platform name="windows">
         <preference name="windows-target-version" value="10.0" />
         <preference name="target-device" value="universal" />
         <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
     </platform>
+
+    <engine name="android" spec="latest" />
+    <engine name="ios" spec="latest" />
+    <engine name="windows" spec="latest" />
+
+    <plugin name="cordova-plugin-whitelist" spec="*" />
+    <plugin name="cordova-plugin-device" spec="*" />
+    <plugin name="cordova-custom-config" spec="*" />
+    <plugin name="cordova-plugin-geolocation" spec="*" />
+    <plugin name="cordova-plugin-camera" spec="*" />
+    <plugin name="cordova-plugin-file" spec="*" />
+    <plugin name="cordova.plugins.diagnostic" spec="*" />
 </widget>
