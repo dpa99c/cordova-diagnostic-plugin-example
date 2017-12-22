@@ -14,6 +14,8 @@ function onDeviceReady() {
 
     // Register change listeners for iOS+Android
     if(platform === "android" || platform === "ios") {
+        cordova.plugins.diagnostic.enableDebug();
+
         cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function (state) {
             log("Bluetooth state changed to: " + state);
             checkState();
