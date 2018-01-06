@@ -83,7 +83,8 @@
             width: 100%;
         }
 
-        .settings button{
+        .settings button,
+        .settings select{
             display: block;
             margin: 0 auto;
             margin-bottom: 24px;
@@ -106,6 +107,17 @@
         #write-external-sd-file{
             display: none;
         }
+
+        #request-remote-notifications{
+            border: 1px solid #ccc;
+            margin: 0 12px;
+            padding-top: 12px;
+        }
+
+        #request-remote-notifications *{
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
@@ -433,6 +445,14 @@
     <button id="request-reminders" class="ios-only">Request Reminders Authorization</button>
     <button id="request-motion" class="ios-only">Request Motion Authorization</button>
     <button id="request-external-sd-permission" class="android-only">Request external SD permission</button>
+    <div id="request-remote-notifications" class="ios-only">
+        <select multiple="multiple">
+            <option value="alert">Alerts</option>
+            <option value="sound">Sounds</option>
+            <option value="badge">Badges</option>
+        </select>
+        <button>Request remote notifications</button>
+    </div>
 
     <h3>Use permissions</h3>
     <button id="get-location">Get Current Location</button>

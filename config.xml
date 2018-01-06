@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="cordova.plugins.diagnostic.example" version="3.8.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="cordova.plugins.diagnostic.example" version="3.9.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Diagnostic plugin example</name>
     <description>
         An example app that demonstrates use of cordova.plugins.diagnostic
@@ -29,10 +29,6 @@
         </custom-config-file>
     </platform>
     <platform name="ios">
-        <plugin source="git" spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" />
-        <plugin name="phonegap-plugin-push" version="*">
-            <param name="SENDER_ID" value="12345678" />
-        </plugin>
         <custom-config-file parent="UIBackgroundModes" platform="ios" target="*-Info.plist">
             <array>
                 <string>fetch</string>
@@ -45,6 +41,7 @@
         <preference name="target-device" value="universal" />
         <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
     </platform>
+    <plugin source="git" spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" />
     <plugin name="cordova-plugin-whitelist" spec="*" />
     <plugin name="cordova-plugin-device" spec="*" />
     <plugin name="cordova-custom-config" spec="*" />

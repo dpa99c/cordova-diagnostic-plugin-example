@@ -229,6 +229,22 @@ function onDeviceReady() {
         });
     });
 
+    $('#request-remote-notifications button').on("click", function(){
+        var types = [];
+        $("#request-remote-notifications select :selected").each(function(){
+            types.push($(this).val());
+        });
+        cordova.plugins.diagnostic.requestRemoteNotificationsAuthorization({
+            successCallback: function(result){
+                log("Successfully requested remote notifications authorization: " + result);
+                checkState();
+            },
+            errorCallback: error,
+            types: types,
+            omitRegistration: false
+        });
+    });
+
     $('#request-external-sd-permission').on("click", function(){
         cordova.plugins.diagnostic.requestExternalStorageAuthorization(function(status){
             log("Successfully requested external storage authorization: authorization was " + status);
@@ -299,27 +315,6 @@ function onDeviceReady() {
         };
         Fetcher.configure(fetchCallback, failureCallback, {
             stopOnTerminate: true
-        });
-
-        // Setup push notifications
-        var push = PushNotification.init({
-            "android": {
-                "senderID": "123456789"
-            },
-            "ios": {
-                "sound": true,
-                "alert": true,
-                "badge": true
-            },
-            "windows": {}
-        });
-
-        push.on('registration', function(data) {
-            log("registration event: " + data.registrationId);
-        });
-
-        push.on('error', function(e) {
-            log("push error = " + e.message);
         });
     }
 
@@ -627,6 +622,7 @@ function checkState(){
         if(osVersion >= 10){
             cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(function (status) {
                 $remoteNotificationsAuthorizationStatusValue.text(status.toUpperCase());
+                $('#request-remote-notifications').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
             }, error);
         }else{
             $remoteNotificationsAuthorizationStatusValue.text("UNAVAILABLE");
