@@ -696,9 +696,9 @@ function error(error){
     alert(msg);
 }
 
-function log(msg, alert){
+function log(msg, showAlert){
     console.log(msg);
-    if(alert){
+    if(showAlert){
         alert(msg);
     }
 }
