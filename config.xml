@@ -10,6 +10,10 @@
     <content src="index.html" />
     <access origin="*" />
     <preference name="Fullscreen" value="false" />
+
+    <!-- Phonegap Build only -->
+    <preference name="phonegap-version" value="cli-7.1.0" />
+
     <platform name="android">
         <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.BLUETOOTH" />
