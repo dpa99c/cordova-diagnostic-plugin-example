@@ -11,7 +11,7 @@
     <access origin="*" />
     <preference name="Fullscreen" value="false" />
     <platform name="android">
-        <custom-config-file parent="/*" target="AndroidManifest.xml">
+        <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.BLUETOOTH" />
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -26,15 +26,15 @@
             <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
             <uses-permission android:name="android.permission.READ_CONTACTS" />
             <uses-permission android:name="android.permission.READ_CALENDAR" />
-        </custom-config-file>
+        </config-file>
     </platform>
     <platform name="ios">
-        <custom-config-file parent="UIBackgroundModes" platform="ios" target="*-Info.plist">
+        <config-file parent="UIBackgroundModes" platform="ios" target="*-Info.plist">
             <array>
                 <string>fetch</string>
                 <string>remote-notification</string>
             </array>
-        </custom-config-file>
+        </config-file>
     </platform>
     <platform name="windows">
         <preference name="windows-target-version" value="10.0" />
@@ -44,7 +44,6 @@
     <plugin source="git" spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" />
     <plugin name="cordova-plugin-whitelist" spec="*" />
     <plugin name="cordova-plugin-device" spec="*" />
-    <plugin name="cordova-custom-config" spec="*" />
     <plugin name="cordova-plugin-geolocation" spec="*" />
     <plugin name="cordova-plugin-camera" spec="*" />
     <plugin name="cordova-plugin-file" spec="*" />

@@ -11,7 +11,6 @@
     "plugins": {
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
-      "cordova-custom-config": {},
       "cordova-plugin-geolocation": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-file": {},
@@ -21,13 +20,12 @@
   "dependencies": {
     "cordova-android": "latest",
     "cordova-ios": "latest",
-    "cordova-windows": "latest",
-    "cordova-plugin-whitelist": "*",
-    "cordova-plugin-device": "*",
-    "cordova-custom-config": "*",
-    "cordova-plugin-geolocation": "*",
     "cordova-plugin-camera": "*",
+    "cordova-plugin-device": "*",
     "cordova-plugin-file": "*",
+    "cordova-plugin-geolocation": "*",
+    "cordova-plugin-whitelist": "*",
+    "cordova-windows": "latest",
     "cordova.plugins.diagnostic": "*"
   }
 }
