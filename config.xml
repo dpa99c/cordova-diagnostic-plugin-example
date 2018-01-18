@@ -10,10 +10,7 @@
     <content src="index.html" />
     <access origin="*" />
     <preference name="Fullscreen" value="false" />
-
-    <!-- Phonegap Build only -->
     <preference name="phonegap-version" value="cli-7.1.0" />
-
     <platform name="android">
         <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -33,6 +30,7 @@
         </config-file>
     </platform>
     <platform name="ios">
+        <plugin name="cordova-plugin-background-fetch" spec="*" />
         <config-file parent="UIBackgroundModes" platform="ios" target="*-Info.plist">
             <array>
                 <string>fetch</string>
@@ -45,13 +43,11 @@
         <preference name="target-device" value="universal" />
         <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
     </platform>
-    <plugin source="git" spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" />
     <plugin name="cordova-plugin-whitelist" spec="*" />
-    <plugin name="cordova-plugin-device" spec="*" />
-    <plugin name="cordova-plugin-geolocation" spec="*" />
-    <plugin name="cordova-plugin-camera" spec="*" />
-    <plugin name="cordova-plugin-file" spec="*" />
     <plugin name="cordova.plugins.diagnostic" spec="*" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
+    <plugin name="cordova-plugin-device" spec="^2.0.1" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <engine name="android" spec="latest" />
     <engine name="ios" spec="latest" />
     <engine name="windows" spec="latest" />

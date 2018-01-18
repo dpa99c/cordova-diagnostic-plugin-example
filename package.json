@@ -10,20 +10,19 @@
     ],
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-device": {},
+      "cordova.plugins.diagnostic": {},
       "cordova-plugin-geolocation": {},
-      "cordova-plugin-camera": {},
-      "cordova-plugin-file": {},
-      "cordova.plugins.diagnostic": {}
+      "cordova-plugin-device": {},
+      "cordova-plugin-file": {}
     }
   },
   "dependencies": {
     "cordova-android": "latest",
     "cordova-ios": "latest",
-    "cordova-plugin-camera": "*",
-    "cordova-plugin-device": "*",
-    "cordova-plugin-file": "*",
-    "cordova-plugin-geolocation": "*",
+    "cordova-plugin-camera": "^4.0.1",
+    "cordova-plugin-device": "^2.0.1",
+    "cordova-plugin-file": "^6.0.1",
+    "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-whitelist": "*",
     "cordova-windows": "latest",
     "cordova.plugins.diagnostic": "*"
