@@ -257,18 +257,22 @@ function onDeviceReady() {
             log("Successfully retrieved external SD card details");
             var $results = $('#request-external-sd-details-results');
             $results.show().empty();
-            details.forEach(function(detail){
-                $results.append('<p>Path: '+detail.path+
-                    '<br/>Writable?: '+detail.canWrite+
-                    '<br/>Free space: '+detail.freeSpace+
-                    '<br/>Type: '+detail.type+
-                    '</p>');
-                if(detail.canWrite){
-                    $('#write-external-sd-file').css('display', 'block');
-                    cordova.file.externalSdCardDirectory = detail.filePath;
-                }
-            });
-            window.scrollTo(0,document.body.scrollHeight)
+            if(details.length > 0){
+                details.forEach(function(detail){
+                    $results.append('<p>Path: '+detail.path+
+                        '<br/>Writable?: '+detail.canWrite+
+                        '<br/>Free space: '+detail.freeSpace+
+                        '<br/>Type: '+detail.type+
+                        '</p>');
+                    if(detail.canWrite){
+                        $('#write-external-sd-file').css('display', 'block');
+                        cordova.file.externalSdCardDirectory = detail.filePath;
+                    }
+                });
+                window.scrollTo(0,document.body.scrollHeight)
+            }else{
+                alert("No external storage found");
+            }
         }, error);
     });
 
