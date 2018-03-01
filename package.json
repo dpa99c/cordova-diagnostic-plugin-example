@@ -1,6 +1,6 @@
 {
   "name": "cordova.plugins.diagnostic.example",
-  "version": "3.9.0",
+  "version": "4.0.0",
   "displayName": "Diagnostic plugin example",
   "cordova": {
     "platforms": [
