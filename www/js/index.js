@@ -20,14 +20,14 @@ function onDeviceReady() {
             log("Bluetooth state changed to: " + state);
             checkState();
         }, function (error) {
-            error("Error registering for Bluetooth state changes: " + error);
+            handleError("Error registering for Bluetooth state changes: " + error);
         });
 
         cordova.plugins.diagnostic.registerLocationStateChangeHandler(function (state) {
             log("Location state changed to: " + state);
             checkState();
         }, function (error) {
-            error("Error registering for location state changes: " + error);
+            handleError("Error registering for location state changes: " + error);
         });
     }
 
@@ -57,7 +57,7 @@ function onDeviceReady() {
             log("NFC state changed to: " + state);
             checkState();
         }, function (error) {
-            error("Error registering for NFC state changes: " + error);
+            handleError("Error registering for NFC state changes: " + error);
         });
     }
 
@@ -68,7 +68,7 @@ function onDeviceReady() {
                 log("Successfully requested camera authorization: authorization was " + status);
                 checkState();
             },
-            errorCallback: error,
+            errorCallback: handleError,
             externalStorage: true
         });
     });
@@ -76,28 +76,28 @@ function onDeviceReady() {
     $('#settings').on("click", function(){
         cordova.plugins.diagnostic.switchToSettings(function(){
             log("Successfully opened settings");
-        }, error);
+        }, handleError);
     });
 
     $('#request-microphone').on("click", function(){
         cordova.plugins.diagnostic.requestMicrophoneAuthorization(function(status){
             log("Successfully requested microphone authorization: authorization was " + status);
             checkState();
-        }, error);
+        }, handleError);
     });
 
     $('#request-contacts').on("click", function(){
         cordova.plugins.diagnostic.requestContactsAuthorization(function(status){
             log("Successfully requested contacts authorization: authorization was " + status);
             checkState();
-        }, error);
+        }, handleError);
     });
 
     $('#request-calendar').on("click", function(){
         cordova.plugins.diagnostic.requestCalendarAuthorization(function(status){
             log("Successfully requested calendar authorization: authorization was " + status);
             checkState();
-        }, error);
+        }, handleError);
     });
 
 
@@ -107,51 +107,51 @@ function onDeviceReady() {
         checkState();
     };
     $('#request-location-always').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, error, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
+        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, handleError, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
     });
 
     $('#request-location-in-use').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, error, cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE);
+        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, handleError, cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE);
     });
 
     $('#request-camera-roll').on("click", function(){
         cordova.plugins.diagnostic.requestCameraRollAuthorization(function(status){
             log("Successfully requested camera roll authorization: authorization was " + status);
             checkState();
-        }, error);
+        }, handleError);
     });
 
     $('#request-reminders').on("click", function(){
         cordova.plugins.diagnostic.requestRemindersAuthorization(function(status){
             log("Successfully requested reminders authorization: authorization was " + status);
             checkState();
-        }, error);
+        }, handleError);
     });
 
     $('#request-bluetooth').on("click", function(){
         cordova.plugins.diagnostic.requestBluetoothAuthorization(function(){
             log("Successfully requested Bluetooth authorization");
             checkState();
-        }, error);
+        }, handleError);
     });
 
     $('#request-motion').on("click", function(){
-        cordova.plugins.diagnostic.requestMotionAuthorization(handleMotionAuthorizationStatus, error);
+        cordova.plugins.diagnostic.requestMotionAuthorization(handleMotionAuthorizationStatus, handleError);
     });
 
     // Android settings
     $('#warm-restart').on("click", function(){
-        cordova.plugins.diagnostic.restart(error, false);
+        cordova.plugins.diagnostic.restart(handleError, false);
     });
 
     $('#cold-restart').on("click", function(){
-        cordova.plugins.diagnostic.restart(error, true);
+        cordova.plugins.diagnostic.restart(handleError, true);
     });
 
     $('#request-location').on("click", function(){
         cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
             log("Successfully requested location authorization: authorization was " + status);
-        }, error);
+        }, handleError);
     });
 
     $('#location-settings').on("click", function(){
@@ -183,28 +183,28 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.setWifiState(function(){
             log("Successfully enabled Wifi");
             setTimeout(checkState, 100);
-        }, error, true);
+        }, handleError, true);
     });
 
     $('#disable-wifi').on("click", function(){
         cordova.plugins.diagnostic.setWifiState(function(){
             log("Successfully disabled Wifi");
             setTimeout(checkState, 100);
-        }, error, false);
+        }, handleError, false);
     });
 
     $('#enable-bluetooth').on("click", function(){
         cordova.plugins.diagnostic.setBluetoothState(function(){
             log("Successfully enabled Bluetooth");
             setTimeout(checkState, 1000);
-        }, error, true);
+        }, handleError, true);
     });
 
     $('#disable-bluetooth').on("click", function(){
         cordova.plugins.diagnostic.setBluetoothState(function(){
             log("Successfully disabled Bluetooth");
             setTimeout(checkState, 1000);
-        }, error, false);
+        }, handleError, false);
     });
 
     $('#get-location').on("click", function(){
@@ -214,7 +214,7 @@ function onDeviceReady() {
             var lon = position.coords.longitude;
             log("Current position: "+lat+","+lon, true);
         }, function (err) {
-            error("Position error: code="+ err.code + "; message=" + err.message);
+            handleError("Position error: code="+ err.code + "; message=" + err.message);
         }, posOptions);
     });
 
@@ -222,7 +222,7 @@ function onDeviceReady() {
         navigator.camera.getPicture(function(){
             log("Successfully took a photo", true);
         }, function(err){
-            error("Camera error: "+ err);
+            handleError("Camera error: "+ err);
         }, {
             saveToPhotoAlbum: false,
             destinationType: Camera.DestinationType.DATA_URL
@@ -239,7 +239,7 @@ function onDeviceReady() {
                 log("Successfully requested remote notifications authorization: " + result);
                 checkState();
             },
-            errorCallback: error,
+            errorCallback: handleError,
             types: types,
             omitRegistration: false
         });
@@ -249,7 +249,7 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.requestExternalStorageAuthorization(function(status){
             log("Successfully requested external storage authorization: authorization was " + status);
             checkState();
-        }, error);
+        }, handleError);
     });
 
     $('#request-external-sd-details').on("click", function(){
@@ -273,7 +273,7 @@ function onDeviceReady() {
             }else{
                 alert("No external storage found");
             }
-        }, error);
+        }, handleError);
     });
 
     $('#write-external-sd-file').on("click", function(){
@@ -283,7 +283,7 @@ function onDeviceReady() {
 
         var fail = function(error) {
             var msg = 'Failed to write file \'' + targetFilepath + '\'. Error code: ' + error.code;
-            error(msg);
+            handleError(msg);
         };
         window.resolveLocalFileSystemURL(targetDir, function (dirEntry) {
             dirEntry.getFile(filename, {
@@ -315,7 +315,7 @@ function onDeviceReady() {
             });
         };
         var failureCallback = function() {
-            error('- BackgroundFetch failed');
+            handleError('- BackgroundFetch failed');
         };
         Fetcher.configure(fetchCallback, failureCallback, {
             stopOnTerminate: true
@@ -335,22 +335,22 @@ function checkState(){
     var onGetLocationAuthorizationStatus;
     cordova.plugins.diagnostic.isLocationAvailable(function(available){
         $('#state .location').addClass(available ? 'on' : 'off');
-    }, error);
+    }, handleError);
 
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.isLocationEnabled(function (enabled) {
             $('#state .location-setting').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
 
         cordova.plugins.diagnostic.isLocationAuthorized(function(enabled){
             $('#state .location-authorization').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
             $('#state .location-authorization-status').find('.value').text(status.toUpperCase());
             onGetLocationAuthorizationStatus(status); // platform-specific
-        }, error);
+        }, handleError);
     }
 
 
@@ -363,23 +363,23 @@ function checkState(){
     if(platform === "android"){
         cordova.plugins.diagnostic.isGpsLocationAvailable(function(available){
             $('#state .gps-location').addClass(available ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.isNetworkLocationAvailable(function(available){
             $('#state .network-location').addClass(available ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
             $('#state .gps-location-setting').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.isNetworkLocationEnabled(function(enabled){
             $('#state .network-location-setting').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getLocationMode(function(mode){
             $('#state .location-mode').find('.value').text(mode.toUpperCase());
-        }, error);
+        }, handleError);
 
         onGetLocationAuthorizationStatus = function(status){
             $('#request-location').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
@@ -387,15 +387,15 @@ function checkState(){
 
         cordova.plugins.diagnostic.hasBluetoothSupport(function(supported){
             $('#state .bluetooth-support').addClass(supported ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.hasBluetoothLESupport(function(supported){
             $('#state .bluetooth-le-support').addClass(supported ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.hasBluetoothLEPeripheralSupport(function(supported){
             $('#state .bluetooth-le-peripheral-support').addClass(supported ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         // NFC
         cordova.plugins.diagnostic.isNFCPresent(function (present) {
@@ -405,15 +405,15 @@ function checkState(){
                     .attr('disabled', 'disabled')
                     .addClass('disabled');
             }
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.isNFCEnabled(function (enabled) {
             $('#state .nfc-enabled').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.isNFCAvailable(function (available) {
             $('#state .nfc-available').addClass(available ? 'on' : 'off');
-        }, error);
+        }, handleError);
     }
 
 
@@ -423,20 +423,20 @@ function checkState(){
         successCallback: function(available){
             $('#state .camera').addClass(available ? 'on' : 'off');
         },
-        errorCallback: error,
+        errorCallback: handleError,
         externalStorage: true
     });
 
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.isCameraPresent(function (present) {
             $('#state .camera-present').addClass(present ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.isCameraAuthorized({
             successCallback: function (authorized) {
                 $('#state .camera-authorized').addClass(authorized ? 'on' : 'off');
             },
-            errorCallback: error,
+            errorCallback: handleError,
             externalStorage: true
         });
 
@@ -445,7 +445,7 @@ function checkState(){
                 $('#state .camera-authorization-status').find('.value').text(status.toUpperCase());
                 onGetCameraAuthorizationStatus(status);
             },
-            errorCallback: error,
+            errorCallback: handleError,
             externalStorage: true
         });
 
@@ -454,12 +454,12 @@ function checkState(){
     if(platform === "ios"){
         cordova.plugins.diagnostic.isCameraRollAuthorized(function(authorized){
             $('#state .camera-roll-authorized').addClass(authorized ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getCameraRollAuthorizationStatus(function(status){
             $('#state .camera-roll-authorization-status').find('.value').text(status.toUpperCase());
             $('#request-camera-roll').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
-        }, error);
+        }, handleError);
 
         onGetCameraAuthorizationStatus = function(status){
             $('#request-camera').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
@@ -480,16 +480,16 @@ function checkState(){
             $('#enable-wifi').toggle(!available);
             $('#disable-wifi').toggle(!!available);
         }
-    }, error);
+    }, handleError);
 
     cordova.plugins.diagnostic.isWifiEnabled(function(available){
         $('#state .wifi-setting').addClass(available ? 'on' : 'off');
-    }, error);
+    }, handleError);
 
     if(platform === "android"){
         cordova.plugins.diagnostic.isDataRoamingEnabled(function(enabled){
             $('#state .data-roaming').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
     }
 
 
@@ -501,19 +501,19 @@ function checkState(){
             $('#enable-bluetooth').toggle(!available);
             $('#disable-bluetooth').toggle(!!available);
         }
-    }, error);
+    }, handleError);
 
     if(platform === "android"){
         cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){
             $('#state .bluetooth-setting').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
     }
 
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.getBluetoothState(function (state) {
             $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
             $('#request-bluetooth').toggle(status === cordova.plugins.diagnostic.permissionStatus.DENIED);
-        }, error);
+        }, handleError);
     }
 
     // Microphone
@@ -522,12 +522,12 @@ function checkState(){
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.isMicrophoneAuthorized(function (enabled) {
             $('#state .microphone-authorized').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getMicrophoneAuthorizationStatus(function (status) {
             $('#state .microphone-authorization-status').find('.value').text(status.toUpperCase());
             onGetMicrophoneAuthorizationStatus(status);
-        }, error);
+        }, handleError);
     }
 
     if(platform === "ios"){
@@ -548,12 +548,12 @@ function checkState(){
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.isContactsAuthorized(function (enabled) {
             $('#state .contacts-authorized').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getContactsAuthorizationStatus(function (status) {
             $('#state .contacts-authorization-status').find('.value').text(status.toUpperCase());
             onGetContactsAuthorizationStatus(status);
-        }, error);
+        }, handleError);
     }
 
     if(platform === "ios"){
@@ -574,12 +574,12 @@ function checkState(){
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.isCalendarAuthorized(function (enabled) {
             $('#state .calendar-authorized').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getCalendarAuthorizationStatus(function (status) {
             $('#state .calendar-authorization-status').find('.value').text(status.toUpperCase());
             onGetCalendarAuthorizationStatus(status);
-        }, error);
+        }, handleError);
     }
 
     if(platform === "ios"){
@@ -598,28 +598,28 @@ function checkState(){
         // Remote notifications
         cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function (enabled) {
             $('#state .remote-notifications-enabled').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
     }
 
     if(platform === "ios") {
         // Reminders
         cordova.plugins.diagnostic.isRemindersAuthorized(function (enabled) {
             $('#state .reminders-authorized').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getRemindersAuthorizationStatus(function (status) {
             $('#state .reminders-authorization-status').find('.value').text(status.toUpperCase());
             $('#request-reminders').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
-        }, error);
+        }, handleError);
 
         // Background refresh
         cordova.plugins.diagnostic.isBackgroundRefreshAuthorized(function (enabled) {
             $('#state .background-refresh-authorized').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getBackgroundRefreshStatus(function (status) {
             $('#state .background-refresh-authorization-status').find('.value').text(status.toUpperCase());
-        }, error);
+        }, handleError);
 
         // Remote notifications
         var $remoteNotificationsAuthorizationStatusValue = $('#state .remote-notifications-authorization-status').find('.value');
@@ -627,14 +627,14 @@ function checkState(){
             cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(function (status) {
                 $remoteNotificationsAuthorizationStatusValue.text(status.toUpperCase());
                 $('#request-remote-notifications').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
-            }, error);
+            }, handleError);
         }else{
             $remoteNotificationsAuthorizationStatusValue.text("UNAVAILABLE");
         }
 
         cordova.plugins.diagnostic.isRegisteredForRemoteNotifications(function (enabled) {
             $('#state .remote-notifications-registered').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getRemoteNotificationTypes(function (types) {
             var value = "";
@@ -642,7 +642,7 @@ function checkState(){
                 value += type + "=" + (types[type] ? "Y" : "N") +"; ";
             }
             $('#state .remote-notifications-types').find('.value').text(value);
-        }, error);
+        }, handleError);
 
         // Motion
         cordova.plugins.diagnostic.isMotionAvailable(function (available) {
@@ -652,13 +652,13 @@ function checkState(){
                     .attr('disabled', 'disabled')
                     .addClass('disabled');
             }
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.isMotionRequestOutcomeAvailable(function (available) {
             $('#state .motion-request-outcome-available').addClass(available ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
-        cordova.plugins.diagnostic.getMotionAuthorizationStatus(handleMotionAuthorizationStatus, error);
+        cordova.plugins.diagnostic.getMotionAuthorizationStatus(handleMotionAuthorizationStatus, handleError);
 
     }
 
@@ -666,13 +666,13 @@ function checkState(){
     if(platform === "android"){
         cordova.plugins.diagnostic.isExternalStorageAuthorized(function (enabled) {
             $('#state .external-sd-authorized').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.getExternalStorageAuthorizationStatus(function (status) {
             $('#state .external-sd-authorization-status').find('.value').text(status.toUpperCase());
             $('#request-external-sd-permission').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
             $('#request-external-sd-details').toggle(status === cordova.plugins.diagnostic.permissionStatus.GRANTED);
-        }, error);
+        }, handleError);
     }
 
 
@@ -680,11 +680,11 @@ function checkState(){
     if(platform === "android"){
         cordova.plugins.diagnostic.isADBModeEnabled(function(enabled){
             $('#state .adb').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
 
         cordova.plugins.diagnostic.isDeviceRooted(function(enabled){
             $('#state .root').addClass(enabled ? 'on' : 'off');
-        }, error);
+        }, handleError);
     }
 
     if(platform === "android" || platform === "ios"){
@@ -694,7 +694,7 @@ function checkState(){
     }
 }
 
-function error(error){
+function handleError(error){
     var msg = "Error: "+error;
     console.error(msg);
     alert(msg);
