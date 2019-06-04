@@ -43,7 +43,7 @@ function onDeviceReady() {
                     case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
                         log("Permission to use "+permission+" has not been requested yet");
                         break;
-                    case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                    case cordova.plugins.diagnostic.permissionStatus.DENIED_ONCE:
                         log("Permission denied to use "+permission);
                         break;
                     case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
@@ -512,7 +512,7 @@ function checkState(){
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.getBluetoothState(function (state) {
             $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
-            $('#request-bluetooth').toggle(status === cordova.plugins.diagnostic.permissionStatus.DENIED);
+            $('#request-bluetooth').toggle(state === cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
         }, handleError);
     }
 
