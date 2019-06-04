@@ -13,12 +13,16 @@
       "cordova.plugins.diagnostic": {},
       "cordova-plugin-geolocation": {},
       "cordova-plugin-device": {},
-      "cordova-plugin-file": {}
+      "cordova-plugin-file": {},
+      "cordova-plugin-androidx": {},
+      "cordova-plugin-androidx-adapter": {}
     }
   },
   "dependencies": {
     "cordova-android": "latest",
     "cordova-ios": "latest",
+    "cordova-plugin-androidx": "^1.0.2",
+    "cordova-plugin-androidx-adapter": "^1.0.2",
     "cordova-plugin-camera": "^4.0.1",
     "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-file": "^6.0.1",
