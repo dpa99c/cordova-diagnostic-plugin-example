@@ -1,4 +1,4 @@
-var platform, osVersion;
+var platform, osVersion, monitoringBluetooth = false;
 function onDeviceReady() {
     osVersion = parseFloat(device.version);
     platform = device.platform.toLowerCase();
@@ -15,13 +15,6 @@ function onDeviceReady() {
     // Register change listeners for iOS+Android
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.enableDebug();
-
-        cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function (state) {
-            log("Bluetooth state changed to: " + state);
-            checkState();
-        }, function (error) {
-            handleError("Error registering for Bluetooth state changes: " + error);
-        });
 
         cordova.plugins.diagnostic.registerLocationStateChangeHandler(function (state) {
             log("Location state changed to: " + state);
@@ -59,6 +52,8 @@ function onDeviceReady() {
         }, function (error) {
             handleError("Error registering for NFC state changes: " + error);
         });
+
+        registerBluetoothStateChangeHandler();
     }
 
     // iOS+Android settings
@@ -131,8 +126,14 @@ function onDeviceReady() {
     $('#request-bluetooth').on("click", function(){
         cordova.plugins.diagnostic.requestBluetoothAuthorization(function(){
             log("Successfully requested Bluetooth authorization");
+            if(!monitoringBluetooth) registerBluetoothStateChangeHandler();
             checkState();
         }, handleError);
+    });
+
+    $('#monitor-bluetooth').on("click", function(){
+        registerBluetoothStateChangeHandler();
+        $('#monitor-bluetooth').remove();
     });
 
     $('#request-motion').on("click", function(){
@@ -494,26 +495,28 @@ function checkState(){
 
 
     // Bluetooth
-    cordova.plugins.diagnostic.isBluetoothAvailable(function(available){
-        $('#state .bluetooth-available').addClass(available ? 'on' : 'off');
+    if(monitoringBluetooth) {
+        cordova.plugins.diagnostic.isBluetoothAvailable(function (available) {
+            $('#state .bluetooth-available').addClass(available ? 'on' : 'off');
 
-        if(platform === "android" || platform === "windows") {
-            $('#enable-bluetooth').toggle(!available);
-            $('#disable-bluetooth').toggle(!!available);
+            if (platform === "android" || platform === "windows") {
+                $('#enable-bluetooth').toggle(!available);
+                $('#disable-bluetooth').toggle(!!available);
+            }
+        }, handleError);
+
+        if (platform === "android") {
+            cordova.plugins.diagnostic.isBluetoothEnabled(function (enabled) {
+                $('#state .bluetooth-setting').addClass(enabled ? 'on' : 'off');
+            }, handleError);
         }
-    }, handleError);
 
-    if(platform === "android"){
-        cordova.plugins.diagnostic.isBluetoothEnabled(function(enabled){
-            $('#state .bluetooth-setting').addClass(enabled ? 'on' : 'off');
-        }, handleError);
-    }
-
-    if(platform === "android" || platform === "ios") {
-        cordova.plugins.diagnostic.getBluetoothState(function (state) {
-            $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
-            $('#request-bluetooth').toggle(state === cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
-        }, handleError);
+        if (platform === "android" || platform === "ios") {
+            cordova.plugins.diagnostic.getBluetoothState(function (state) {
+                $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
+                $('#request-bluetooth, #monitor-bluetooth').toggle(state === cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
+            }, handleError);
+        }
     }
 
     // Microphone
@@ -722,6 +725,16 @@ function handleMotionAuthorizationStatus(status) {
             .attr('disabled', 'disabled')
             .addClass('disabled');
     }
+}
+
+function registerBluetoothStateChangeHandler(){
+    cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function (state) {
+        log("Bluetooth state changed to: " + state);
+        checkState();
+    }, function (error) {
+        handleError("Error registering for Bluetooth state changes: " + error);
+    });
+    monitoringBluetooth = true;
 }
 
 
