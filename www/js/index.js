@@ -57,6 +57,18 @@ function onDeviceReady() {
     }
 
     // iOS+Android settings
+    var onLocationRequestChange = function(status){
+        log("Successfully requested location authorization: authorization was " + status);
+        checkState();
+    };
+    $('#request-location-always').on("click", function(){
+        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, handleError, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
+    });
+
+    $('#request-location-in-use').on("click", function(){
+        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, handleError, cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE);
+    });
+
     $('#request-camera').on("click", function(){
         cordova.plugins.diagnostic.requestCameraAuthorization({
             successCallback: function(status){
@@ -97,18 +109,6 @@ function onDeviceReady() {
 
 
     // iOS settings
-    var onLocationRequestChange = function(status){
-        log("Successfully requested location authorization: authorization was " + status);
-        checkState();
-    };
-    $('#request-location-always').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, handleError, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
-    });
-
-    $('#request-location-in-use').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, handleError, cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE);
-    });
-
     $('#request-camera-roll').on("click", function(){
         cordova.plugins.diagnostic.requestCameraRollAuthorization(function(status){
             log("Successfully requested camera roll authorization: authorization was " + status);
@@ -147,12 +147,6 @@ function onDeviceReady() {
 
     $('#cold-restart').on("click", function(){
         cordova.plugins.diagnostic.restart(handleError, true);
-    });
-
-    $('#request-location').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
-            log("Successfully requested location authorization: authorization was " + status);
-        }, handleError);
     });
 
     $('#location-settings').on("click", function(){

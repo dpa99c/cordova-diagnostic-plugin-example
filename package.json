@@ -1,6 +1,6 @@
 {
   "name": "cordova.plugins.diagnostic.example",
-  "version": "5.0.0",
+  "version": "5.0.2",
   "displayName": "Diagnostic plugin example",
   "cordova": {
     "platforms": [
@@ -19,7 +19,7 @@
     }
   },
   "dependencies": {
-    "cordova-android": "^8.1.0",
+    "cordova-android": "^9.0.0-nightly.2020.5.10.e86b211c",
     "cordova-ios": "latest",
     "cordova-plugin-androidx": "^1.0.2",
     "cordova-plugin-androidx-adapter": "^1.1.1",
