@@ -29,6 +29,6 @@
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-whitelist": "*",
     "cordova-windows": "latest",
-    "cordova.plugins.diagnostic": "*"
+    "cordova.plugins.diagnostic": "git+https://github.com/dpa99c/cordova-diagnostic-plugin.git#dev"
   }
 }
