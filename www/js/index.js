@@ -56,6 +56,16 @@ function onDeviceReady() {
         registerBluetoothStateChangeHandler();
     }
 
+    // Register change listeners for iOS
+    if(platform === "ios") {
+        cordova.plugins.diagnostic.registerLocationAccuracyAuthorizationChangeHandler(function (accuracyAuthorization) {
+            log("Location accuracy authorization changed to: " + accuracyAuthorization);
+            checkState();
+        }, function (error) {
+            handleError("Error registering for location accuracy authorization changes: " + error);
+        });
+    }
+
     // iOS+Android settings
     var onLocationRequestChange = function(status){
         log("Successfully requested location authorization: authorization was " + status);
@@ -109,6 +119,13 @@ function onDeviceReady() {
 
 
     // iOS settings
+    $('#request-location-full-accuracy').on("click", function(){
+        cordova.plugins.diagnostic.requestTemporaryFullAccuracyAuthorization("navigation", function(accuracyAuthorization){
+            log("User chose accuracy authorization:" + accuracyAuthorization);
+            checkState();
+        }, handleError);
+    });
+
     $('#request-camera-roll').on("click", function(){
         cordova.plugins.diagnostic.requestCameraRollAuthorization(function(status){
             log("Successfully requested camera roll authorization: authorization was " + status);
@@ -353,6 +370,10 @@ function checkState(){
         onGetLocationAuthorizationStatus = function(status){
             $('.request-location').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }
+
+        cordova.plugins.diagnostic.getLocationAccuracyAuthorization(function(accuracyAuthorization){
+            $('#state .location-accuracy-authorization').find('.value').text(accuracyAuthorization.toUpperCase());
+        }, handleError);
     }
 
     if(platform === "android"){

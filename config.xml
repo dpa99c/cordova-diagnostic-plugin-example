@@ -40,6 +40,14 @@
                 <string>remote-notification</string>
             </array>
         </config-file>
+        <config-file platform="ios" target="*-Info.plist" parent="NSLocationTemporaryUsageDescriptionDictionary">
+            <dict>
+                <key>navigation</key>
+                <string>This app requires access to your exact location in order to provide SatNav route navigation.</string>
+                <key>emergency</key>
+                <string>This app requires access to your exact location in order to report your location to emergency services.</string>
+            </dict>
+        </config-file>
     </platform>
     <platform name="windows">
         <preference name="windows-target-version" value="10.0" />

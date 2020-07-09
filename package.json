@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "cordova-android": "^9.0.0-nightly.2020.5.10.e86b211c",
-    "cordova-ios": "latest",
+    "cordova-ios": "^6.1.0",
     "cordova-plugin-androidx": "^1.0.2",
     "cordova-plugin-androidx-adapter": "^1.1.1",
     "cordova-plugin-camera": "^4.0.1",
