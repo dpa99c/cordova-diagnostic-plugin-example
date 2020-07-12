@@ -54,7 +54,6 @@
         <preference name="target-device" value="universal" />
         <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
     </platform>
-    <engine name="android" spec="latest" />
     <engine name="ios" spec="latest" />
     <engine name="windows" spec="latest" />
 </widget>
