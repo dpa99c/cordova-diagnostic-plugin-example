@@ -57,7 +57,7 @@ function onDeviceReady() {
     }
 
     // Register change listeners for iOS
-    if(platform === "ios") {
+    if(platform === "ios" && osVersion >= 14) {
         cordova.plugins.diagnostic.registerLocationAccuracyAuthorizationChangeHandler(function (accuracyAuthorization) {
             log("Location accuracy authorization changed to: " + accuracyAuthorization);
             checkState();
@@ -371,9 +371,11 @@ function checkState(){
             $('.request-location').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
         }
 
-        cordova.plugins.diagnostic.getLocationAccuracyAuthorization(function(accuracyAuthorization){
-            $('#state .location-accuracy-authorization').find('.value').text(accuracyAuthorization.toUpperCase());
-        }, handleError);
+        if(osVersion >= 14){
+            cordova.plugins.diagnostic.getLocationAccuracyAuthorization(function(accuracyAuthorization){
+                $('#state .location-accuracy-authorization').find('.value').text(accuracyAuthorization.toUpperCase());
+            }, handleError);
+        }
     }
 
     if(platform === "android"){
