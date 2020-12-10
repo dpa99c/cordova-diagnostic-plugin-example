@@ -368,7 +368,7 @@ function checkState(){
 
     if(platform === "ios"){
         onGetLocationAuthorizationStatus = function(status){
-            $('.request-location').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+            $('.request-location').toggle(shouldAllowRequestPermission(status));
         }
 
         if(osVersion >= 14){
@@ -400,7 +400,7 @@ function checkState(){
         }, handleError);
 
         onGetLocationAuthorizationStatus = function(status){
-            $('#request-location').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
+            $('#request-location').toggle(shouldAllowRequestPermission(status));
         };
 
         cordova.plugins.diagnostic.hasBluetoothSupport(function(supported){
@@ -476,17 +476,17 @@ function checkState(){
 
         cordova.plugins.diagnostic.getCameraRollAuthorizationStatus(function(status){
             $('#state .camera-roll-authorization-status').find('.value').text(status.toUpperCase());
-            $('#request-camera-roll').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-camera-roll').toggle(shouldAllowRequestPermission(status));
         }, handleError);
 
         onGetCameraAuthorizationStatus = function(status){
-            $('#request-camera').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-camera').toggle(shouldAllowRequestPermission(status));
         }
     }
 
     if(platform === "android"){
         onGetCameraAuthorizationStatus = function(status){
-            $('#request-camera').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
+            $('#request-camera').toggle(shouldAllowRequestPermission(status));
         }
     }
 
@@ -552,13 +552,13 @@ function checkState(){
 
     if(platform === "ios"){
         onGetMicrophoneAuthorizationStatus = function(status){
-            $('#request-microphone').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-microphone').toggle(shouldAllowRequestPermission(status));
         }
     }
 
     if(platform === "android"){
         onGetMicrophoneAuthorizationStatus = function(status){
-            $('#request-microphone').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
+            $('#request-microphone').toggle(shouldAllowRequestPermission(status));
         }
     }
 
@@ -578,13 +578,13 @@ function checkState(){
 
     if(platform === "ios"){
         onGetContactsAuthorizationStatus = function(status){
-            $('#request-contacts').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-contacts').toggle(shouldAllowRequestPermission(status));
         }
     }
 
     if(platform === "android"){
         onGetContactsAuthorizationStatus = function(status){
-            $('#request-contacts').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
+            $('#request-contacts').toggle(shouldAllowRequestPermission(status));
         }
     }
 
@@ -604,13 +604,13 @@ function checkState(){
 
     if(platform === "ios"){
         onGetCalendarAuthorizationStatus = function(status){
-            $('#request-calendar').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-calendar').toggle(shouldAllowRequestPermission(status));
         }
     }
 
     if(platform === "android"){
         onGetCalendarAuthorizationStatus = function(status){
-            $('#request-calendar').toggle(status != cordova.plugins.diagnostic.permissionStatus.GRANTED && status != cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
+            $('#request-calendar').toggle(shouldAllowRequestPermission(status));
         }
     }
 
@@ -629,7 +629,7 @@ function checkState(){
 
         cordova.plugins.diagnostic.getRemindersAuthorizationStatus(function (status) {
             $('#state .reminders-authorization-status').find('.value').text(status.toUpperCase());
-            $('#request-reminders').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-reminders').toggle(shouldAllowRequestPermission(status));
         }, handleError);
 
         // Background refresh
@@ -646,7 +646,7 @@ function checkState(){
         if(osVersion >= 10){
             cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(function (status) {
                 $remoteNotificationsAuthorizationStatusValue.text(status.toUpperCase());
-                $('#request-remote-notifications').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+                $('#request-remote-notifications').toggle(shouldAllowRequestPermission(status));
             }, handleError);
         }else{
             $remoteNotificationsAuthorizationStatusValue.text("UNAVAILABLE");
@@ -690,7 +690,7 @@ function checkState(){
 
         cordova.plugins.diagnostic.getExternalStorageAuthorizationStatus(function (status) {
             $('#state .external-sd-authorization-status').find('.value').text(status.toUpperCase());
-            $('#request-external-sd-permission').toggle(status === cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED);
+            $('#request-external-sd-permission').toggle(shouldAllowRequestPermission(status));
             $('#request-external-sd-details').toggle(status === cordova.plugins.diagnostic.permissionStatus.GRANTED);
         }, handleError);
     }
@@ -752,6 +752,17 @@ function registerBluetoothStateChangeHandler(){
         handleError("Error registering for Bluetooth state changes: " + error);
     });
     monitoringBluetooth = true;
+}
+
+function shouldAllowRequestPermission(status){
+    if(platform === "android"){
+        return status !== cordova.plugins.diagnostic.permissionStatus.GRANTED &&
+            (status !== cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS
+                || osVersion >= 11 // On Android 11+, "Only this time" will cause the status to be detected as `DENIED_ALWAYS` on subsequent app sessions
+            )
+    }else{
+        return shouldAllowRequestPermission(status);
+    }
 }
 
 
