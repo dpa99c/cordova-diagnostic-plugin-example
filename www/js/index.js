@@ -363,6 +363,10 @@ function checkState(){
             $('#state .location-authorization-status').find('.value').text(status.toUpperCase());
             onGetLocationAuthorizationStatus(status); // platform-specific
         }, handleError);
+
+        cordova.plugins.diagnostic.getCurrentBatteryLevel(function (level) {
+            $('#state .battery-level').find('.value').text(level+'%');
+        }, handleError);
     }
 
 
