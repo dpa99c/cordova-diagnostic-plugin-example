@@ -10,14 +10,11 @@
     "plugins": {
       "cordova.plugins.diagnostic": {},
       "cordova-plugin-androidx-adapter": {},
-      "cordova-plugin-androidx": {},
       "cordova-plugin-compat": {},
       "cordova-plugin-file": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-geolocation": {},
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-splashscreen": {},
-      "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {}
     }
   },
