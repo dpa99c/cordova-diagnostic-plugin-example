@@ -10,7 +10,6 @@
     "plugins": {
       "cordova.plugins.diagnostic": {},
       "cordova-plugin-androidx-adapter": {},
-      "cordova-plugin-compat": {},
       "cordova-plugin-file": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-geolocation": {},
