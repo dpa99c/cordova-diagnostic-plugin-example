@@ -18,7 +18,7 @@
     }
   },
   "devDependencies": {
-    "cordova-android": "^10.1.1",
+    "cordova-android": "^11.0.0",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-androidx": "^1.0.2",
     "cordova-plugin-androidx-adapter": "^1.1.1",

@@ -7,11 +7,12 @@
     <author email="dave@workingedge.co.uk" href="http://www.workingedge.co.uk/dave">
         Dave Alden
     </author>
+
     <content src="index.html" />
     <access origin="*" />
     <preference name="Fullscreen" value="false" />
-    <preference name="phonegap-version" value="cli-7.1.0" />
-    <preference name="cordova.plugins.diagnostic.modules" value="LOCATION BLUETOOTH WIFI CAMERA NOTIFICATIONS MICROPHONE CONTACTS CALENDAR REMINDERS MOTION NFC EXTERNAL_STORAGE" />
+    <preference name="cordova.plugins.diagnostic.modules" value="LOCATION BLUETOOTH WIFI CAMERA NOTIFICATIONS MICROPHONE CONTACTS CALENDAR REMINDERS MOTION NFC EXTERNAL_STORAGE AIRPLANE_MODE" />
+
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:allowBackup="false"/>
@@ -37,6 +38,7 @@
             <uses-permission android:name="android.permission.GET_ACCOUNTS" />
         </config-file>
     </platform>
+
     <platform name="ios">
         <plugin name="cordova-plugin-background-fetch" spec="*" />
         <config-file parent="UIBackgroundModes" platform="ios" target="*-Info.plist">
@@ -54,11 +56,4 @@
             </dict>
         </config-file>
     </platform>
-    <platform name="windows">
-        <preference name="windows-target-version" value="10.0" />
-        <preference name="target-device" value="universal" />
-        <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
-    </platform>
-    <engine name="ios" spec="latest" />
-    <engine name="windows" spec="latest" />
 </widget>
