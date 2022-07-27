@@ -1,0 +1,120 @@
+body,
+ul{
+    padding: 0;
+    margin: 0;
+}
+
+body.ios{
+    margin-top: 20px;
+}
+
+body:not(.android) .android-only,
+body:not(.ios) .ios-only,
+.os-conditional,
+.settings button.os-conditional{
+    display: none;
+}
+
+body.android .os-conditional.android,
+body.ios .os-conditional.ios,
+body.android .settings button.os-conditional.android,
+body.ios .settings button.os-conditional.ios{
+    display: block;
+}
+
+#state > div{
+    clear: right;
+}
+
+h2{
+    text-align: center;
+    margin-top: 0;
+    padding-top: 0;
+}
+h3, h4{
+    margin-top: 12px;
+    padding-top: 0;
+}
+li{
+    list-style: none;
+    clear: right;
+    padding: 0;
+    margin: 12px 0 0 4px;
+}
+li span.name{
+
+}
+li span.state,
+li span.value{
+    float: right;
+    padding: 2px;
+    text-align: right;
+}
+li span.on{
+    background-color: green;
+}
+li span.off{
+    background-color: red;
+}
+
+li span.on,
+li.off span.on,
+li.on span.off{
+    display: none;
+}
+
+li.on span.on{
+    display: list-item !important;
+}
+
+.settings{
+    border-top: 1px solid #000;
+    margin-top: 24px;
+    padding-top: 24px;
+    width: 100%;
+}
+
+.settings button,
+.settings select[multiple]{
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 24px;
+}
+
+.disabled{
+    color: #cccccc;
+}
+
+#request-external-sd-details-results{
+    display: none;
+    margin-top: 12px;
+    border-top: 1px solid #000;
+    width: 100%;
+    word-break: break-word;
+}
+#request-external-sd-details-results p{
+    padding: 12px;
+}
+#write-external-sd-file{
+    display: none;
+}
+
+#request-remote-notifications{
+    border: 1px solid #ccc;
+    margin: 0 12px;
+    padding-top: 12px;
+}
+
+#request-remote-notifications *{
+    text-align: center;
+}
+
+.section{
+    border: 1px solid #ccc;
+    margin: 12px;
+    padding: 12px;
+}
+
+.selector{
+    margin: 12px 0;
+}

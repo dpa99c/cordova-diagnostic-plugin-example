@@ -124,7 +124,6 @@ function onDeviceReady() {
 
 
     // iOS settings
-
     $('#request-camera-roll').on("click", function(){
         cordova.plugins.diagnostic.requestCameraRollAuthorization(function(status){
             log("Successfully requested camera roll authorization: authorization was " + status);
@@ -140,11 +139,18 @@ function onDeviceReady() {
     });
 
     $('#request-bluetooth').on("click", function(){
+        var permissions;
+        if(platform === "android"){
+            permissions = [];
+            $("#bluetooth-permission-types :selected").each(function(){
+                permissions.push($(this).val());
+            });
+        }
         cordova.plugins.diagnostic.requestBluetoothAuthorization(function(){
             log("Successfully requested Bluetooth authorization");
             if(!monitoringBluetooth) registerBluetoothStateChangeHandler();
             checkState();
-        }, handleError);
+        }, handleError, permissions);
     });
 
     $('#monitor-bluetooth').on("click", function(){
@@ -433,6 +439,14 @@ function checkState(){
             $('#state .bluetooth-le-peripheral-support').addClass(supported ? 'on' : 'off');
         }, handleError);
 
+        cordova.plugins.diagnostic.getBluetoothAuthorizationStatuses(function(statuses){
+            var value = "";
+            for(var status in statuses){
+                if(value) value += "<br/>";
+                value += status.toUpperCase() + ": " + statuses[status].toUpperCase();
+            }
+            $('#state .bluetooth-authorization-status').find('.value').html(value);
+        }, handleError);
 
 
         // NFC
@@ -546,7 +560,6 @@ function checkState(){
         if (platform === "android" || platform === "ios") {
             cordova.plugins.diagnostic.getBluetoothState(function (state) {
                 $('#state .bluetooth-state').find('.value').text(state.toUpperCase());
-                $('#request-bluetooth, #monitor-bluetooth').toggle(state === cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS);
             }, handleError);
         }
     }
