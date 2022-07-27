@@ -380,6 +380,9 @@ function checkState(){
             console.log('Location status changed to: ' + status);
         }
 
+        cordova.plugins.diagnostic.getBluetoothAuthorizationStatus(function(status){
+            $('#state .bluetooth-authorization-status').find('.value').text(status.toUpperCase());
+        }, handleError);
     }
 
     if((platform === "ios" && osVersion >= 14) || platform === "android"){
