@@ -67,16 +67,21 @@ function onDeviceReady() {
     }
 
     // iOS+Android settings
-    var onLocationRequestChange = function(status){
-        log("Successfully requested location authorization: authorization was " + status);
-        checkState();
-    };
-    $('#request-location-always').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, handleError, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
-    });
+    $('#request-location').on("click", function(){
+        var locationRequestType = $('#location-request-type').val() === 'always' ? cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS : cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE,
+            locationAccuracyType = $('#location-accuracy-type').val() === 'precise' ? cordova.plugins.diagnostic.locationAccuracyAuthorization.FULL : cordova.plugins.diagnostic.locationAccuracyAuthorization.REDUCED;
 
-    $('#request-location-in-use').on("click", function(){
-        cordova.plugins.diagnostic.requestLocationAuthorization(onLocationRequestChange, handleError, cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE);
+        cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
+            log("Successfully requested location authorization: authorization was " + status);
+            checkState();
+
+            if(platform === "ios" && osVersion >= 14 && locationAccuracyType === cordova.plugins.diagnostic.locationAccuracyAuthorization.FULL && status.match("GRANTED")){
+                cordova.plugins.diagnostic.requestTemporaryFullAccuracyAuthorization("navigation", function(accuracyAuthorization){
+                    log("User chose accuracy authorization:" + accuracyAuthorization);
+                    checkState();
+                }, handleError);
+            }
+        }, handleError, locationRequestType, locationAccuracyType);
     });
 
     $('#request-camera').on("click", function(){
@@ -119,12 +124,6 @@ function onDeviceReady() {
 
 
     // iOS settings
-    $('#request-location-full-accuracy').on("click", function(){
-        cordova.plugins.diagnostic.requestTemporaryFullAccuracyAuthorization("navigation", function(accuracyAuthorization){
-            log("User chose accuracy authorization:" + accuracyAuthorization);
-            checkState();
-        }, handleError);
-    });
 
     $('#request-camera-roll').on("click", function(){
         cordova.plugins.diagnostic.requestCameraRollAuthorization(function(status){
@@ -372,17 +371,30 @@ function checkState(){
 
     if(platform === "ios"){
         onGetLocationAuthorizationStatus = function(status){
-            $('.request-location').toggle(shouldAllowRequestPermission(status));
+            console.log('Location status changed to: ' + status);
         }
 
-        if(osVersion >= 14){
-            cordova.plugins.diagnostic.getLocationAccuracyAuthorization(function(accuracyAuthorization){
-                $('#state .location-accuracy-authorization').find('.value').text(accuracyAuthorization.toUpperCase());
-            }, handleError);
-        }
+    }
+
+    if((platform === "ios" && osVersion >= 14) || platform === "android"){
+        cordova.plugins.diagnostic.getLocationAccuracyAuthorization(function(accuracyAuthorization){
+            var displayValue = accuracyAuthorization ? accuracyAuthorization.toUpperCase() : "UNKNOWN";
+            $('#state .location-accuracy-authorization').find('.value').text(displayValue);
+        }, handleError);
     }
 
     if(platform === "android"){
+
+        // Location
+        cordova.plugins.diagnostic.getLocationAuthorizationStatuses(function(statuses){
+            var value = "";
+            for(var status in statuses){
+                if(value) value += "<br/>";
+                value += status.toUpperCase() + ": " + statuses[status].toUpperCase();
+            }
+            $('#state .location-authorization-statuses').find('.value').html(value);
+        }, handleError);
+
         cordova.plugins.diagnostic.isGpsLocationAvailable(function(available){
             $('#state .gps-location').addClass(available ? 'on' : 'off');
         }, handleError);
@@ -404,9 +416,11 @@ function checkState(){
         }, handleError);
 
         onGetLocationAuthorizationStatus = function(status){
-            $('#request-location').toggle(shouldAllowRequestPermission(status));
+            console.log('Location status changed to: ' + status);
         };
 
+
+        // Bluetooth
         cordova.plugins.diagnostic.hasBluetoothSupport(function(supported){
             $('#state .bluetooth-support').addClass(supported ? 'on' : 'off');
         }, handleError);
@@ -418,6 +432,8 @@ function checkState(){
         cordova.plugins.diagnostic.hasBluetoothLEPeripheralSupport(function(supported){
             $('#state .bluetooth-le-peripheral-support').addClass(supported ? 'on' : 'off');
         }, handleError);
+
+
 
         // NFC
         cordova.plugins.diagnostic.isNFCPresent(function (present) {
@@ -480,19 +496,14 @@ function checkState(){
 
         cordova.plugins.diagnostic.getCameraRollAuthorizationStatus(function(status){
             $('#state .camera-roll-authorization-status').find('.value').text(status.toUpperCase());
-            $('#request-camera-roll').toggle(shouldAllowRequestPermission(status));
+            console.log('Camera roll status changed to: ' + status);
         }, handleError);
 
-        onGetCameraAuthorizationStatus = function(status){
-            $('#request-camera').toggle(shouldAllowRequestPermission(status));
-        }
+    }
+    onGetCameraAuthorizationStatus = function(status){
+        console.log('Camera status changed to: ' + status);
     }
 
-    if(platform === "android"){
-        onGetCameraAuthorizationStatus = function(status){
-            $('#request-camera').toggle(shouldAllowRequestPermission(status));
-        }
-    }
 
     // Network
     cordova.plugins.diagnostic.isWifiAvailable(function(available){
@@ -554,16 +565,8 @@ function checkState(){
         }, handleError);
     }
 
-    if(platform === "ios"){
-        onGetMicrophoneAuthorizationStatus = function(status){
-            $('#request-microphone').toggle(shouldAllowRequestPermission(status));
-        }
-    }
-
-    if(platform === "android"){
-        onGetMicrophoneAuthorizationStatus = function(status){
-            $('#request-microphone').toggle(shouldAllowRequestPermission(status));
-        }
+    onGetMicrophoneAuthorizationStatus = function(status){
+        console.log('Microphone status changed to: ' + status);
     }
 
     // Contacts
@@ -580,16 +583,8 @@ function checkState(){
         }, handleError);
     }
 
-    if(platform === "ios"){
-        onGetContactsAuthorizationStatus = function(status){
-            $('#request-contacts').toggle(shouldAllowRequestPermission(status));
-        }
-    }
-
-    if(platform === "android"){
-        onGetContactsAuthorizationStatus = function(status){
-            $('#request-contacts').toggle(shouldAllowRequestPermission(status));
-        }
+    onGetContactsAuthorizationStatus = function(status){
+        console.log('Contacts auth status changed to: ' + status);
     }
 
     // Calendar
@@ -606,16 +601,8 @@ function checkState(){
         }, handleError);
     }
 
-    if(platform === "ios"){
-        onGetCalendarAuthorizationStatus = function(status){
-            $('#request-calendar').toggle(shouldAllowRequestPermission(status));
-        }
-    }
-
-    if(platform === "android"){
-        onGetCalendarAuthorizationStatus = function(status){
-            $('#request-calendar').toggle(shouldAllowRequestPermission(status));
-        }
+    onGetCalendarAuthorizationStatus = function(status){
+        console.log('Calendar auth status changed to: ' + status);
     }
 
     if(platform === "ios" || platform === "android") {
@@ -633,7 +620,8 @@ function checkState(){
 
         cordova.plugins.diagnostic.getRemindersAuthorizationStatus(function (status) {
             $('#state .reminders-authorization-status').find('.value').text(status.toUpperCase());
-            $('#request-reminders').toggle(shouldAllowRequestPermission(status));
+            console.log('Reminders auth status changed to: ' + status);
+
         }, handleError);
 
         // Background refresh
@@ -650,7 +638,7 @@ function checkState(){
         if(osVersion >= 10){
             cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(function (status) {
                 $remoteNotificationsAuthorizationStatusValue.text(status.toUpperCase());
-                $('#request-remote-notifications').toggle(shouldAllowRequestPermission(status));
+                console.log('Remote notifications auth status changed to: ' + status);
             }, handleError);
         }else{
             $remoteNotificationsAuthorizationStatusValue.text("UNAVAILABLE");
@@ -694,7 +682,7 @@ function checkState(){
 
         cordova.plugins.diagnostic.getExternalStorageAuthorizationStatus(function (status) {
             $('#state .external-sd-authorization-status').find('.value').text(status.toUpperCase());
-            $('#request-external-sd-permission').toggle(shouldAllowRequestPermission(status));
+            console.log('External SD auth status changed to: ' + status);
             $('#request-external-sd-details').toggle(status === cordova.plugins.diagnostic.permissionStatus.GRANTED);
         }, handleError);
     }
@@ -756,17 +744,6 @@ function registerBluetoothStateChangeHandler(){
         handleError("Error registering for Bluetooth state changes: " + error);
     });
     monitoringBluetooth = true;
-}
-
-function shouldAllowRequestPermission(status){
-    if(platform === "android"){
-        return status !== cordova.plugins.diagnostic.permissionStatus.GRANTED &&
-            (status !== cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS
-                || osVersion >= 11 // On Android 11+, "Only this time" will cause the status to be detected as `DENIED_ALWAYS` on subsequent app sessions
-            )
-    }else{
-        return shouldAllowRequestPermission(status);
-    }
 }
 
 

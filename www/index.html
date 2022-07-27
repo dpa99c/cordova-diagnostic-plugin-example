@@ -45,6 +45,10 @@
             margin-top: 0;
             padding-top: 0;
         }
+        h3, h4{
+            margin-top: 12px;
+            padding-top: 0;
+        }
         li{
             list-style: none;
             clear: right;
@@ -58,6 +62,7 @@
         li span.value{
             float: right;
             padding: 2px;
+            text-align: right;
         }
         li span.on{
             background-color: green;
@@ -84,7 +89,7 @@
         }
 
         .settings button,
-        .settings select{
+        .settings select[multiple]{
             display: block;
             margin: 0 auto;
             margin-bottom: 24px;
@@ -116,6 +121,16 @@
 
         #request-remote-notifications *{
             text-align: center;
+        }
+
+        .section{
+            border: 1px solid #ccc;
+            margin: 12px;
+            padding: 12px;
+        }
+
+        .selector{
+            margin: 12px 0;
         }
 
     </style>
@@ -169,7 +184,11 @@
             <span class="name">Location authorization status</span>
             <span class="value">NOT_DETERMINED</span>
         </li>
-        <li class="location-accuracy-authorization os-conditional ios">
+        <li class="location-authorization-statuses os-conditional android">
+            <span class="name">Location authorization statuses</span>
+            <span class="value">NOT_DETERMINED</span>
+        </li>
+        <li class="location-accuracy-authorization os-conditional android ios">
             <span class="name">Location accuracy authorization</span>
             <span class="value">NOT_DETERMINED</span>
         </li>
@@ -441,9 +460,29 @@
     <button id="nfc-settings" class="android-only">Open NFC settings</button>
 
     <h3>Request permissions</h3>
-    <button id="request-location-always" class="request-location">Request Location Authorization Always</button>
-    <button id="request-location-in-use" class="request-location">Request Location Authorization When In Use</button>
-    <button id="request-location-full-accuracy" class="ios-only">Request Full Location Accuracy Authorization</button>
+
+    <div class="section">
+        <h4>Location</h4>
+
+        <div class="selector">
+            <label for="location-request-type">Type:</label>
+            <select id="location-request-type">
+                <option value="when-in-use">When in use</option>
+                <option value="always">Always</option>
+            </select>
+        </div>
+
+        <div class="selector">
+            <label for="location-accuracy-type">Accuracy:</label>
+            <select id="location-accuracy-type">
+                <option value="approximate">Approximate</option>
+                <option value="precise">Precise</option>
+            </select>
+        </div>
+
+        <button id="request-location" class="request-location">Request Location Authorization</button>
+    </div>
+
     <button id="request-bluetooth" class="ios-only">Request Bluetooth Authorization</button>
     <button id="request-camera" class="os-conditional android ios">Request Camera Authorization</button>
     <button id="request-camera-roll" class="ios-only">Request Camera Roll Authorization</button>
