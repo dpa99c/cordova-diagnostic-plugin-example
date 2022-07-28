@@ -372,6 +372,10 @@ function checkState(){
         cordova.plugins.diagnostic.getCurrentBatteryLevel(function (level) {
             $('#state .battery-level').find('.value').text(level+'%');
         }, handleError);
+
+        cordova.plugins.diagnostic.getBluetoothAuthorizationStatus(function(status){
+            $('#state .bluetooth-authorization-status').find('.value').text(status.toUpperCase());
+        }, handleError);
     }
 
 
@@ -379,10 +383,6 @@ function checkState(){
         onGetLocationAuthorizationStatus = function(status){
             console.log('Location status changed to: ' + status);
         }
-
-        cordova.plugins.diagnostic.getBluetoothAuthorizationStatus(function(status){
-            $('#state .bluetooth-authorization-status').find('.value').text(status.toUpperCase());
-        }, handleError);
     }
 
     if((platform === "ios" && osVersion >= 14) || platform === "android"){
@@ -448,7 +448,7 @@ function checkState(){
                 if(value) value += "<br/>";
                 value += status.toUpperCase() + ": " + statuses[status].toUpperCase();
             }
-            $('#state .bluetooth-authorization-status').find('.value').html(value);
+            $('#state .bluetooth-authorization-statuses').find('.value').html(value);
         }, handleError);
 
 
