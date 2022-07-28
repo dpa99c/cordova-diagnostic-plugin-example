@@ -713,6 +713,10 @@ function checkState(){
         cordova.plugins.diagnostic.isDeviceRooted(function(enabled){
             $('#state .root').addClass(enabled ? 'on' : 'off');
         }, handleError);
+
+        cordova.plugins.diagnostic.isAirplaneModeEnabled(function(enabled){
+            $('#state .airplane-mode').addClass(enabled ? 'on' : 'off');
+        }, handleError);
     }
 
     if(platform === "android" || platform === "ios"){
