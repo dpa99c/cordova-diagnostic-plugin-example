@@ -125,10 +125,11 @@ function onDeviceReady() {
 
     // iOS settings
     $('#request-camera-roll').on("click", function(){
+        var accessLevel = $('#camera-roll-access-level').val();
         cordova.plugins.diagnostic.requestCameraRollAuthorization(function(status){
             log("Successfully requested camera roll authorization: authorization was " + status);
             checkState();
-        }, handleError);
+        }, handleError, accessLevel);
     });
 
     $('#request-reminders').on("click", function(){
@@ -381,7 +382,7 @@ function checkState(){
 
     if(platform === "ios"){
         onGetLocationAuthorizationStatus = function(status){
-            console.log('Location status changed to: ' + status);
+            console.log('Location auth status: ' + status);
         }
     }
 
@@ -425,7 +426,7 @@ function checkState(){
         }, handleError);
 
         onGetLocationAuthorizationStatus = function(status){
-            console.log('Location status changed to: ' + status);
+            console.log('Location auth status: ' + status);
         };
 
 
@@ -507,18 +508,18 @@ function checkState(){
     }
 
     if(platform === "ios"){
+        var accessLevel = $('#camera-roll-access-level').val();
         cordova.plugins.diagnostic.isCameraRollAuthorized(function(authorized){
             $('#state .camera-roll-authorized').addClass(authorized ? 'on' : 'off');
-        }, handleError);
+        }, handleError, accessLevel);
 
         cordova.plugins.diagnostic.getCameraRollAuthorizationStatus(function(status){
             $('#state .camera-roll-authorization-status').find('.value').text(status.toUpperCase());
-            console.log('Camera roll status changed to: ' + status);
-        }, handleError);
-
+            console.log('Camera roll auth status: ' + status);
+        }, handleError, accessLevel);
     }
     onGetCameraAuthorizationStatus = function(status){
-        console.log('Camera status changed to: ' + status);
+        console.log('Camera auth status: ' + status);
     }
 
 
@@ -582,7 +583,7 @@ function checkState(){
     }
 
     onGetMicrophoneAuthorizationStatus = function(status){
-        console.log('Microphone status changed to: ' + status);
+        console.log('Microphone auth status: ' + status);
     }
 
     // Contacts
@@ -600,7 +601,7 @@ function checkState(){
     }
 
     onGetContactsAuthorizationStatus = function(status){
-        console.log('Contacts auth status changed to: ' + status);
+        console.log('Contacts auth status: ' + status);
     }
 
     // Calendar
@@ -618,7 +619,7 @@ function checkState(){
     }
 
     onGetCalendarAuthorizationStatus = function(status){
-        console.log('Calendar auth status changed to: ' + status);
+        console.log('Calendar auth status: ' + status);
     }
 
     if(platform === "ios" || platform === "android") {
@@ -636,7 +637,7 @@ function checkState(){
 
         cordova.plugins.diagnostic.getRemindersAuthorizationStatus(function (status) {
             $('#state .reminders-authorization-status').find('.value').text(status.toUpperCase());
-            console.log('Reminders auth status changed to: ' + status);
+            console.log('Reminders auth status: ' + status);
 
         }, handleError);
 
@@ -654,7 +655,7 @@ function checkState(){
         if(osVersion >= 10){
             cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(function (status) {
                 $remoteNotificationsAuthorizationStatusValue.text(status.toUpperCase());
-                console.log('Remote notifications auth status changed to: ' + status);
+                console.log('Remote notifications auth status: ' + status);
             }, handleError);
         }else{
             $remoteNotificationsAuthorizationStatusValue.text("UNAVAILABLE");
@@ -698,7 +699,7 @@ function checkState(){
 
         cordova.plugins.diagnostic.getExternalStorageAuthorizationStatus(function (status) {
             $('#state .external-sd-authorization-status').find('.value').text(status.toUpperCase());
-            console.log('External SD auth status changed to: ' + status);
+            console.log('External SD auth status: ' + status);
             $('#request-external-sd-details').toggle(status === cordova.plugins.diagnostic.permissionStatus.GRANTED);
         }, handleError);
     }

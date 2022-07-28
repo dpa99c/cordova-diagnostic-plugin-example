@@ -385,8 +385,20 @@
         <button id="request-bluetooth">Request Bluetooth Authorization</button>
     </div>
 
-    <button id="request-camera">Request Camera Authorization</button>
-    <button id="request-camera-roll" class="ios-only">Request Camera Roll Authorization</button>
+    <div class="section">
+        <h4>Camera</h4>
+        <div class="selector ios-only">
+            <label for="camera-roll-access-level">Camera roll access:</label>
+            <select id="camera-roll-access-level">
+                <option value="add_only">Add only</option>
+                <option value="read_write">Read/write</option>
+            </select>
+        </div>
+
+        <button id="request-camera">Request Camera Authorization</button>
+        <button id="request-camera-roll" class="ios-only">Request Camera Roll Authorization</button>
+    </div>
+
     <button id="request-microphone">Request Microphone Authorization</button>
     <button id="request-contacts">Request Contacts Authorization</button>
     <button id="request-calendar">Request Calendar Authorization</button>
