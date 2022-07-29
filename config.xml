@@ -73,12 +73,18 @@
 
     <platform name="ios">
         <plugin name="cordova-plugin-background-fetch" spec="*" />
+
         <config-file parent="UIBackgroundModes" platform="ios" target="*-Info.plist">
             <array>
                 <string>fetch</string>
                 <string>remote-notification</string>
             </array>
         </config-file>
+
+        <config-file parent="PHPhotoLibraryPreventAutomaticLimitedAccessAlert" platform="ios" target="*-Info.plist">
+            <true/>
+        </config-file>
+
         <config-file platform="ios" target="*-Info.plist" parent="NSLocationTemporaryUsageDescriptionDictionary">
             <dict>
                 <key>navigation</key>

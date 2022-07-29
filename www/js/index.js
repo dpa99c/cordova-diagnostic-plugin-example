@@ -131,6 +131,16 @@ function onDeviceReady() {
             checkState();
         }, handleError, accessLevel);
     });
+    $('#present-limited-photo-library-picker').on("click", function(){
+        cordova.plugins.diagnostic.presentLimitedLibraryPicker(function(identifiers){
+            var msg = "Successfully presented limited library picker UI";
+            if(identifiers && identifiers.length){
+                msg += " - added identifiers: " + identifiers.join(',');
+            }
+            log(msg);
+            checkState();
+        }, handleError);
+    });
 
     $('#request-reminders').on("click", function(){
         cordova.plugins.diagnostic.requestRemindersAuthorization(function(status){
