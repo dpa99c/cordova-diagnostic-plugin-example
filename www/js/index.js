@@ -480,6 +480,20 @@ function checkState(){
         cordova.plugins.diagnostic.isNFCAvailable(function (available) {
             $('#state .nfc-available').addClass(available ? 'on' : 'off');
         }, handleError);
+
+        // OS version
+        cordova.plugins.diagnostic.getDeviceOSVersion(function(details){
+            $('#state .device-os-version .value').text(details.version);
+            $('#state .device-os-api-level .value').text(details.apiLevel);
+            $('#state .device-os-api-name .value').text(details.apiName);
+        });
+
+        cordova.plugins.diagnostic.getBuildOSVersion(function(details){
+            $('#state .target-api-level .value').text(details.targetApiLevel);
+            $('#state .target-api-name .value').text(details.targetApiName);
+            $('#state .min-api-level .value').text(details.minApiLevel);
+            $('#state .min-api-name .value').text(details.minApiName);
+        });
     }
 
 
