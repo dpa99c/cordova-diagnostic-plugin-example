@@ -717,6 +717,10 @@ function checkState(){
 
 
     //Misc
+    cordova.plugins.diagnostic.isMobileDataEnabled(function(enabled){
+        $('#state .mobile-data').addClass(enabled ? 'on' : 'off');
+    }, handleError);
+
     if(platform === "android"){
         cordova.plugins.diagnostic.isADBModeEnabled(function(enabled){
             $('#state .adb').addClass(enabled ? 'on' : 'off');
