@@ -549,11 +549,16 @@ function checkState(){
     }, handleError);
 
     if(platform === "android"){
-        cordova.plugins.diagnostic.isDataRoamingEnabled(function(enabled){
-            $('#state .data-roaming').addClass(enabled ? 'on' : 'off');
-        }, handleError);
+        cordova.plugins.diagnostic.getBuildOSVersion(function(details){
+            if(details.targetApiLevel <= 32){
+                cordova.plugins.diagnostic.isDataRoamingEnabled(function(enabled){
+                    $('#state .data-roaming').addClass(enabled ? 'on' : 'off');
+                }, handleError);
+            }else{
+                log("Data roaming setting not available on Android 12L / API32+");
+            }
+        });
     }
-
 
     // Bluetooth
     if(monitoringBluetooth) {
