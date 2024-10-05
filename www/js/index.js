@@ -716,7 +716,6 @@ function checkState(){
         cordova.plugins.diagnostic.getExternalStorageAuthorizationStatus(function (status) {
             $('#state .external-sd-authorization-status').find('.value').text(status.toUpperCase());
             console.log('External SD auth status: ' + status);
-            $('#request-external-sd-details').toggle(status === cordova.plugins.diagnostic.permissionStatus.GRANTED);
         }, handleError);
     }
 
