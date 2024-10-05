@@ -85,13 +85,14 @@ function onDeviceReady() {
     });
 
     $('#request-camera').on("click", function(){
+        var externalStorage = $('#camera-external-storage').val() === 'yes';
         cordova.plugins.diagnostic.requestCameraAuthorization({
             successCallback: function(status){
                 log("Successfully requested camera authorization: authorization was " + status);
                 checkState();
             },
             errorCallback: handleError,
-            externalStorage: true
+            storage: externalStorage
         });
     });
 
@@ -486,12 +487,13 @@ function checkState(){
 
     // Camera
     var onGetCameraAuthorizationStatus;
+    var externalStorage = $('#camera-external-storage').val() === 'yes';
     cordova.plugins.diagnostic.isCameraAvailable({
         successCallback: function(available){
             $('#state .camera').addClass(available ? 'on' : 'off');
         },
         errorCallback: handleError,
-        externalStorage: true
+        storage: externalStorage
     });
 
     if(platform === "android" || platform === "ios") {
@@ -499,12 +501,13 @@ function checkState(){
             $('#state .camera-present').addClass(present ? 'on' : 'off');
         }, handleError);
 
+        var externalStorage = $('#camera-external-storage').val() === 'yes';
         cordova.plugins.diagnostic.isCameraAuthorized({
             successCallback: function (authorized) {
                 $('#state .camera-authorized').addClass(authorized ? 'on' : 'off');
             },
             errorCallback: handleError,
-            externalStorage: true
+            storage: externalStorage
         });
 
         cordova.plugins.diagnostic.getCameraAuthorizationStatus({
@@ -513,7 +516,7 @@ function checkState(){
                 onGetCameraAuthorizationStatus(status);
             },
             errorCallback: handleError,
-            externalStorage: true
+            storage: externalStorage
         });
 
     }
@@ -532,7 +535,6 @@ function checkState(){
     onGetCameraAuthorizationStatus = function(status){
         console.log('Camera auth status: ' + status);
     }
-
 
     // Network
     cordova.plugins.diagnostic.isWifiAvailable(function(available){

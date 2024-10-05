@@ -1,4 +1,7 @@
-body,
+body{
+    padding: 8px;
+    margin: 0;
+}
 ul{
     padding: 0;
     margin: 0;
