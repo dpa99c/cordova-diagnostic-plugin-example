@@ -734,6 +734,10 @@ function checkState(){
             $('#state .root').addClass(enabled ? 'on' : 'off');
         }, handleError);
 
+        cordova.plugins.diagnostic.isDebugBuild(function(isDebug){
+            $('#state .build-type').addClass(isDebug ? 'on' : 'off');
+        }, handleError);
+
         cordova.plugins.diagnostic.isAirplaneModeEnabled(function(enabled){
             $('#state .airplane-mode').addClass(enabled ? 'on' : 'off');
         }, handleError);
