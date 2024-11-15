@@ -14,8 +14,8 @@
     <preference name="cordova.plugins.diagnostic.modules" value="LOCATION BLUETOOTH WIFI CAMERA NOTIFICATIONS MICROPHONE CONTACTS CALENDAR REMINDERS MOTION NFC EXTERNAL_STORAGE AIRPLANE_MODE" />
 
     <platform name="android">
-        <!-- Build with SDK: Android 13 -->
-        <preference name="android-targetSdkVersion" value="33" />
+        <!-- Build with SDK: Android 14 -->
+        <preference name="android-targetSdkVersion" value="34" />
 
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:allowBackup="false"/>
