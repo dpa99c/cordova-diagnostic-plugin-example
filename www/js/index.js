@@ -723,10 +723,6 @@ function checkState(){
 
 
     //Misc
-    cordova.plugins.diagnostic.isMobileDataEnabled(function(enabled){
-        $('#state .mobile-data').addClass(enabled ? 'on' : 'off');
-    }, handleError);
-
     if(platform === "android"){
         cordova.plugins.diagnostic.isADBModeEnabled(function(enabled){
             $('#state .adb').addClass(enabled ? 'on' : 'off');
@@ -736,16 +732,26 @@ function checkState(){
             $('#state .root').addClass(enabled ? 'on' : 'off');
         }, handleError);
 
-        cordova.plugins.diagnostic.isDebugBuild(function(isDebug){
-            $('#state .build-type').addClass(isDebug ? 'on' : 'off');
-        }, handleError);
-
         cordova.plugins.diagnostic.isAirplaneModeEnabled(function(enabled){
             $('#state .airplane-mode').addClass(enabled ? 'on' : 'off');
+        }, handleError);
+
+        cordova.plugins.diagnostic.isMobileDataEnabled(function(enabled){
+            $('#state .mobile-data-enabled').addClass(enabled ? 'on' : 'off');
+        }, handleError);
+    }
+
+    if(platform === "ios"){
+        cordova.plugins.diagnostic.isMobileDataAuthorized(function(authorized){
+            $('#state .mobile-data-authorized').addClass(authorized ? 'on' : 'off');
         }, handleError);
     }
 
     if(platform === "android" || platform === "ios"){
+        cordova.plugins.diagnostic.isDebugBuild(function(isDebug){
+            $('#state .build-type').addClass(isDebug ? 'on' : 'off');
+        }, handleError);
+
         cordova.plugins.diagnostic.getArchitecture(function (arch) {
             $('#state .cpu-architecture').find('.value').text(arch.toUpperCase());
         });
