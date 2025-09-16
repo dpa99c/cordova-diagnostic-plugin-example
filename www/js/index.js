@@ -391,6 +391,10 @@ function checkState(){
 
     }
 
+    cordova.plugins.diagnostic.isCompassAvailable(function(available){
+        $('#state .compass').addClass(available ? 'on' : 'off');
+    }, handleError);
+
 
     if(platform === "ios"){
         onGetLocationAuthorizationStatus = function(status){
