@@ -98,5 +98,17 @@
                 <string>This app requires access to your exact location in order to report your location to emergency services.</string>
             </dict>
         </config-file>
+
+        <config-file parent="NSLocalNetworkUsageDescription" platform="ios" target="*-Info.plist">
+            <string>This app requires access to your local network in order to discover and connect to devices on the same network.</string>
+        </config-file>
+
+        <config-file parent="NSBonjourServices" platform="ios" target="*-Info.plist">
+            <array>
+                <string>_lnp._tcp.</string>
+                <string>_bonjour._tcp.</string>
+            </array>
+        </config-file>
+
     </platform>
 </widget>
