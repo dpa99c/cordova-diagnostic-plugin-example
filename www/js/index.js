@@ -16,6 +16,11 @@ function onDeviceReady() {
     if(platform === "android" || platform === "ios") {
         cordova.plugins.diagnostic.enableDebug();
 
+        cordova.plugins.diagnostic.onLowPowerModeChange(function (enabled) {
+            log("Low power mode changed to: " + enabled);
+            checkState();
+        });
+
         cordova.plugins.diagnostic.registerLocationStateChangeHandler(function (state) {
             log("Location state changed to: " + state);
             checkState();
@@ -392,6 +397,10 @@ function checkState(){
 
         cordova.plugins.diagnostic.getCurrentBatteryLevel(function (level) {
             $('#state .battery-level').find('.value').text(level+'%');
+        }, handleError);
+
+        cordova.plugins.diagnostic.isLowPowerModeEnabled(function (enabled) {
+            $('#state .low-power-mode').addClass(enabled ? 'on' : 'off');
         }, handleError);
 
         cordova.plugins.diagnostic.getBluetoothAuthorizationStatus(function(status){
