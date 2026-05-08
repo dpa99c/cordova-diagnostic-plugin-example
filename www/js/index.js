@@ -216,6 +216,12 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.switchToNFCSettings();
     });
 
+    $('#request-ignore-battery-optimizations').on("click", function(){
+        cordova.plugins.diagnostic.requestIgnoreBatteryOptimizations(function(){
+            log("Opened battery optimization exemption request");
+        }, handleError);
+    });
+
     // Android set state
     $('#enable-wifi').on("click", function(){
         cordova.plugins.diagnostic.setWifiState(function(){
@@ -484,6 +490,10 @@ function checkState(){
                 value += status.toUpperCase() + ": " + statuses[status].toUpperCase();
             }
             $('#state .bluetooth-authorization-statuses').find('.value').html(value);
+        }, handleError);
+
+        cordova.plugins.diagnostic.isIgnoringBatteryOptimizations(function(enabled){
+            $('#state .ignoring-battery-optimizations').addClass(enabled ? 'on' : 'off');
         }, handleError);
 
 
