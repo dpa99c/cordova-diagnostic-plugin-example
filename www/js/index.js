@@ -128,6 +128,14 @@ function onDeviceReady() {
         }, handleError);
     });
 
+    $('#request-local-network').on("click", function(){
+        if(platform === "ios"){
+            cordova.plugins.diagnostic.requestLocalNetworkAuthorization(handleLocalNetworkAuthorizationStatus, handleError);
+        }else if (platform === "android"){
+            cordova.plugins.diagnostic.requestRuntimePermission(handleLocalNetworkAuthorizationStatus, handleError, cordova.plugins.diagnostic.permission.ACCESS_LOCAL_NETWORK);
+        }
+    });
+
 
     // iOS settings
     $('#request-camera-roll').on("click", function(){
@@ -179,10 +187,6 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.requestMotionAuthorization(handleMotionAuthorizationStatus, handleError);
     });
 
-    $('#request-local-network').on("click", function(){
-        cordova.plugins.diagnostic.requestLocalNetworkAuthorization(handleLocalNetworkAuthorizationStatus, handleError);
-    });
-
     // Android settings
     $('#warm-restart').on("click", function(){
         cordova.plugins.diagnostic.restart(handleError, false);
@@ -220,6 +224,13 @@ function onDeviceReady() {
         cordova.plugins.diagnostic.requestIgnoreBatteryOptimizations(function(){
             log("Opened battery optimization exemption request");
         }, handleError);
+    });
+
+    $('#request-nearby-wifi-devices').on("click", function(){
+        cordova.plugins.diagnostic.requestRuntimePermission(function(status){
+            log("Successfully requested Nearby WiFi Devices authorization: authorization was " + status);
+            checkState();
+        }, handleError, cordova.plugins.diagnostic.permission.NEARBY_WIFI_DEVICES);
     });
 
     // Android set state
@@ -342,6 +353,42 @@ function onDeviceReady() {
                 }, fail);
             }, fail);
         }, fail);
+    });
+
+    var isDiscoveringServices = false;
+    $('#discover-local-network-services').on("click", function(){
+        if(isDiscoveringServices){
+            log("Already discovering local network services");
+            return;
+        }
+
+        cordova.plugins.zeroconf.registerAddressFamily = 'ipv4';
+        cordova.plugins.zeroconf.watchAddressFamily = 'ipv4';
+
+        var watchService = function(serviceType){
+            log("Watching for local network services of type: " + serviceType);
+            cordova.plugins.zeroconf.watch(serviceType, 'local.', function(result) {
+                var action = result.action;
+                var service = result.service;
+                log('"' + serviceType + '" local network service ' + action + ': ' + JSON.stringify(service), true);
+            }, function(error) {
+                handleError('Error watching service "' + serviceType + '": ' + error);
+            });
+        };
+        
+        watchService('_lnp._tcp.');
+        watchService('_bonjour._tcp.');
+
+        watchService('_nmea-0183._tcp.');
+        watchService('_nx-radio-api._tcp.');
+        watchService('_nx-radio-rx._tcp.');
+        watchService('_nx-radio-tx._tcp.');
+        watchService('_nx-loudhail._tcp.');
+        watchService('_nx-intercom._tcp.');
+        watchService('_nx-public-addr._tcp.');
+
+
+        isDiscoveringServices = true;
     });
 
 
@@ -593,18 +640,39 @@ function checkState(){
             $('#state .local-network-authorization-status').find('.value').text(status.toUpperCase());
             handleLocalNetworkAuthorizationStatus(status);
         }, handleError);
+    }
 
-        if(platform === "android"){
-            cordova.plugins.diagnostic.getBuildOSVersion(function(details){
-                if(details.targetApiLevel <= 32){
-                    cordova.plugins.diagnostic.isDataRoamingEnabled(function(enabled){
-                        $('#state .data-roaming').addClass(enabled ? 'on' : 'off');
-                    }, handleError);
-                }else{
-                    log("Data roaming setting not available on Android 12L / API32+");
-                }
-            });
-        }
+    if(platform === "android"){
+        cordova.plugins.diagnostic.getPermissionAuthorizationStatus(function(status){
+            const authorized = (status === cordova.plugins.diagnostic.permissionStatus.GRANTED);
+            console.log('isLocalNetworkAuthorized: ' + authorized);
+            $('#state .local-network').addClass(authorized ? 'on' : 'off');
+
+            console.log('getLocalNetworkAuthorizationStatus: ' + status);
+            $('#state .local-network-authorization-status').find('.value').text(status.toUpperCase());
+            handleLocalNetworkAuthorizationStatus(status)
+
+        }, handleError, cordova.plugins.diagnostic.permission.ACCESS_LOCAL_NETWORK);
+
+        cordova.plugins.diagnostic.getPermissionAuthorizationStatus(function(status){
+            const authorized = (status === cordova.plugins.diagnostic.permissionStatus.GRANTED);
+            console.log('isNearbyWiFiDevicesAuthorized: ' + authorized);
+            $('#state .nearby-wifi-devices').addClass(authorized ? 'on' : 'off');
+
+            console.log('getNearbyWiFiDevicesAuthorizationStatus: ' + status);
+            $('#state .nearby-wifi-devices-authorization-status').find('.value').text(status.toUpperCase());
+
+        }, handleError, cordova.plugins.diagnostic.permission.NEARBY_WIFI_DEVICES);
+
+        cordova.plugins.diagnostic.getBuildOSVersion(function(details){
+            if(details.targetApiLevel <= 32){
+                cordova.plugins.diagnostic.isDataRoamingEnabled(function(enabled){
+                    $('#state .data-roaming').addClass(enabled ? 'on' : 'off');
+                }, handleError);
+            }else{
+                log("Data roaming setting not available on Android 12L / API32+");
+            }
+        });
     }
 
     // Bluetooth

@@ -14,8 +14,8 @@
     <preference name="cordova.plugins.diagnostic.modules" value="LOCATION BLUETOOTH WIFI CAMERA NOTIFICATIONS MICROPHONE CONTACTS CALENDAR REMINDERS MOTION NFC EXTERNAL_STORAGE AIRPLANE_MODE" />
 
     <platform name="android">
-        <!-- Build with SDK: Android 16 -->
-        <preference name="android-targetSdkVersion" value="36" />
+        <!-- Build with SDK: Android 17 -->
+        <preference name="android-targetSdkVersion" value="37" />
 
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:allowBackup="false"/>
@@ -37,6 +37,7 @@
             <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" /> <!-- API 37+ -->
             <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
             <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
             <uses-permission android:name="android.permission.ADD_VOICEMAIL" />
@@ -49,9 +50,10 @@
             <uses-permission android:name="android.permission.CALL_PHONE" />
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-            <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" />
+            <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" /> <!-- API 33+ -->
             <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
             <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+            <uses-permission android:name="android.permission.RANGING" />
             <uses-permission android:name="android.permission.READ_CALENDAR" />
             <uses-permission android:name="android.permission.READ_CALL_LOG" />
             <uses-permission android:name="android.permission.READ_CONTACTS" />

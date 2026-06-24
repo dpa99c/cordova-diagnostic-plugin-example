@@ -20,12 +20,14 @@
         "ANDROIDX_CORE_VERSION": "1.6.+"
       },
       "cordova-plugin-androidx-adapter": {},
-      "cordova-plugin-device": {}
+      "cordova-plugin-device": {},
+      "cordova-plugin-zeroconf": {}
     }
   },
   "devDependencies": {
     "cordova-android": "^15.0.0",
-    "cordova-ios": "^7.1.1"
+    "cordova-ios": "^7.1.1",
+    "cordova-plugin-zeroconf": "github:veronicatc/cordova-plugin-zeroconf"
   },
   "dependencies": {
     "cordova-plugin-androidx-adapter": "*",

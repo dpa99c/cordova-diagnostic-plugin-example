@@ -121,13 +121,22 @@
             <span class="state on">ENABLED</span>
             <span class="state off">DISABLED</span>
         </li>
-        <li class="local-network ios-only">
+        <li class="local-network">
             <span class="name">Local Network authorized?</span>
             <span class="state on">AUTHORIZED</span>
             <span class="state off">UNAUTHORIZED</span>
         </li>
-        <li class="local-network-authorization-status ios-only">
+        <li class="local-network-authorization-status">
             <span class="name">Local Network authorization status</span>
+            <span class="value">NOT_DETERMINED</span>
+        </li>
+        <li class="nearby-wifi-devices android-only">
+            <span class="name">Nearby WiFi devices authorized?</span>
+            <span class="state on">AUTHORIZED</span>
+            <span class="state off">UNAUTHORIZED</span>
+        </li>
+        <li class="nearby-wifi-devices-authorization-status android-only">
+            <span class="name">Nearby WiFi devices authorization status</span>
             <span class="value">NOT_DETERMINED</span>
         </li>
     </ul>
@@ -437,6 +446,9 @@
         </div>
 
         <button id="request-location" class="request-location">Request Location Authorization</button>
+
+        <h3>Use permission</h3>
+        <button id="get-location">Get Current Location</button>
     </div>
 
     <div class="section">
@@ -450,7 +462,12 @@
             </select>
         </div>
 
-        <button id="request-bluetooth">Request Bluetooth Authorization</button>
+        <button id="request-bluetooth">Request Bluetooth Authorization</button>s
+
+        <h3>Use permissions</h3>
+        <button id="monitor-bluetooth" class="os-conditional ios">Monitor Bluetooth State</button>
+        <button id="enable-bluetooth" class="os-conditional android">Enable Bluetooth</button>
+        <button id="disable-bluetooth" class="os-conditional android">Disable Bluetooth</button>
     </div>
 
     <div class="section">
@@ -474,6 +491,32 @@
         <button id="request-camera">Request Camera Authorization</button>
         <button id="request-camera-roll" class="ios-only">Request Camera Roll Authorization</button>
         <button id="present-limited-photo-library-picker" class="ios-only">Present Limited Library Picker UI</button>
+
+        <h3>Use permission</h3>
+        <button id="use-camera">Use Camera</button>
+    </div>
+
+    <div class="section">
+        <h4>Wi-Fi / Local network</h4>
+
+        <button id="request-local-network">Request Local Network Authorization</button>
+        <button id="request-nearby-wifi-devices" class="android-only">Request Nearby WiFi Devices Authorization</button>
+
+        <h3>Use permissions</h3>
+        <button id="enable-wifi" class="os-conditional android">Enable Wifi</button>
+        <button id="disable-wifi" class="os-conditional android">Disable Wifi</button>
+        <button id="discover-local-network-services">Discover Local Network Services</button>
+    </div>
+
+    <div class="section android-only">
+        <h4>External SD card</h4>
+
+        <button id="request-external-sd-permission">Request external SD permission</button>
+
+        <h3>Use permissions</h3>
+        <button id="request-external-sd-details" class="android-only">Show external SD details</button>
+        <div id="request-external-sd-details-results" class="android-only"></div>
+        <button id="write-external-sd-file" class="android-only">Write external SD file</button>
     </div>
 
     <button id="request-microphone">Request Microphone Authorization</button>
@@ -481,8 +524,8 @@
     <button id="request-calendar">Request Calendar Authorization</button>
     <button id="request-reminders" class="ios-only">Request Reminders Authorization</button>
     <button id="request-motion" class="ios-only">Request Motion Authorization</button>
-    <button id="request-local-network" class="ios-only">Request Local Network Authorization</button>
-    <button id="request-external-sd-permission" class="android-only">Request external SD permission</button>
+    
+    
     <div id="request-remote-notifications" class="ios-only">
         <select multiple="multiple">
             <option value="alert">Alerts</option>
@@ -492,17 +535,6 @@
         <button>Request remote notifications</button>
     </div>
 
-    <h3>Use permissions</h3>
-    <button id="get-location">Get Current Location</button>
-    <button id="use-camera">Use Camera</button>
-    <button id="enable-wifi" class="os-conditional android">Enable Wifi</button>
-    <button id="disable-wifi" class="os-conditional android">Disable Wifi</button>
-    <button id="monitor-bluetooth" class="os-conditional ios">Monitor Bluetooth State</button>
-    <button id="enable-bluetooth" class="os-conditional android">Enable Bluetooth</button>
-    <button id="disable-bluetooth" class="os-conditional android">Disable Bluetooth</button>
-    <button id="request-external-sd-details" class="android-only">Show external SD details</button>
-    <div id="request-external-sd-details-results" class="android-only"></div>
-    <button id="write-external-sd-file" class="android-only">Write external SD file</button>
 </div>
 </body>
 </html>
